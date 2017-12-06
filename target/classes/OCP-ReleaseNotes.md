@@ -1,0 +1,1 @@
+OCP(One Click Print) Supports the printing of Laser Printer eForms and Impact Printer forms from Host and Distributed Applications - used by RLAN, CDP and Wealth.

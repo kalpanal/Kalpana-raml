@@ -1,0 +1,125 @@
+﻿{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "",
+	"description": "",
+	"type": "object",
+	"properties": {
+		"printerName": {
+			"description": "Name of printer, e.g. PrintToMe,Send To OneNote 2010,Microsoft XPS Document Writer,JetPCL Document Capture,Fax,275 Dundas.10th Floor - RICOH Aficio MP C4502 - (TD305304)",
+			"type": "string"
+		},
+		"internetProtocolAddressNum": {
+			"description": "IP address of the requester workstation.",
+			"type": "string",
+			"maxLength": 25
+		},
+		"workstationSerialNum": {
+			"description": "Workstation Name.",
+			"type": "string"
+		},
+		"workstationTerminalNum": {
+			"description": "Workstation Asset Tag.",
+			"type": "string"
+		},
+		"originatingPartyId": {
+			"description": "ACF2 ID of the requester.",
+			"type": "string"
+		},
+		"printJob": {
+			"description": "Instruction of print job, could be different to each file content.",
+			"type": "array",
+			"items": {
+				"description": "",
+				"type": "object",
+				"properties": {
+					"printJobName": {
+						"description": "Name of the print Job.",
+						"type": "string"
+					},
+					"printerTrayCd": {
+						"description": "Whether a manual tray should feed the paper or an automatic tray.",
+						"type": "string"
+					},
+					"printCopyCnt": {
+						"description": "Number of copies of the PDF print required.",
+						"type": "integer"
+					},
+					"pdfFile": {
+						"description": "PDF file attachments, single or multiple",
+						"$ref": "/definitions/base64Binary"
+					}
+				},
+				"required": [
+					"printerTrayCd",
+					"printCopyCnt",
+					"pdfFile"
+				]
+			}
+		}
+	},
+	"required": [
+		"printerName",
+		"printJob"
+	],
+	"definitions": {
+		"base64Binary": {
+			"description": "base64Binary represents Base64-encoded arbitrary binary data. The ·value space· of base64Binary is the set of finite-length sequences of binary octets. For base64Binary data the entire binary stream is encoded using the Base64 Alphabet in [RFC 2045].",
+			"type": "string"
+		},
+		"anyURI": {
+			"description": "anyURI represents a Uniform Resource Identifier Reference (URI). An anyURI value can be absolute or relative, and may have an optional fragment identifier (i.e., it may be a URI Reference). This type should be used to specify the intention that the value fulfills the role of a URI as defined by [RFC 2396], as amended by [RFC 2732].",
+			"type": "string",
+			"format": "uri"
+		},
+		"unsignedLong": {
+			"description": "unsignedLong is ·derived· from integer by setting the minimum to zero, and the maxInclusive to be 18446744073709551615.",
+			"type": "integer",
+			"minimum": 0,
+			"maximum": 18446744073709551615
+		},
+		"unsignedInt": {
+			"description": "unsignedInt is ·derived· from unsignedLong by setting the value of ·maxInclusive· to be 4294967295.",
+			"allOf": [
+				{
+					"ref": "/definitions/unsignedLong"
+				},
+				{
+					"maximum": 4294967295
+				}
+			]
+		},
+		"normalizedString": {
+			"description": "normalizedString represents white space normalized strings. The ·value space· of normalizedString is the set of strings that do not contain the carriage return (#xD), line feed (#xA) nor tab (#x9) characters. The ·lexical space· of normalizedString is the set of strings that do not contain the carriage return (#xD), line feed (#xA) nor tab (#x9) characters. The ·base type· of normalizedString is string.",
+			"type": "string"
+		},
+		"token": {
+			"description": "token represents tokenized strings. The ·value space· of token is the set of strings that do not contain the carriage return (#xD), line feed (#xA) nor tab (#x9) characters, that have no leading or trailing spaces (#x20) and that have no internal sequences of two or more spaces. The ·lexical space· of token is the set of strings that do not contain the carriage return (#xD), line feed (#xA) nor tab (#x9) characters, that have no leading or trailing spaces (#x20) and that have no internal sequences of two or more spaces. The ·base type· of token is normalizedString.",
+			"allOf": [
+				{
+					"ref": "/definitions/normalizedString"
+				}
+			]
+		},
+		"dateTime": {
+			"description": "dateTime values may be viewed as objects with integer-valued year, month, day, hour and minute properties, a decimal-valued second property, and a boolean timezoned property. Each such object also has one decimal-valued method or computed property, timeOnTimeline, whose value is always a decimal number; the values are dimensioned in seconds, the integer 0 is 0001-01-01T00:00:00 and the value of timeOnTimeline for other dateTime values is computed using the Gregorian algorithm as modified for leap-seconds. The timeOnTimeline values form two related \"timelines\", one for timezoned values and one for non-timezoned values. Each timeline is a copy of the ·value space· of decimal, with integers given units of seconds.",
+			"type": "string",
+			"format": "date-time"
+		},
+		"date": {
+			"description": "The ·value space· of date consists of top-open intervals of exactly one day in length on the timelines of dateTime, beginning on the beginning moment of each day (in each timezone), i.e. '00:00:00', up to but not including '24:00:00' (which is identical with '00:00:00' of the next day). For nontimezoned values, the top-open intervals disjointly cover the nontimezoned timeline, one per day. For timezoned values, the intervals begin at every minute and therefore overlap.",
+			"type": "string"
+		},
+		"time": {
+			"description": "The lexical space of xsd:time is identical to the time part of dateTime (hh:mm:ss[Z|(+|-)hh:mm]), and its value space is the set of points in time recurring daily.",
+			"type": "string"
+		},
+		"gYearMonth": {
+			"description": "gYearMonth represents a specific gregorian month in a specific gregorian year. The ·value space· of gYearMonth is the set of Gregorian calendar months as defined in § 5.2.1 of [ISO 8601]. Specifically, it is a set of one-month long, non-periodic instances e.g. 1999-10 to represent the whole month of 1999-10, independent of how many days this month has.",
+			"type": "string"
+		},
+		"decimal": {
+			"description": " decimal represents a subset of the real numbers, which can be represented by decimal numerals. The ·value space· of decimal is the set of numbers that can be obtained by multiplying an integer by a non-positive power of ten, i.e., expressible as i × 10^-n where i and n are integers and n >= 0. Precision is not reflected in this value space; the number 2.0 is not distinct from the number 2.00. The ·order-relation· on decimal is the order relation on real numbers, restricted to this subset.",
+			"type": "number"
+		}
+	}
+}

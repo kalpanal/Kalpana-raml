@@ -1,0 +1,14 @@
+{
+	"status": {
+		"serverStatusCode": "403",
+		"severity": "Error",
+		"additionalStatus": [
+			{
+				"statusCode": 1760,
+				"serverStatusCode": "XYZX",
+				"severity": "Error",
+				"statusDesc": "Authorization Failure."
+			}
+		]
+	}
+}

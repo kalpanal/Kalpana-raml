@@ -1,0 +1,14 @@
+{
+	"status": {
+		"serverStatusCode": "503",
+		"severity": "Error",
+		"additionalStatus": [
+			{
+				"statusCode": 300,
+				"serverStatusCode": "ABC",
+				"severity": "Error",
+				"statusDesc": "System Not Available"
+			}
+		]
+	}
+}

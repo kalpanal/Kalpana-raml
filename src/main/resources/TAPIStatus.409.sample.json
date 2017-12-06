@@ -1,0 +1,14 @@
+{
+	"status": {
+		"serverStatusCode": "409",
+		"severity": "Error",
+		"additionalStatus": [
+			{
+				"statusCode": 1361,
+				"serverStatusCode": "WXYZ",
+				"severity": "Error",
+				"statusDesc": "Invalid reference"
+			}
+		]
+	}
+}

@@ -1,0 +1,496 @@
+        <ElementValue className="webtool.soap.ElementValue" version="1.11.12">
+         <writeType>true</writeType>
+         <ElementType className="webtool.soap.ElementType" version="2.12.3">
+          <hash>1</hash>
+          <localName>root</localName>
+          <ComplexType className="webtool.soap.ComplexType" version="2.10.3">
+           <hash>2</hash>
+           <attributesSize>1</attributesSize>
+           <AttributeType className="webtool.soap.AttributeType" version="2.3.3">
+            <hash>3</hash>
+            <name>type</name>
+            <fixed>object</fixed>
+            <StringType className="webtool.soap.StringType" version="2.5.3">
+             <hash>4</hash>
+            </StringType>
+            <required>true</required>
+           </AttributeType>
+           <name>anonymous</name>
+           <compositor>true</compositor>
+           <AllCompositor className="webtool.soap.AllCompositor" version="2.1.3.3">
+            <hash>5</hash>
+            <paramTypesSize>2</paramTypesSize>
+            <ElementType className="webtool.soap.ElementType" version="2.12.3">
+             <hash>6</hash>
+             <minOccurs>0</minOccurs>
+             <nillable>true</nillable>
+             <localName>workstationTerminal</localName>
+             <ComplexType className="webtool.soap.ComplexType" version="2.10.3">
+              <hash>7</hash>
+              <attributesSize>1</attributesSize>
+              <AttributeType className="webtool.soap.AttributeType" version="2.3.3">
+               <hash>8</hash>
+               <name>type</name>
+               <fixed>object</fixed>
+               <StringType className="webtool.soap.StringType" version="2.5.3">
+                <hash>9</hash>
+               </StringType>
+               <required>true</required>
+              </AttributeType>
+              <name>anonymous</name>
+              <compositor>true</compositor>
+              <AllCompositor className="webtool.soap.AllCompositor" version="2.1.3.3">
+               <hash>10</hash>
+               <paramTypesSize>6</paramTypesSize>
+               <ElementType className="webtool.soap.ElementType" version="2.12.3">
+                <hash>11</hash>
+                <minOccurs>0</minOccurs>
+                <nillable>true</nillable>
+                <localName>workstationTerminalNum</localName>
+                <ComplexType className="webtool.soap.ComplexType" version="2.10.3">
+                 <hash>12</hash>
+                 <isAbstract>true</isAbstract>
+                 <attributesSize>1</attributesSize>
+                 <AttributeType className="webtool.soap.AttributeType" version="2.3.3">
+                  <hash>13</hash>
+                  <name>type</name>
+                  <fixed>string</fixed>
+                  <StringType className="webtool.soap.StringType" version="2">
+                   <hash>4</hash>
+                  </StringType>
+                 </AttributeType>
+                 <content>true</content>
+                 <StringType className="webtool.soap.StringType" version="2">
+                  <hash>9</hash>
+                 </StringType>
+                 <namespace>urn:parasoft:json</namespace>
+                 <name>String</name>
+                </ComplexType>
+               </ElementType>
+               <ElementType className="webtool.soap.ElementType" version="2.12.3">
+                <hash>14</hash>
+                <minOccurs>0</minOccurs>
+                <nillable>true</nillable>
+                <localName>workstationSerialNum</localName>
+                <ComplexType className="webtool.soap.ComplexType" version="2">
+                 <hash>12</hash>
+                </ComplexType>
+               </ElementType>
+               <ElementType className="webtool.soap.ElementType" version="2.12.3">
+                <hash>15</hash>
+                <minOccurs>0</minOccurs>
+                <nillable>true</nillable>
+                <localName>workstationTypeCd</localName>
+                <ComplexType className="webtool.soap.ComplexType" version="2">
+                 <hash>12</hash>
+                </ComplexType>
+               </ElementType>
+               <ElementType className="webtool.soap.ElementType" version="2.12.3">
+                <hash>16</hash>
+                <minOccurs>0</minOccurs>
+                <nillable>true</nillable>
+                <localName>udpPortNum</localName>
+                <ComplexType className="webtool.soap.ComplexType" version="2">
+                 <hash>12</hash>
+                </ComplexType>
+               </ElementType>
+               <ElementType className="webtool.soap.ElementType" version="2.12.3">
+                <hash>17</hash>
+                <minOccurs>0</minOccurs>
+                <nillable>true</nillable>
+                <localName>internetProtocolAddressNum</localName>
+                <ComplexType className="webtool.soap.ComplexType" version="2">
+                 <hash>12</hash>
+                </ComplexType>
+               </ElementType>
+               <ElementType className="webtool.soap.ElementType" version="2.12.3">
+                <hash>18</hash>
+                <minOccurs>0</minOccurs>
+                <nillable>true</nillable>
+                <localName>printer</localName>
+                <ComplexType className="webtool.soap.ComplexType" version="2.10.3">
+                 <hash>19</hash>
+                 <attributesSize>1</attributesSize>
+                 <AttributeType className="webtool.soap.AttributeType" version="2.3.3">
+                  <hash>20</hash>
+                  <name>type</name>
+                  <fixed>array</fixed>
+                  <StringType className="webtool.soap.StringType" version="2">
+                   <hash>4</hash>
+                  </StringType>
+                  <required>true</required>
+                 </AttributeType>
+                 <name>anonymous</name>
+                 <compositor>true</compositor>
+                 <SequenceCompositor className="webtool.soap.SequenceCompositor" version="2.1.3.3">
+                  <hash>21</hash>
+                  <paramTypesSize>1</paramTypesSize>
+                  <ElementType className="webtool.soap.ElementType" version="2.12.3">
+                   <hash>22</hash>
+                   <minOccurs>0</minOccurs>
+                   <maxOccurs>-1</maxOccurs>
+                   <nillable>true</nillable>
+                   <localName>item</localName>
+                   <ComplexType className="webtool.soap.ComplexType" version="2.10.3">
+                    <hash>23</hash>
+                    <attributesSize>1</attributesSize>
+                    <AttributeType className="webtool.soap.AttributeType" version="2.3.3">
+                     <hash>24</hash>
+                     <name>type</name>
+                     <fixed>object</fixed>
+                     <StringType className="webtool.soap.StringType" version="2.5.3">
+                      <hash>25</hash>
+                     </StringType>
+                     <required>true</required>
+                    </AttributeType>
+                    <name>anonymous</name>
+                    <compositor>true</compositor>
+                    <AllCompositor className="webtool.soap.AllCompositor" version="2.1.3.3">
+                     <hash>26</hash>
+                     <paramTypesSize>2</paramTypesSize>
+                     <ElementType className="webtool.soap.ElementType" version="2.12.3">
+                      <hash>27</hash>
+                      <minOccurs>0</minOccurs>
+                      <nillable>true</nillable>
+                      <localName>printerName</localName>
+                      <ComplexType className="webtool.soap.ComplexType" version="2">
+                       <hash>12</hash>
+                      </ComplexType>
+                     </ElementType>
+                     <ElementType className="webtool.soap.ElementType" version="2.12.3">
+                      <hash>28</hash>
+                      <minOccurs>0</minOccurs>
+                      <nillable>true</nillable>
+                      <localName>defaultInd</localName>
+                      <ComplexType className="webtool.soap.ComplexType" version="2.10.3">
+                       <hash>29</hash>
+                       <isAbstract>true</isAbstract>
+                       <attributesSize>1</attributesSize>
+                       <AttributeType className="webtool.soap.AttributeType" version="2.3.3">
+                        <hash>30</hash>
+                        <name>type</name>
+                        <fixed>boolean</fixed>
+                        <StringType className="webtool.soap.StringType" version="2">
+                         <hash>4</hash>
+                        </StringType>
+                        <required>true</required>
+                       </AttributeType>
+                       <content>true</content>
+                       <BooleanType className="webtool.soap.BooleanType" version="2.2.3">
+                        <hash>31</hash>
+                       </BooleanType>
+                       <namespace>urn:parasoft:json</namespace>
+                       <name>Boolean</name>
+                      </ComplexType>
+                     </ElementType>
+                    </AllCompositor>
+                   </ComplexType>
+                  </ElementType>
+                 </SequenceCompositor>
+                </ComplexType>
+               </ElementType>
+              </AllCompositor>
+             </ComplexType>
+            </ElementType>
+            <ElementType className="webtool.soap.ElementType" version="2.12.3">
+             <hash>32</hash>
+             <minOccurs>0</minOccurs>
+             <nillable>true</nillable>
+             <localName>clientAuthentication</localName>
+             <ComplexType className="webtool.soap.ComplexType" version="2.10.3">
+              <hash>33</hash>
+              <attributesSize>1</attributesSize>
+              <AttributeType className="webtool.soap.AttributeType" version="2.3.3">
+               <hash>34</hash>
+               <name>type</name>
+               <fixed>object</fixed>
+               <StringType className="webtool.soap.StringType" version="2.5.3">
+                <hash>35</hash>
+               </StringType>
+               <required>true</required>
+              </AttributeType>
+              <name>anonymous</name>
+              <compositor>true</compositor>
+              <AllCompositor className="webtool.soap.AllCompositor" version="2.1.3.3">
+               <hash>36</hash>
+               <paramTypesSize>2</paramTypesSize>
+               <ElementType className="webtool.soap.ElementType" version="2.12.3">
+                <hash>37</hash>
+                <minOccurs>0</minOccurs>
+                <nillable>true</nillable>
+                <localName>logOnUserId</localName>
+                <ComplexType className="webtool.soap.ComplexType" version="2">
+                 <hash>12</hash>
+                </ComplexType>
+               </ElementType>
+               <ElementType className="webtool.soap.ElementType" version="2.12.3">
+                <hash>38</hash>
+                <minOccurs>0</minOccurs>
+                <nillable>true</nillable>
+                <localName>serverDomainName</localName>
+                <ComplexType className="webtool.soap.ComplexType" version="2">
+                 <hash>12</hash>
+                </ComplexType>
+               </ElementType>
+              </AllCompositor>
+             </ComplexType>
+            </ElementType>
+           </AllCompositor>
+          </ComplexType>
+         </ElementType>
+         <size>1</size>
+         <ComplexValue className="webtool.soap.ComplexValue" version="1.10.12">
+          <attributesSize>1</attributesSize>
+          <AttributeValue className="webtool.soap.AttributeValue" version="1.3.12">
+           <StringValue className="webtool.soap.StringValue" version="1.7.1.12">
+            <value>object</value>
+           </StringValue>
+           <useValue>true</useValue>
+          </AttributeValue>
+          <compositorValue>true</compositorValue>
+          <CompositorValue className="webtool.soap.CompositorValue" version="1.3.12">
+           <CompositorValueSetCollectionSet className="webtool.soap.CompositorValueSetCollectionSet" version="1.1">
+            <setSize>1</setSize>
+            <CompositorValueSet className="webtool.soap.CompositorValueSet" version="1.1">
+             <valuesSize>2</valuesSize>
+             <ElementValue className="webtool.soap.ElementValue" version="1.11.12">
+              <size>1</size>
+              <ComplexValue className="webtool.soap.ComplexValue" version="1.10.12">
+               <allowArrayExclude>true</allowArrayExclude>
+               <attributesSize>1</attributesSize>
+               <AttributeValue className="webtool.soap.AttributeValue" version="1.3.12">
+                <StringValue className="webtool.soap.StringValue" version="1.7.1.12">
+                 <value>object</value>
+                </StringValue>
+                <useValue>true</useValue>
+               </AttributeValue>
+               <compositorValue>true</compositorValue>
+               <CompositorValue className="webtool.soap.CompositorValue" version="1.3.12">
+                <CompositorValueSetCollectionSet className="webtool.soap.CompositorValueSetCollectionSet" version="1.1">
+                 <setSize>1</setSize>
+                 <CompositorValueSet className="webtool.soap.CompositorValueSet" version="1.1">
+                  <valuesSize>6</valuesSize>
+                  <ElementValue className="webtool.soap.ElementValue" version="1.11.12">
+                  </ElementValue>
+                  <ElementValue className="webtool.soap.ElementValue" version="1.11.12">
+                   <size>1</size>
+                   <ComplexValue className="webtool.soap.ComplexValue" version="1.10.12">
+                    <allowArrayExclude>true</allowArrayExclude>
+                    <attributesSize>1</attributesSize>
+                    <AttributeValue className="webtool.soap.AttributeValue" version="1.3.12">
+                     <StringValue className="webtool.soap.StringValue" version="1.7.1.12">
+                      <value>string</value>
+                     </StringValue>
+                    </AttributeValue>
+                    <contentValue>true</contentValue>
+                    <StringValue className="webtool.soap.StringValue" version="1.7.1.12">
+                     <mode>3</mode>
+                     <columnName>workstationSerialNum</columnName>
+                     <value>TDD05106263</value>
+                    </StringValue>
+                   </ComplexValue>
+                  </ElementValue>
+                  <ElementValue className="webtool.soap.ElementValue" version="1.11.12">
+                   <size>1</size>
+                   <ComplexValue className="webtool.soap.ComplexValue" version="1.10.12">
+                    <allowArrayExclude>true</allowArrayExclude>
+                    <attributesSize>1</attributesSize>
+                    <AttributeValue className="webtool.soap.AttributeValue" version="1.3.12">
+                     <StringValue className="webtool.soap.StringValue" version="1.7.1.12">
+                      <value>string</value>
+                     </StringValue>
+                    </AttributeValue>
+                    <contentValue>true</contentValue>
+                    <StringValue className="webtool.soap.StringValue" version="1.7.1.12">
+                     <mode>3</mode>
+                     <columnName>workstationTypeCd</columnName>
+                     <value>EDGE</value>
+                    </StringValue>
+                   </ComplexValue>
+                  </ElementValue>
+                  <ElementValue className="webtool.soap.ElementValue" version="1.11.12">
+                   <size>1</size>
+                   <ComplexValue className="webtool.soap.ComplexValue" version="1.10.12">
+                    <allowArrayExclude>true</allowArrayExclude>
+                    <attributesSize>1</attributesSize>
+                    <AttributeValue className="webtool.soap.AttributeValue" version="1.3.12">
+                     <StringValue className="webtool.soap.StringValue" version="1.7.1.12">
+                      <value>string</value>
+                     </StringValue>
+                    </AttributeValue>
+                    <contentValue>true</contentValue>
+                    <StringValue className="webtool.soap.StringValue" version="1.7.1.12">
+                     <mode>3</mode>
+                     <columnName>udpPortNum</columnName>
+                     <value>6273</value>
+                    </StringValue>
+                   </ComplexValue>
+                  </ElementValue>
+                  <ElementValue className="webtool.soap.ElementValue" version="1.11.12">
+                   <size>1</size>
+                   <ComplexValue className="webtool.soap.ComplexValue" version="1.10.12">
+                    <allowArrayExclude>true</allowArrayExclude>
+                    <attributesSize>1</attributesSize>
+                    <AttributeValue className="webtool.soap.AttributeValue" version="1.3.12">
+                     <StringValue className="webtool.soap.StringValue" version="1.7.1.12">
+                      <value>string</value>
+                     </StringValue>
+                    </AttributeValue>
+                    <contentValue>true</contentValue>
+                    <StringValue className="webtool.soap.StringValue" version="1.7.1.12">
+                     <mode>3</mode>
+                     <columnName>internetProtocolAddressNum</columnName>
+                     <value>49.27.80.108</value>
+                    </StringValue>
+                   </ComplexValue>
+                  </ElementValue>
+                  <ElementValue className="webtool.soap.ElementValue" version="1.11.12">
+                   <size>1</size>
+                   <ComplexValue className="webtool.soap.ComplexValue" version="1.10.12">
+                    <attributesSize>1</attributesSize>
+                    <AttributeValue className="webtool.soap.AttributeValue" version="1.3.12">
+                     <StringValue className="webtool.soap.StringValue" version="1.7.1.12">
+                      <value>array</value>
+                     </StringValue>
+                     <useValue>true</useValue>
+                    </AttributeValue>
+                    <compositorValue>true</compositorValue>
+                    <CompositorValue className="webtool.soap.CompositorValue" version="1.3.12">
+                     <CompositorValueSetCollectionSet className="webtool.soap.CompositorValueSetCollectionSet" version="1.1">
+                      <setSize>1</setSize>
+                      <CompositorValueSet className="webtool.soap.CompositorValueSet" version="1.1">
+                       <valuesSize>1</valuesSize>
+                       <ElementValue className="webtool.soap.ElementValue" version="1.11.12">
+                        <size>1</size>
+                        <ComplexValue className="webtool.soap.ComplexValue" version="1.10.12">
+                         <allowArrayExclude>true</allowArrayExclude>
+                         <attributesSize>1</attributesSize>
+                         <AttributeValue className="webtool.soap.AttributeValue" version="1.3.12">
+                          <StringValue className="webtool.soap.StringValue" version="1.7.1.12">
+                           <value>object</value>
+                          </StringValue>
+                          <useValue>true</useValue>
+                         </AttributeValue>
+                         <compositorValue>true</compositorValue>
+                         <CompositorValue className="webtool.soap.CompositorValue" version="1.3.12">
+                          <CompositorValueSetCollectionSet className="webtool.soap.CompositorValueSetCollectionSet" version="1.1">
+                           <setSize>1</setSize>
+                           <CompositorValueSet className="webtool.soap.CompositorValueSet" version="1.1">
+                            <valuesSize>2</valuesSize>
+                            <ElementValue className="webtool.soap.ElementValue" version="1.11.12">
+                             <size>1</size>
+                             <ComplexValue className="webtool.soap.ComplexValue" version="1.10.12">
+                              <allowArrayExclude>true</allowArrayExclude>
+                              <attributesSize>1</attributesSize>
+                              <AttributeValue className="webtool.soap.AttributeValue" version="1.3.12">
+                               <StringValue className="webtool.soap.StringValue" version="1.7.1.12">
+                                <value>string</value>
+                               </StringValue>
+                              </AttributeValue>
+                              <contentValue>true</contentValue>
+                              <StringValue className="webtool.soap.StringValue" version="1.7.1.12">
+                               <mode>3</mode>
+                               <columnName>printerName1</columnName>
+                               <value>WebEx Document Loader</value>
+                              </StringValue>
+                             </ComplexValue>
+                            </ElementValue>
+                            <ElementValue className="webtool.soap.ElementValue" version="1.11.12">
+                             <size>1</size>
+                             <ComplexValue className="webtool.soap.ComplexValue" version="1.10.12">
+                              <allowArrayExclude>true</allowArrayExclude>
+                              <attributesSize>1</attributesSize>
+                              <AttributeValue className="webtool.soap.AttributeValue" version="1.3.12">
+                               <StringValue className="webtool.soap.StringValue" version="1.7.1.12">
+                                <value>boolean</value>
+                               </StringValue>
+                               <useValue>true</useValue>
+                              </AttributeValue>
+                              <contentValue>true</contentValue>
+                              <BooleanValue className="webtool.soap.BooleanValue" version="1.2.12">
+                               <mode>3</mode>
+                               <columnName>defaultInd1</columnName>
+                               <value>true</value>
+                              </BooleanValue>
+                             </ComplexValue>
+                            </ElementValue>
+                           </CompositorValueSet>
+                          </CompositorValueSetCollectionSet>
+                         </CompositorValue>
+                        </ComplexValue>
+                       </ElementValue>
+                      </CompositorValueSet>
+                     </CompositorValueSetCollectionSet>
+                    </CompositorValue>
+                   </ComplexValue>
+                  </ElementValue>
+                 </CompositorValueSet>
+                </CompositorValueSetCollectionSet>
+               </CompositorValue>
+              </ComplexValue>
+             </ElementValue>
+             <ElementValue className="webtool.soap.ElementValue" version="1.11.12">
+              <size>1</size>
+              <ComplexValue className="webtool.soap.ComplexValue" version="1.10.12">
+               <allowArrayExclude>true</allowArrayExclude>
+               <attributesSize>1</attributesSize>
+               <AttributeValue className="webtool.soap.AttributeValue" version="1.3.12">
+                <StringValue className="webtool.soap.StringValue" version="1.7.1.12">
+                 <value>object</value>
+                </StringValue>
+                <useValue>true</useValue>
+               </AttributeValue>
+               <compositorValue>true</compositorValue>
+               <CompositorValue className="webtool.soap.CompositorValue" version="1.3.12">
+                <CompositorValueSetCollectionSet className="webtool.soap.CompositorValueSetCollectionSet" version="1.1">
+                 <setSize>1</setSize>
+                 <CompositorValueSet className="webtool.soap.CompositorValueSet" version="1.1">
+                  <valuesSize>2</valuesSize>
+                  <ElementValue className="webtool.soap.ElementValue" version="1.11.12">
+                   <size>1</size>
+                   <ComplexValue className="webtool.soap.ComplexValue" version="1.10.12">
+                    <allowArrayExclude>true</allowArrayExclude>
+                    <attributesSize>1</attributesSize>
+                    <AttributeValue className="webtool.soap.AttributeValue" version="1.3.12">
+                     <StringValue className="webtool.soap.StringValue" version="1.7.1.12">
+                      <value>string</value>
+                     </StringValue>
+                    </AttributeValue>
+                    <contentValue>true</contentValue>
+                    <StringValue className="webtool.soap.StringValue" version="1.7.1.12">
+                     <mode>3</mode>
+                     <columnName>Logon UserID</columnName>
+                     <value>rashia4</value>
+                    </StringValue>
+                   </ComplexValue>
+                  </ElementValue>
+                  <ElementValue className="webtool.soap.ElementValue" version="1.11.12">
+                   <size>1</size>
+                   <ComplexValue className="webtool.soap.ComplexValue" version="1.10.12">
+                    <allowArrayExclude>true</allowArrayExclude>
+                    <attributesSize>1</attributesSize>
+                    <AttributeValue className="webtool.soap.AttributeValue" version="1.3.12">
+                     <StringValue className="webtool.soap.StringValue" version="1.7.1.12">
+                      <value>string</value>
+                     </StringValue>
+                    </AttributeValue>
+                    <contentValue>true</contentValue>
+                    <StringValue className="webtool.soap.StringValue" version="1.7.1.12">
+                     <mode>3</mode>
+                     <columnName>Domain</columnName>
+                     <value>TDBFG</value>
+                    </StringValue>
+                   </ComplexValue>
+                  </ElementValue>
+                 </CompositorValueSet>
+                </CompositorValueSetCollectionSet>
+               </CompositorValue>
+              </ComplexValue>
+             </ElementValue>
+            </CompositorValueSet>
+           </CompositorValueSetCollectionSet>
+          </CompositorValue>
+         </ComplexValue>
+        </ElementValue>
+ 
+ 

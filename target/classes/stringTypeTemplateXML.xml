@@ -1,0 +1,9 @@
+            <ElementType className="webtool.soap.ElementType" version="2.12.3">
+             <hash>6</hash>
+             <minOccurs>0</minOccurs>
+             <nillable>true</nillable>
+             <localName>printerName</localName>
+             <ComplexType className="webtool.soap.ComplexType" version="2.10.3">
+              <hash>7</hash>
+             </ComplexType>
+            </ElementType>

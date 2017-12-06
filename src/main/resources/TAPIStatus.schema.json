@@ -1,0 +1,190 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "",
+	"description": "API Status.\nDefine the error reporting structure that may be returned by an API call.",
+	"type": "object",
+	"properties": {
+		"status": {
+			"description": "Status.\nThe error reporting structure that may be returned by an API call.",
+			"type": "object",
+			"properties": {
+				"serverStatusCode": {
+					"description": "HTTP Server Status Code.\nThe value placed here is used to allow the client to display a status code to the user, or log appropriately for troubleshooting purposes.\nNo business logic may be written based on the values of this field.",
+					"type": "string"
+				},
+				"severity": {
+					"description": "API Status Severity Code.\nValid values:\nError – There was an error in the request severe enough that no response could be made. The requested transaction was not processed.\nThe associated HTTP status code is one of Client error (4xx) or Server error (5xx).\nWarning – There was a problem with the request, but a valid response is still present. The requested transaction was processed.\nThe associated HTTP status code is one of Successful (2xx), except 200 (reserved for success, a case where an API Status is not returned).",
+					"type": "string",
+					"enum": [
+						"Warning",
+						"Error"
+					]
+				},
+				"additionalStatus": {
+					"description": "API Additional Statuses.\nThis aggregate may appear once for each additional status that the service intends to provide.\nFor example, if both an account number and a date are invalid, an Additional Status' StatusCode\nmay return a general data validation error, while additional statuses may provide two detailed errors,\none for each edit.",
+					"type": "array",
+					"items": {
+						"description": "",
+						"type": "object",
+						"properties": {
+							"statusCode": {
+								"description": "Response Status Code.\nValid values depend on context. See specific API documentation site.\nBusiness logic may be written based on the values of this field.",
+								"type": "integer"
+							},
+							"serverStatusCode": {
+								"description": "Server Status Code.\nThe value placed here is used to allow the client to display a status code to the user, or log appropriately for troubleshooting purposes.\nNo business logic may be written based on the values of this field.",
+								"type": "string",
+								"maxLength": 100
+							},
+							"severity": {
+								"description": "API Status Severity Code.\nValid values:\nError – There was an error in the request severe enough that no response could be made. The requested transaction was not processed.\nWarning – There was a problem with the request, but a valid response is still present. The requested transaction was processed.\nInfo – Information Only. The requested transaction was processed.",
+								"type": "string",
+								"enum": [
+									"Info",
+									"Warning",
+									"Error"
+								]
+							},
+							"statusDesc": {
+								"description": "Status Description. Explanatory text associated with a status such as the response status code, the bank account status, stopped check status or other related object status.",
+								"type": "string"
+							}
+						},
+						"required": [
+							"statusCode",
+							"severity"
+						]
+					}
+				}
+			},
+			"required": [
+				"serverStatusCode",
+				"severity"
+			]
+		}
+	},
+	"required": [
+		"status"
+	],
+	"definitions": {
+		"base64Binary": {
+			"description": "base64Binary represents Base64-encoded arbitrary binary data. The ·value space· of base64Binary is the set of finite-length sequences of binary octets. For base64Binary data the entire binary stream is encoded using the Base64 Alphabet in [RFC 2045].",
+			"type": "string"
+		},
+		"anyURI": {
+			"description": "anyURI represents a Uniform Resource Identifier Reference (URI). An anyURI value can be absolute or relative, and may have an optional fragment identifier (i.e., it may be a URI Reference). This type should be used to specify the intention that the value fulfills the role of a URI as defined by [RFC 2396], as amended by [RFC 2732].",
+			"type": "string",
+			"format": "uri"
+		},
+		"unsignedLong": {
+			"description": "unsignedLong is ·derived· from integer by setting the minimum to zero, and the maxInclusive to be 18446744073709551615.",
+			"type": "integer",
+			"minimum": 0,
+			"maximum": 18446744073709551615
+		},
+		"unsignedInt": {
+			"description": "unsignedInt is ·derived· from unsignedLong by setting the value of ·maxInclusive· to be 4294967295.",
+			"allOf": [
+				{
+					"$ref": "#/definitions/unsignedLong"
+				},
+				{
+					"maximum": 4294967295
+				}
+			]
+		},
+		"normalizedString": {
+			"description": "normalizedString represents white space normalized strings. The ·value space· of normalizedString is the set of strings that do not contain the carriage return (#xD), line feed (#xA) nor tab (#x9) characters. The ·lexical space· of normalizedString is the set of strings that do not contain the carriage return (#xD), line feed (#xA) nor tab (#x9) characters. The ·base type· of normalizedString is string.",
+			"type": "string"
+		},
+		"token": {
+			"description": "token represents tokenized strings. The ·value space· of token is the set of strings that do not contain the carriage return (#xD), line feed (#xA) nor tab (#x9) characters, that have no leading or trailing spaces (#x20) and that have no internal sequences of two or more spaces. The ·lexical space· of token is the set of strings that do not contain the carriage return (#xD), line feed (#xA) nor tab (#x9) characters, that have no leading or trailing spaces (#x20) and that have no internal sequences of two or more spaces. The ·base type· of token is normalizedString.",
+			"allOf": [
+				{
+					"$ref": "#/definitions/normalizedString"
+				}
+			]
+		},
+		"dateTime": {
+			"description": "dateTime values may be viewed as objects with integer-valued year, month, day, hour and minute properties, a decimal-valued second property, and a boolean timezoned property. Each such object also has one decimal-valued method or computed property, timeOnTimeline, whose value is always a decimal number; the values are dimensioned in seconds, the integer 0 is 0001-01-01T00:00:00 and the value of timeOnTimeline for other dateTime values is computed using the Gregorian algorithm as modified for leap-seconds. The timeOnTimeline values form two related \"timelines\", one for timezoned values and one for non-timezoned values. Each timeline is a copy of the ·value space· of decimal, with integers given units of seconds.",
+			"type": "string",
+			"format": "date-time"
+		},
+		"date": {
+			"description": "The ·value space· of date consists of top-open intervals of exactly one day in length on the timelines of dateTime, beginning on the beginning moment of each day (in each timezone), i.e. '00:00:00', up to but not including '24:00:00' (which is identical with '00:00:00' of the next day). For nontimezoned values, the top-open intervals disjointly cover the nontimezoned timeline, one per day. For timezoned values, the intervals begin at every minute and therefore overlap.",
+			"type": "string"
+		},
+		"gYearMonth": {
+			"description": "gYearMonth represents a specific gregorian month in a specific gregorian year. The ·value space· of gYearMonth is the set of Gregorian calendar months as defined in § 5.2.1 of [ISO 8601]. Specifically, it is a set of one-month long, non-periodic instances e.g. 1999-10 to represent the whole month of 1999-10, independent of how many days this month has.",
+			"type": "string"
+		},
+		"decimal": {
+			"description": " decimal represents a subset of the real numbers, which can be represented by decimal numerals. The ·value space· of decimal is the set of numbers that can be obtained by multiplying an integer by a non-positive power of ten, i.e., expressible as i × 10^-n where i and n are integers and n >= 0. Precision is not reflected in this value space; the number 2.0 is not distinct from the number 2.00. The ·order-relation· on decimal is the order relation on real numbers, restricted to this subset.",
+			"type": "number"
+		},
+		"tAPIAdditionalStatusSeverity": {
+			"description": "",
+			"allOf": [
+				{
+					"type": "string"
+				},
+				{
+					"enum": [
+						"Info",
+						"Warning",
+						"Error"
+					]
+				}
+			]
+		},
+		"tAPIStatusSeverity": {
+			"description": "",
+			"allOf": [
+				{
+					"type": "string"
+				},
+				{
+					"enum": [
+						"Warning",
+						"Error"
+					]
+				}
+			]
+		},
+		"tHTTPStatusCode": {
+			"description": "",
+			"allOf": [
+				{
+					"type": "string"
+				}
+			]
+		},
+		"tServerStatusCode": {
+			"description": "Type used to define a Server Status Code.",
+			"allOf": [
+				{
+					"type": "string"
+				},
+				{
+					"maxLength": 100
+				}
+			]
+		},
+		"tStatusCode": {
+			"description": "Type used to define a Status Code.",
+			"allOf": [
+				{
+					"type": "integer"
+				}
+			]
+		},
+		"tStatusDesc": {
+			"description": "Type used to define a Status Description.",
+			"allOf": [
+				{
+					"type": "string"
+				}
+			]
+		}
+	}
+}

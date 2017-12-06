@@ -1,0 +1,14 @@
+{
+	"status": {
+		"serverStatusCode": "500",
+		"severity": "Error",
+		"additionalStatus": [
+			{
+				"statusCode": 100,
+				"serverStatusCode": "XYZ",
+				"severity": "Error",
+				"statusDesc": "System Error"
+			}
+		]
+	}
+}

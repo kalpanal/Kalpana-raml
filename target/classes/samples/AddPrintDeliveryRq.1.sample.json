@@ -1,0 +1,21 @@
+{
+	"printerName": "PrintToMe",
+	"internetProtocolAddressNum": "100.100.100.100",
+	"workstationSerialNum": "TD12345678",
+	"workstationTerminalNum": "TDD0012345678.TDBFG.COM",
+	"originatingPartyId": "JDDK2",
+	"printJob": [
+		{
+			"printJobName": "AFX Print",
+			"printerTrayCd": "Manual",
+			"printCopyCnt": 3,
+			"pdfFile": "EASDJYUIPO:IUIU%$^FDGFHD*432353455543534JHJHGJ"
+		},
+		{
+			"printJobName": "EKH Print",
+			"printerTrayCd": "Automatic",
+			"printCopyCnt": 2,
+			"pdfFile": "ABCDJYUIPO:IUIU%$^FDGFHD*432353455543534JHJCGF"
+		}
+	]
+}

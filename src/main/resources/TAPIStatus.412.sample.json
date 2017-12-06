@@ -1,0 +1,14 @@
+{
+	"status": {
+		"serverStatusCode": "412",
+		"severity": "Error",
+		"additionalStatus": [
+			{
+				"statusCode": 750,
+				"serverStatusCode": "XYZXXX",
+				"severity": "Error",
+				"statusDesc": "Unsupported Function."
+			}
+		]
+	}
+}

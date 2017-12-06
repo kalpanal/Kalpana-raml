@@ -1,0 +1,14 @@
+{
+	"status": {
+		"serverStatusCode": "429",
+		"severity": "Error",
+		"additionalStatus": [
+			{
+				"statusCode": 2660,
+				"serverStatusCode": "XYZOPO",
+				"severity": "Error",
+				"statusDesc": "Too many requests to process."
+			}
+		]
+	}
+}

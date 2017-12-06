@@ -1,0 +1,27 @@
+        <ElementValue className="webtool.soap.ElementValue" version="1.11.12">
+         <writeType>true</writeType>
+         <ElementType className="webtool.soap.ElementType" version="2.12.3">
+          <hash>1</hash>
+          <localName>root</localName>
+          <ComplexType className="webtool.soap.ComplexType" version="2.10.3">
+           <hash>2</hash>
+           <attributesSize>1</attributesSize>
+           <AttributeType className="webtool.soap.AttributeType" version="2.3.3">
+            <hash>3</hash>
+            <name>type</name>
+            <fixed>object</fixed>
+            <StringType className="webtool.soap.StringType" version="2.5.3">
+             <hash>4</hash>
+            </StringType>
+            <required>true</required>
+           </AttributeType>
+           <name>anonymous</name>
+           <compositor>true</compositor>
+		   <AllCompositor className="webtool.soap.AllCompositor" version="2.1.3.3">
+            <hash>5</hash>
+            <paramTypesSize>template</paramTypesSize>
+			</AllCompositor>
+			</ComplexType>
+         </ElementType>
+		 <size>1</size>
+         </ElementValue>

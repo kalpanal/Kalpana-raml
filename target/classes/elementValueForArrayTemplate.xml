@@ -1,0 +1,22 @@
+<ElementValue className="webtool.soap.ElementValue" version="1.11.12">
+   <size>1</size>
+   <ComplexValue className="webtool.soap.ComplexValue" version="1.10.12">
+      <attributesSize>1</attributesSize>
+      <AttributeValue className="webtool.soap.AttributeValue" version="1.3.12">
+         <StringValue className="webtool.soap.StringValue" version="1.7.1.12">
+            <value>array</value>
+         </StringValue>
+         <useValue>true</useValue>
+      </AttributeValue>
+      <compositorValue>true</compositorValue>
+      <CompositorValue className="webtool.soap.CompositorValue" version="1.3.12">
+         <CompositorValueSetCollectionSet className="webtool.soap.CompositorValueSetCollectionSet" version="1.1">
+            <setSize>1</setSize>
+            <CompositorValueSet className="webtool.soap.CompositorValueSet" version="1.1">
+               <valuesSize>1</valuesSize>
+            </CompositorValueSet>
+         </CompositorValueSetCollectionSet>
+      </CompositorValue>
+   </ComplexValue>
+</ElementValue>
+

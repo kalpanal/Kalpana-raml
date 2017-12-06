@@ -1,0 +1,14 @@
+{
+	"status": {
+		"serverStatusCode": "207",
+		"severity": "Warning",
+		"additionalStatus": [
+			{
+				"statusCode": 8050,
+				"serverStatusCode": "XYAZ",
+				"severity": "Error",
+				"statusDesc": "Invalid information type."
+			}
+		]
+	}
+}

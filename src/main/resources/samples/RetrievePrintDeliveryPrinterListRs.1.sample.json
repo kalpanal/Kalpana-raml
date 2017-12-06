@@ -1,0 +1,16 @@
+{
+	"printer": [
+		{
+			"printerName": "PrintToMe",
+			"defaultInd": true
+		},
+		{
+			"printerName": "Microsoft XPS Document Writer",
+			"defaultInd": false
+		},
+		{
+			"printerName": "JetPCL Document Capture",
+			"defaultInd": false
+		}
+	]
+}
