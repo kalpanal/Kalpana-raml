@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Scanner;
 
+import com.ibm.automation.common.StringUtilsCustom;
 import com.ibm.automation.parasoft.domain.AppConfigurationPropertiesForDataSheet;
 
 public class Util {
@@ -93,9 +94,13 @@ public class Util {
 	}
 
 	public static String[] tokenizePathURLEndpoint(String tokenizePathURLEndpoint){
-		tokenizePathURLEndpoint = tokenizePathURLEndpoint.substring(tokenizePathURLEndpoint.indexOf("/"));
+		
+		ArrayList<Integer> listofPositionsOfColon = StringUtilsCustom.occurrencesPos(tokenizePathURLEndpoint, "/");
+		
+		//tokenizePathURLEndpoint.substring(tokenizePathURLEndpoint.indexOf(":", listofPositionsOfColon.get(1))+1);
+		//tokenizePathURLEndpoint = tokenizePathURLEndpoint.substring(tokenizePathURLEndpoint.indexOf("/"));
 		System.out.println("splitting of sprint starts \n");
-        String[] urlPathTokens = tokenizePathURLEndpoint.split("/");
+        String[] urlPathTokens = tokenizePathURLEndpoint.substring(tokenizePathURLEndpoint.indexOf("/", listofPositionsOfColon.get(1))+1).split("/");
 		return urlPathTokens;
 		
 	}

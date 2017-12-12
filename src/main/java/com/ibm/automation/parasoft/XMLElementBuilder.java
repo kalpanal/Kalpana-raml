@@ -457,10 +457,10 @@ public class XMLElementBuilder {
 		if(urlPathParametersLiteralElement != null){
 			urlPathParametersLiteralElement.removeContent();
 			String[] urlPaths = Util.tokenizePathURLEndpoint(configurationTO.getEndPointUrl());
-			urlPathParametersLiteralElement.addContent(new Element("pathElementss").setAttribute("size", urlPaths.length+""));
+			urlPathParametersLiteralElement.addContent(new Element("pathElementss").setAttribute("size", (urlPaths.length-1)+""));
 			
 			
-			for (int i = 0; i < urlPaths.length; i++) {
+			for (int i = 1; i < urlPaths.length; i++) {
 				
 	            System.out.println("paths::"+i+" "+urlPaths[i]+"\n");
 	            UrlPathParamsMultiValue = new XMLElementBuilder().loadElementValueTemplateXML("urlPathParamsMultiValue.xml").detachRootElement();
@@ -469,7 +469,7 @@ public class XMLElementBuilder {
 	            UrlPathParamsMultiValue.getChild("StringTestValue").getChild("value").removeContent();
 	            UrlPathParamsMultiValue.getChild("StringTestValue").getChild("value").addContent(urlPaths[i]);
 	            
-	            urlPathParametersLiteralElement.getChild("pathElementss").setContent(UrlPathParamsMultiValue);
+	            urlPathParametersLiteralElement.getChild("pathElementss").addContent(UrlPathParamsMultiValue);
 	        }
 		}
 
@@ -1457,10 +1457,10 @@ public class XMLElementBuilder {
 		if(urlPathParametersLiteralElement != null){
 			urlPathParametersLiteralElement.removeContent();
 			String[] urlPaths = Util.tokenizePathURLEndpoint(configurationTO.getEndPointUrl());
-			urlPathParametersLiteralElement.addContent(new Element("pathElementss").setAttribute("size", urlPaths.length+""));
+			urlPathParametersLiteralElement.addContent(new Element("pathElementss").setAttribute("size", (urlPaths.length-1)+""));
 			
 			
-			for (int i = 0; i < urlPaths.length; i++) {
+			for (int i = 1; i < urlPaths.length; i++) {
 				
 	            System.out.println("paths::"+i+" "+urlPaths[i]+"\n");
 	            UrlPathParamsMultiValue = new XMLElementBuilder().loadElementValueTemplateXML("urlPathParamsMultiValue.xml").detachRootElement();
@@ -1469,7 +1469,7 @@ public class XMLElementBuilder {
 	            UrlPathParamsMultiValue.getChild("StringTestValue").getChild("value").removeContent();
 	            UrlPathParamsMultiValue.getChild("StringTestValue").getChild("value").addContent(urlPaths[i]);
 	            
-	            urlPathParametersLiteralElement.getChild("pathElementss").setContent(UrlPathParamsMultiValue);
+	            urlPathParametersLiteralElement.getChild("pathElementss").addContent(UrlPathParamsMultiValue);
 	        }
 		}
 	if (testID != null) {
