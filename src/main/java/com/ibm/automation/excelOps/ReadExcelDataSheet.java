@@ -49,7 +49,7 @@ public class ReadExcelDataSheet {
 		}
 		
 		dataSourcesSize.removeContent();
-		dataSourcesSize.addContent(appConfigPropertiesForDatasheets.size()+"");
+		dataSourcesSize.addContent((appConfigPropertiesForDatasheets.size())+"");
 		for (AppConfigurationPropertiesForDataSheet appConfigurationPropertiesForDataSheet : appConfigPropertiesForDatasheets) {
 			try {
 				//inputExcelFileVO = parse(configurationTO.getDataSourcePath()+"/"+dataSheetName);
@@ -64,13 +64,18 @@ public class ReadExcelDataSheet {
 				excelDataSourceImpl.setAttribute("version", "1.5.5");
 				System.out.println("appConfigurationPropertiesForDataSheet.getDatasheetName()"+appConfigurationPropertiesForDataSheet.getDatasheetName());
 				
+				Element name = new Element("name");
+				name.addContent(StringUtilsCustom.getSheetNameAlone(appConfigurationPropertiesForDataSheet.getDatasheetName()));
+				
 				Element sheets = generateDatasheets(dataSheetPath+"/"+appConfigurationPropertiesForDataSheet.getDatasheetName());
 				excelDataSourceImpl.addContent(sheets);
 				
 				dataSource.addContent(excelDataSourceImpl);
+				dataSource.addContent(name);
 				
 				
-				dataSourcesSize.getParentElement().addContent(37, dataSource);
+				dataSourcesSize.getParentElement().addContent(34, dataSource);
+				
 				//dataSourcesSize
 			} catch (Exception e) {
 				System.out.println("Error while generation datasource XML nodes"+e.getMessage());
@@ -87,7 +92,7 @@ public class ReadExcelDataSheet {
 		
 		XSSFWorkbook workbook = new XSSFWorkbook(spreadsheet);
 		Element sheets = new Element("sheets");
-		sheets.setAttribute("size", workbook.getNumberOfSheets()+"");
+		sheets.setAttribute("size", (workbook.getNumberOfSheets()-1)+"");
 		int indexNum = 0;
 		for (int i = 0; i< workbook.getNumberOfSheets() - 1; i++) {
             XSSFSheet individualSheet = workbook.getSheetAt(i);
@@ -100,18 +105,23 @@ public class ReadExcelDataSheet {
             Element data  = new Element("data"); 
             data.setAttribute("index", indexNum+"");
             data.addContent("true");
-            indexNum++;
+            
             Element columnNames = new Element("columnNames");
-            columnNames.setAttribute("size", inputExcelFileVO.getHeaders().size()+"");
-            columnNames.setAttribute("index", "0");
+            
             int j=0;
             for(String columnNameStr : inputExcelFileVO.getHeaders()) {
-               Element columnName = new Element("columnName");
-               columnName.setAttribute("index", j+"");
-               j++;
-               columnName.addContent(columnNameStr);
-               columnNames.addContent(columnName);
+            	if(!columnNameStr.equals("")){
+		               Element columnName = new Element("columnName");
+		               columnName.setAttribute("index", j+"");
+		               j++;
+		               columnName.addContent(columnNameStr);
+		               columnNames.addContent(columnName);
+            	}
            }
+            
+            columnNames.setAttribute("size", j+"");
+            columnNames.setAttribute("index", indexNum+"");
+            indexNum++;
             sheets.addContent(sheetName);
             sheets.addContent(data);
             sheets.addContent(columnNames);

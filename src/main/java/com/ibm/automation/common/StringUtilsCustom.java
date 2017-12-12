@@ -40,6 +40,15 @@ public class StringUtilsCustom {
 		return fullPathWithOutSheetName;
 	}
 	
+	public static String getSheetNameAlone(String fullpathWithSheetName) throws Exception {
+		String fullPathWithOutSheetName = null;
+		if(fullpathWithSheetName != null || (!fullpathWithSheetName.isEmpty())){
+			fullPathWithOutSheetName = fullpathWithSheetName.substring(fullpathWithSheetName.indexOf(":")+1);
+		}
+		
+		return fullPathWithOutSheetName.trim();
+	}
+	
 	
 	public static ArrayList<Integer> occurrencesPos(String str, String substr) {
 	    final boolean ignoreCase = true;

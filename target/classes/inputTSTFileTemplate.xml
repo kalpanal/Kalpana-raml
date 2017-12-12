@@ -225,96 +225,258 @@ Timestamp: 2017-07-18 04:12:04</notes>
   <PropertyOwnerImpl className="com.parasoft.property.PropertyOwnerImpl" version="1.1">
   </PropertyOwnerImpl>
   <nextIdentifier>176</nextIdentifier>
-  <testsSize>1</testsSize>
+  <testsSize>2</testsSize>
   <TestSuite className="webtool.test.TestSuite" version="43.15.2">
-   <DebugAssets className="webtool.test.debug.DebugAssets" version="1">
-   </DebugAssets>
-   <ReportingSettings className="webtool.test.ReportingSettings" version="1.1">
-    <TestGRSSettings className="webtool.test.grs.TestGRSSettings" version="1.4.3">
-    </TestGRSSettings>
-   </ReportingSettings>
-   <testLogic>true</testLogic>
-   <TestLogic className="webtool.test.logic.TestLogic" version="1.7">
-    <TestExecutionDelay className="webtool.test.logic.TestExecutionDelay" version="1.2">
-    </TestExecutionDelay>
-    <TestExecutionDelay className="webtool.test.logic.TestExecutionDelay" version="1.2">
-    </TestExecutionDelay>
-    <TestDependencyLogic className="webtool.test.logic.TestDependencyLogic" version="1.2">
-    </TestDependencyLogic>
-   </TestLogic>
-   <testID>1</testID>
-   <enabled>true</enabled>
-   <name>DocDelivery.1.raml</name>
-   <TestSuitePerformanceOptions className="webtool.test.performance.TestSuitePerformanceOptions" version="1.5">
-    <APMPerformanceProfileProviderContainer className="webtool.test.performance.apm.APMPerformanceProfileProviderContainer" version="1.1">
-    </APMPerformanceProfileProviderContainer>
-    <profiless size="0">
-    </profiless>
-   </TestSuitePerformanceOptions>
-   <AdvancedExecutionOptions className="webtool.test.AdvancedExecutionOptions" version="1.3">
-   </AdvancedExecutionOptions>
-   <TestSuiteLoadTestOptions className="webtool.loadtest.sim.component.soatest.TestSuiteLoadTestOptions" version="1.1">
-   </TestSuiteLoadTestOptions>
-   <SetupTeardownOptions className="webtool.test.SetupTeardownOptions" version="1.1">
-   </SetupTeardownOptions>
-   <browserOptions>true</browserOptions>
-   <TestSuiteBrowserTestingOptions className="webtool.test.TestSuiteBrowserTestingOptions" version="1.14">
-    <DefaultCustomFrameworkOption className="webtool.tool.DefaultCustomFrameworkOption" version="1.1.1">
-    </DefaultCustomFrameworkOption>
-    <InheritingAuthentication className="webtool.test.InheritingAuthentication" version="1.4">
-    </InheritingAuthentication>
-    <DefaultCustomHeadlessOption className="webtool.tool.DefaultCustomHeadlessOption" version="1.1.1">
-    </DefaultCustomHeadlessOption>
-    <DefaultCustomBrowserType className="webtool.tool.DefaultCustomBrowserType" version="1.8.1">
-     <CompositeBrowserType className="com.parasoft.util.CompositeBrowserType" version="1.1.1">
-      <browserTypes size="3">
-       <SingleBrowserType className="com.parasoft.util.SingleBrowserType" index="0" version="1.1.1">
-        <typeValue>0</typeValue>
-       </SingleBrowserType>
-       <SingleBrowserType className="com.parasoft.util.SingleBrowserType" index="1" version="1.1.1">
-        <typeValue>1</typeValue>
-       </SingleBrowserType>
-       <SingleBrowserType className="com.parasoft.util.SingleBrowserType" index="2" version="1.1.1">
-        <typeValue>3</typeValue>
-       </SingleBrowserType>
-      </browserTypes>
-     </CompositeBrowserType>
-    </DefaultCustomBrowserType>
-   </TestSuiteBrowserTestingOptions>
-   <TestSuiteSoapClientOptions className="webtool.test.TestSuiteSoapClientOptions" version="1.2">
-    <WsdlEndpointOptions className="webtool.tool.WsdlEndpointOptions" version="1.1">
-     <DefaultCustomWsdl className="webtool.tool.DefaultCustomWsdl" version="1.1.1">
-     </DefaultCustomWsdl>
-     <DefaultCustomEndpoint className="webtool.tool.DefaultCustomEndpoint" version="1.1.1">
-     </DefaultCustomEndpoint>
-    </WsdlEndpointOptions>
-    <SOAPRPCToolOptions className="webtool.app.SOAPRPCToolOptions" version="1.5">
-     <ResetExistingCookiesPreferenceProviderImpl className="webtool.tool.ResetExistingCookiesPreferenceProviderImpl" version="1.1">
-     </ResetExistingCookiesPreferenceProviderImpl>
-     <DefaultResetExistingCookies className="webtool.tool.DefaultResetExistingCookies" version="1.1.1">
-     </DefaultResetExistingCookies>
-     <RequestHeaderConstrainProviderImpl className="webtool.tool.RequestHeaderConstrainProviderImpl" version="1.1">
-     </RequestHeaderConstrainProviderImpl>
-     <DefaultCustomConstrain className="webtool.tool.DefaultCustomConstrain" version="1.1.1">
-     </DefaultCustomConstrain>
-     <DefaultCustomEncoding className="webtool.tool.DefaultCustomEncoding" version="1.1.1">
-     </DefaultCustomEncoding>
-     <DefaultCustomTimeout className="webtool.tool.DefaultCustomTimeout" version="1.2.1">
-     </DefaultCustomTimeout>
-     <DefaultCustomSoapVersion className="webtool.tool.DefaultCustomSoapVersion" version="1.1.1">
-     </DefaultCustomSoapVersion>
-     <DefaultCustomAttachment className="webtool.tool.DefaultCustomAttachment" version="1.1.1">
-     </DefaultCustomAttachment>
-     <DefaultCustomTransport className="webtool.tool.DefaultCustomTransport" version="1.1.1">
-     </DefaultCustomTransport>
-    </SOAPRPCToolOptions>
-   </TestSuiteSoapClientOptions>
-   <profileMappingID>1</profileMappingID>
-   <PropertyOwnerImpl className="com.parasoft.property.PropertyOwnerImpl" version="1.1">
-   </PropertyOwnerImpl>
-   <dataSourcesSize>2</dataSourcesSize>
+    <DebugAssets className="webtool.test.debug.DebugAssets" version="1">
+    </DebugAssets>
+    <ReportingSettings className="webtool.test.ReportingSettings" version="1.1">
+     <TestGRSSettings className="webtool.test.grs.TestGRSSettings" version="1.4.3">
+     </TestGRSSettings>
+    </ReportingSettings>
+    <testLogic>true</testLogic>
+    <TestLogic className="webtool.test.logic.TestLogic" version="1.7">
+     <TestExecutionDelay className="webtool.test.logic.TestExecutionDelay" version="1.2">
+     </TestExecutionDelay>
+     <TestExecutionDelay className="webtool.test.logic.TestExecutionDelay" version="1.2">
+     </TestExecutionDelay>
+     <TestDependencyLogic className="webtool.test.logic.TestDependencyLogic" version="1.2">
+     </TestDependencyLogic>
+    </TestLogic>
+    <testID>141</testID>
+    <enabled>true</enabled>
+    <name>TC001_getToken</name>
+    <TestSuitePerformanceOptions className="webtool.test.performance.TestSuitePerformanceOptions" version="1.5">
+     <APMPerformanceProfileProviderContainer className="webtool.test.performance.apm.APMPerformanceProfileProviderContainer" version="1.1">
+     </APMPerformanceProfileProviderContainer>
+     <profiless size="0">
+     </profiless>
+    </TestSuitePerformanceOptions>
+    <AdvancedExecutionOptions className="webtool.test.AdvancedExecutionOptions" version="1.3">
+    </AdvancedExecutionOptions>
+    <TestSuiteLoadTestOptions className="webtool.loadtest.sim.component.soatest.TestSuiteLoadTestOptions" version="1.1">
+    </TestSuiteLoadTestOptions>
+    <SetupTeardownOptions className="webtool.test.SetupTeardownOptions" version="1.1">
+    </SetupTeardownOptions>
+    <browserOptions>true</browserOptions>
+    <TestSuiteBrowserTestingOptions className="webtool.test.TestSuiteBrowserTestingOptions" version="1.14">
+     <DefaultCustomFrameworkOption className="webtool.tool.DefaultCustomFrameworkOption" version="1.1.1">
+     </DefaultCustomFrameworkOption>
+     <InheritingAuthentication className="webtool.test.InheritingAuthentication" version="1.4">
+     </InheritingAuthentication>
+     <DefaultCustomHeadlessOption className="webtool.tool.DefaultCustomHeadlessOption" version="1.1.1">
+     </DefaultCustomHeadlessOption>
+     <DefaultCustomBrowserType className="webtool.tool.DefaultCustomBrowserType" version="1.8.1">
+      <CompositeBrowserType className="com.parasoft.util.CompositeBrowserType" version="1.1.1">
+       <browserTypes size="3">
+        <SingleBrowserType className="com.parasoft.util.SingleBrowserType" index="0" version="1.1.1">
+         <typeValue>0</typeValue>
+        </SingleBrowserType>
+        <SingleBrowserType className="com.parasoft.util.SingleBrowserType" index="1" version="1.1.1">
+         <typeValue>1</typeValue>
+        </SingleBrowserType>
+        <SingleBrowserType className="com.parasoft.util.SingleBrowserType" index="2" version="1.1.1">
+         <typeValue>3</typeValue>
+        </SingleBrowserType>
+       </browserTypes>
+      </CompositeBrowserType>
+     </DefaultCustomBrowserType>
+    </TestSuiteBrowserTestingOptions>
+    <TestSuiteSoapClientOptions className="webtool.test.TestSuiteSoapClientOptions" version="1.2">
+     <WsdlEndpointOptions className="webtool.tool.WsdlEndpointOptions" version="1.1">
+      <DefaultCustomWsdl className="webtool.tool.DefaultCustomWsdl" version="1.1.1">
+      </DefaultCustomWsdl>
+      <DefaultCustomEndpoint className="webtool.tool.DefaultCustomEndpoint" version="1.1.1">
+      </DefaultCustomEndpoint>
+     </WsdlEndpointOptions>
+     <SOAPRPCToolOptions className="webtool.app.SOAPRPCToolOptions" version="1.5">
+      <ResetExistingCookiesPreferenceProviderImpl className="webtool.tool.ResetExistingCookiesPreferenceProviderImpl" version="1.1">
+      </ResetExistingCookiesPreferenceProviderImpl>
+      <DefaultResetExistingCookies className="webtool.tool.DefaultResetExistingCookies" version="1.1.1">
+      </DefaultResetExistingCookies>
+      <RequestHeaderConstrainProviderImpl className="webtool.tool.RequestHeaderConstrainProviderImpl" version="1.1">
+      </RequestHeaderConstrainProviderImpl>
+      <DefaultCustomConstrain className="webtool.tool.DefaultCustomConstrain" version="1.1.1">
+      </DefaultCustomConstrain>
+      <DefaultCustomEncoding className="webtool.tool.DefaultCustomEncoding" version="1.1.1">
+      </DefaultCustomEncoding>
+      <DefaultCustomTimeout className="webtool.tool.DefaultCustomTimeout" version="1.2.1">
+      </DefaultCustomTimeout>
+      <DefaultCustomSoapVersion className="webtool.tool.DefaultCustomSoapVersion" version="1.1.1">
+      </DefaultCustomSoapVersion>
+      <DefaultCustomAttachment className="webtool.tool.DefaultCustomAttachment" version="1.1.1">
+      </DefaultCustomAttachment>
+      <DefaultCustomTransport className="webtool.tool.DefaultCustomTransport" version="1.1.1">
+      </DefaultCustomTransport>
+     </SOAPRPCToolOptions>
+    </TestSuiteSoapClientOptions>
+    <profileMappingID>0</profileMappingID>
+    <maxProfileMappingID>1</maxProfileMappingID>
+    <PropertyOwnerImpl className="com.parasoft.property.PropertyOwnerImpl" version="1.1">
+    </PropertyOwnerImpl>
+    <nextIdentifier>1</nextIdentifier>
+    <dataSourcesSize>2</dataSourcesSize>
     <DataSource className="com.parasoft.data.DataSource" version="1.20">
-     <id>ds_-115556731_1504699193017_722310959</id>
+     <id>ds_674270746_1504197620912_1257309760</id>
+     <ExcelDataSourceImpl className="com.parasoft.data.ExcelDataSourceImpl" version="1.5.5">
+      <sheets size="10">
+       <sheetName index="0">AddDocument</sheetName>
+       <data index="0">true</data>
+       <columnNames size="13" index="0">
+        <columnName index="0">TestcaseName</columnName>
+        <columnName index="1">OathToken</columnName>
+        <columnName index="2">MessageID</columnName>
+        <columnName index="3">TraceabilityId</columnName>
+        <columnName index="4">fileName</columnName>
+        <columnName index="5">File Metadata</columnName>
+        <columnName index="6">file Content</columnName>
+        <columnName index="7">BussinessKey</columnName>
+        <columnName index="8">Query</columnName>
+        <columnName index="9">REPOSITORY ID</columnName>
+        <columnName index="10">documentclassCd</columnName>
+        <columnName index="11">OathToken_Filenet</columnName>
+        <columnName index="12">HTTPCode</columnName>
+       </columnNames>
+       <sheetName index="1">GetDocument_RID</sheetName>
+       <data index="1">true</data>
+       <columnNames size="18" index="1">
+        <columnName index="0">Sno</columnName>
+        <columnName index="1">TestcaseName</columnName>
+        <columnName index="2">OathToken</columnName>
+        <columnName index="3">MessageID</columnName>
+        <columnName index="4">TraceabilityId</columnName>
+        <columnName index="5">businessId</columnName>
+        <columnName index="6">FileName</columnName>
+        <columnName index="7">Filemetadat</columnName>
+        <columnName index="8">Query</columnName>
+        <columnName index="9">HTTPCode</columnName>
+        <columnName index="10">documentClassCd</columnName>
+        <columnName index="11">documentId</columnName>
+        <columnName index="12">DocumentTitle</columnName>
+        <columnName index="13">Confidentiality</columnName>
+        <columnName index="14">Delete</columnName>
+        <columnName index="15">DocumentType</columnName>
+        <columnName index="16">DocumentSubType</columnName>
+        <columnName index="17">UploadedBy</columnName>
+       </columnNames>
+       <sheetName index="2">GetAllDocument</sheetName>
+       <data index="2">true</data>
+       <columnNames size="8" index="2">
+        <columnName index="0">Sno</columnName>
+        <columnName index="1">TestcaseName</columnName>
+        <columnName index="2">Test Steps</columnName>
+        <columnName index="3">Expected Results</columnName>
+        <columnName index="4">OathToken</columnName>
+        <columnName index="5">MessageID</columnName>
+        <columnName index="6">TraceabilityId</columnName>
+        <columnName index="7">HTTPCode</columnName>
+       </columnNames>
+       <sheetName index="3">GetAuthencticate</sheetName>
+       <data index="3">true</data>
+       <columnNames size="8" index="3">
+        <columnName index="0">SNO</columnName>
+        <columnName index="1">TestcaseName</columnName>
+        <columnName index="2">Test Steps</columnName>
+        <columnName index="3">Expected Result</columnName>
+        <columnName index="4">OathToken</columnName>
+        <columnName index="5">MessageID</columnName>
+        <columnName index="6">TraceabilityId</columnName>
+        <columnName index="7">HTTPCode</columnName>
+       </columnNames>
+       <sheetName index="4">GetJWTToken</sheetName>
+       <data index="4">true</data>
+       <columnNames size="8" index="4">
+        <columnName index="0">SNO</columnName>
+        <columnName index="1">TestcaseName</columnName>
+        <columnName index="2">Test Steps</columnName>
+        <columnName index="3">Expected Result</columnName>
+        <columnName index="4">OathToken</columnName>
+        <columnName index="5">MessageID</columnName>
+        <columnName index="6">TraceabilityId</columnName>
+        <columnName index="7">HTTPCode</columnName>
+       </columnNames>
+       <sheetName index="5">GetDocument_PID</sheetName>
+       <data index="5">true</data>
+       <columnNames size="9" index="5">
+        <columnName index="0">Sno</columnName>
+        <columnName index="1">SNO</columnName>
+        <columnName index="2">TestcaseName</columnName>
+        <columnName index="3">OathToken</columnName>
+        <columnName index="4">MessageID</columnName>
+        <columnName index="5">TraceabilityId</columnName>
+        <columnName index="6">ProcessID</columnName>
+        <columnName index="7">Query</columnName>
+        <columnName index="8">HTTPCode</columnName>
+       </columnNames>
+       <sheetName index="6">GETDocumentbyBID&amp;PID</sheetName>
+       <data index="6">true</data>
+       <columnNames size="9" index="6">
+        <columnName index="0">SNO</columnName>
+        <columnName index="1">TestcaseName</columnName>
+        <columnName index="2">OathToken</columnName>
+        <columnName index="3">MessageID</columnName>
+        <columnName index="4">TraceabilityId</columnName>
+        <columnName index="5">businessId</columnName>
+        <columnName index="6">ProcessId</columnName>
+        <columnName index="7">Query</columnName>
+        <columnName index="8">HTTPCode</columnName>
+       </columnNames>
+       <sheetName index="7">SmokeTest-FileNet</sheetName>
+       <data index="7">true</data>
+       <columnNames size="17" index="7">
+        <columnName index="0">Sno</columnName>
+        <columnName index="1">TestcaseName</columnName>
+        <columnName index="2">OathToken</columnName>
+        <columnName index="3">MessageID</columnName>
+        <columnName index="4">TraceabilityId</columnName>
+        <columnName index="5">fileName</columnName>
+        <columnName index="6">File Metadata</columnName>
+        <columnName index="7">file Content</columnName>
+        <columnName index="8">BussinessKey</columnName>
+        <columnName index="9">Query</columnName>
+        <columnName index="10">REPOSITORY ID</columnName>
+        <columnName index="11">documentclassCd</columnName>
+        <columnName index="12">OathToken_Filenet</columnName>
+        <columnName index="13">property</columnName>
+        <columnName index="14">option</columnName>
+        <columnName index="15">filter</columnName>
+        <columnName index="16">HTTPCode</columnName>
+       </columnNames>
+       <sheetName index="8">ViewDocument</sheetName>
+       <data index="8">true</data>
+       <columnNames size="7" index="8">
+        <columnName index="0">SNO</columnName>
+        <columnName index="1">TestcaseName</columnName>
+        <columnName index="2">DocumentID</columnName>
+        <columnName index="3">OathToken</columnName>
+        <columnName index="4">MessageID</columnName>
+        <columnName index="5">TraceabilityId</columnName>
+        <columnName index="6">HTTPCODE</columnName>
+       </columnNames>
+       <sheetName index="9">DeleteDocument</sheetName>
+       <data index="9">true</data>
+       <columnNames size="10" index="9">
+        <columnName index="0">TestcaseName</columnName>
+        <columnName index="1">DocumentID</columnName>
+        <columnName index="2">OathToken</columnName>
+        <columnName index="3">MessageID</columnName>
+        <columnName index="4">TraceabilityId</columnName>
+        <columnName index="5">HTTPCODE</columnName>
+        <columnName index="6">Delete</columnName>
+        <columnName index="7">RefernceID</columnName>
+        <columnName index="8">Filename</columnName>
+        <columnName index="9">filemetadat</columnName>
+       </columnNames>
+      </sheets>
+      <file>true</file>
+      <RelativeLocation className="com.parasoft.util.RelativeLocation" version="1.4">
+       <path>C:\SOAtest\data\BPMsharedServices\Datasheet.xlsx</path>
+      </RelativeLocation>
+      <sheetName>AddDocument</sheetName>
+     </ExcelDataSourceImpl>
+     <name>AddDocument</name>
+    </DataSource>
+    <DataSource className="com.parasoft.data.DataSource" version="1.20">
+     <id>ds_674270746_1505208344252_234082132</id>
      <WritableDataSourceImpl className="com.parasoft.data.WritableDataSourceImpl" version="1.3.3.5">
       <SpreadsheetModel className="com.parasoft.data.SpreadsheetModel" version="1.4">
        <columnIdentifiers size="2">
@@ -323,7 +485,7 @@ Timestamp: 2017-07-18 04:12:04</notes>
        </columnIdentifiers>
        <rows>
         <rowValues size="2" index="0">
-         <rowValue index="1">{C48DA831-7A7A-46AC-BDFB-E25CB51A686C}</rowValue>
+         <rowValue index="1">{3834618A-D2BB-4B38-B388-C1EE52D09663}</rowValue>
         </rowValues>
         <rowValues size="2" index="1">
         </rowValues>
@@ -525,512 +687,1093 @@ Timestamp: 2017-07-18 04:12:04</notes>
         </rowValues>
        </rows>
       </SpreadsheetModel>
+      <resetMode>2</resetMode>
       <writingMode>2</writingMode>
      </WritableDataSourceImpl>
      <name>TOKEN</name>
     </DataSource>
-    <DataSource className="com.parasoft.data.DataSource" version="1.20">
-     <id>ds_-268024700_1500965930421_284697825</id>
-     <ExcelDataSourceImpl className="com.parasoft.data.ExcelDataSourceImpl" version="1.5.5">
-      <sheets size="12">
-       <sheetName index="0">Neg-Registration</sheetName>
-       <data index="0">true</data>
-       <columnNames size="20" index="0">
-        <columnName index="0">S.No.</columnName>
-        <columnName index="1">Test Case ID  </columnName>
-        <columnName index="2">Test Case Name</columnName>
-        <columnName index="3">Message  ID</columnName>
-        <columnName index="4">TraceabilityID</columnName>
-        <columnName index="5">Oauth token</columnName>
-        <columnName index="6">workstationTerminalNum</columnName>
-        <columnName index="7">workstationSerialNum</columnName>
-        <columnName index="8">workstationTypeCd</columnName>
-        <columnName index="9">udpPortNum</columnName>
-        <columnName index="10">internetProtocolAddressNum</columnName>
-        <columnName index="11">printerName1</columnName>
-        <columnName index="12">defaultInd1</columnName>
-        <columnName index="13">printerName2</columnName>
-        <columnName index="14">defaultInd2</columnName>
-        <columnName index="15">Logon UserID</columnName>
-        <columnName index="16">Domain</columnName>
-        <columnName index="17">Serverstatuscode</columnName>
-        <columnName index="18">Expected -Serverstatuscode</columnName>
-        <columnName index="19">Actual -Serverstatuscode</columnName>
-       </columnNames>
-       <sheetName index="1">Manual-registration</sheetName>
-       <data index="1">true</data>
-       <columnNames size="19" index="1">
-        <columnName index="0">S.No.</columnName>
-        <columnName index="1">Test Case ID  </columnName>
-        <columnName index="2">Test Case Name</columnName>
-        <columnName index="3">Precondition</columnName>
-        <columnName index="4">TestSteps</columnName>
-        <columnName index="5">MessageID</columnName>
-        <columnName index="6">TraceabilityID</columnName>
-        <columnName index="7">Oauth token</columnName>
-        <columnName index="8">workstationTerminalNum</columnName>
-        <columnName index="9">workstationSerialNum</columnName>
-        <columnName index="10">workstationTypeCd</columnName>
-        <columnName index="11">udpPortNum</columnName>
-        <columnName index="12">internetProtocolAddressNum</columnName>
-        <columnName index="13">printerName</columnName>
-        <columnName index="14">defaultInd</columnName>
-        <columnName index="15">leaseDuration</columnName>
-        <columnName index="16">serverStatusCode</columnName>
-        <columnName index="17">statusCode</columnName>
-        <columnName index="18">statusDesc</columnName>
-       </columnNames>
-       <sheetName index="2">Pos-Registration</sheetName>
-       <data index="2">true</data>
-       <columnNames size="27" index="2">
-        <columnName index="0">S.No.</columnName>
-        <columnName index="1">Test Case ID  </columnName>
-        <columnName index="2">Test Case Name</columnName>
-        <columnName index="3">Message  ID</columnName>
-        <columnName index="4">TraceabilityID</columnName>
-        <columnName index="5">Oauth token</columnName>
-        <columnName index="6">workstationTerminalNum</columnName>
-        <columnName index="7">workstationSerialNum</columnName>
-        <columnName index="8">workstationTypeCd</columnName>
-        <columnName index="9">udpPortNum</columnName>
-        <columnName index="10">internetProtocolAddressNum</columnName>
-        <columnName index="11">printerName_1</columnName>
-        <columnName index="12">defaultInd_1</columnName>
-        <columnName index="13">printerName_2</columnName>
-        <columnName index="14">defaultInd_2</columnName>
-        <columnName index="15">printerName_3</columnName>
-        <columnName index="16">defaultInd_3</columnName>
-        <columnName index="17">printerName_4</columnName>
-        <columnName index="18">defaultInd_4</columnName>
-        <columnName index="19">printerName_5</columnName>
-        <columnName index="20">defaultInd_5</columnName>
-        <columnName index="21">printerName_6</columnName>
-        <columnName index="22">defaultInd_6</columnName>
-        <columnName index="23">Logon UserID</columnName>
-        <columnName index="24">Domain</columnName>
-        <columnName index="25">leaseDuration</columnName>
-        <columnName index="26">ServerStatusCode</columnName>
-       </columnNames>
-       <sheetName index="3">Pos-printing</sheetName>
-       <data index="3">true</data>
-       <columnNames size="16" index="3">
-        <columnName index="0">SNO</columnName>
-        <columnName index="1">TestcaseID</columnName>
-        <columnName index="2">Testcase Name</columnName>
-        <columnName index="3">MessageID</columnName>
-        <columnName index="4">TracebilityID</columnName>
-        <columnName index="5">OathToken</columnName>
-        <columnName index="6">printerName</columnName>
-        <columnName index="7">internet Protocol  AddressNum</columnName>
-        <columnName index="8">workstation SerialNum</columnName>
-        <columnName index="9">workstation TerminalNum</columnName>
-        <columnName index="10">user</columnName>
-        <columnName index="11">Print Job Name</columnName>
-        <columnName index="12">printer TrayCd</columnName>
-        <columnName index="13">printCopy Cnt</columnName>
-        <columnName index="14">pdfFile</columnName>
-        <columnName index="15">Server Status code</columnName>
-       </columnNames>
-       <sheetName index="4">Neg-Printing</sheetName>
-       <data index="4">true</data>
-       <columnNames size="16" index="4">
-        <columnName index="0">SNO</columnName>
-        <columnName index="1">TestcaseID</columnName>
-        <columnName index="2">Testcase Name</columnName>
-        <columnName index="3">MessageID</columnName>
-        <columnName index="4">TracebilityID</columnName>
-        <columnName index="5">OathToken</columnName>
-        <columnName index="6">printerName</columnName>
-        <columnName index="7">internet Protocol  AddressNum</columnName>
-        <columnName index="8">workstation SerialNum</columnName>
-        <columnName index="9">workstation TerminalNum</columnName>
-        <columnName index="10">user</columnName>
-        <columnName index="11">Print Job Name</columnName>
-        <columnName index="12">printer TrayCd</columnName>
-        <columnName index="13">printCopy Cnt</columnName>
-        <columnName index="14">pdfFile</columnName>
-        <columnName index="15">Server Status Code</columnName>
-       </columnNames>
-       <sheetName index="5">Manual-Printing</sheetName>
-       <data index="5">true</data>
-       <columnNames size="17" index="5">
-        <columnName index="0">SNO</columnName>
-        <columnName index="1">TestcaseID</columnName>
-        <columnName index="2">Testcase Name</columnName>
-        <columnName index="3">Pre condition</columnName>
-        <columnName index="4">Test Steps</columnName>
-        <columnName index="5">MessageID</columnName>
-        <columnName index="6">TracebilityID</columnName>
-        <columnName index="7">OathToken</columnName>
-        <columnName index="8">printerName</columnName>
-        <columnName index="9">internet Protocol  AddressNum</columnName>
-        <columnName index="10">workstation SerialNum</columnName>
-        <columnName index="11">workstation TerminalNum</columnName>
-        <columnName index="12">user</columnName>
-        <columnName index="13">Print Job Name</columnName>
-        <columnName index="14">printer TrayCd</columnName>
-        <columnName index="15">printCopy Cnt</columnName>
-        <columnName index="16">pdfFile</columnName>
-       </columnNames>
-       <sheetName index="6">Mailing_positive</sheetName>
-       <data index="6">true</data>
-       <columnNames size="12" index="6">
-        <columnName index="0">S.No</columnName>
-        <columnName index="1">Test case ID</columnName>
-        <columnName index="2">Testcase Name </columnName>
-        <columnName index="3">MessageId</columnName>
-        <columnName index="4">Tracebility ID</columnName>
-        <columnName index="5">OathToken</columnName>
-        <columnName index="6">initiating   BranchNum</columnName>
-        <columnName index="7">initiating  ApplicationName</columnName>
-        <columnName index="8">user</columnName>
-        <columnName index="9">referenceNum</columnName>
-        <columnName index="10">output    TemplateId</columnName>
-        <columnName index="11">PDF File</columnName>
-       </columnNames>
-       <sheetName index="7">Mailing_Negative</sheetName>
-       <data index="7">true</data>
-       <columnNames size="14" index="7">
-        <columnName index="0">SNO</columnName>
-        <columnName index="1">TestcaseID</columnName>
-        <columnName index="2">Testcase Name</columnName>
-        <columnName index="3">MessageID</columnName>
-        <columnName index="4">TracebilityID</columnName>
-        <columnName index="5">OathToken</columnName>
-        <columnName index="6">initiating   BranchNum</columnName>
-        <columnName index="7">initiating  ApplicationName</columnName>
-        <columnName index="8">user</columnName>
-        <columnName index="9">referenceNum</columnName>
-        <columnName index="10">output    TemplateId</columnName>
-        <columnName index="11">PDF File</columnName>
-        <columnName index="12">HTTPCode</columnName>
-        <columnName index="13">Comments</columnName>
-       </columnNames>
-       <sheetName index="8">Mailing_Manual</sheetName>
-       <data index="8">true</data>
-       <columnNames size="7" index="8">
-        <columnName index="0">SNO</columnName>
-        <columnName index="1">TestcaseID</columnName>
-        <columnName index="2">Testcase Name</columnName>
-        <columnName index="3">Precondition</columnName>
-        <columnName index="4">Test Steps</columnName>
-        <columnName index="5">MessageID</columnName>
-        <columnName index="6">TracebilityID</columnName>
-       </columnNames>
-       <sheetName index="9">Pos-Getprinterlist</sheetName>
-       <data index="9">true</data>
-       <columnNames size="12" index="9">
-        <columnName index="0">SNO</columnName>
-        <columnName index="1">Testcase ID</columnName>
-        <columnName index="2">Testcase Name</columnName>
-        <columnName index="3">Message ID</columnName>
-        <columnName index="4">Tracebility ID</columnName>
-        <columnName index="5">Oath Token</columnName>
-        <columnName index="6">workstation  TerminalNum</columnName>
-        <columnName index="7">workstationSerialNum</columnName>
-        <columnName index="8">internet   Protocol AddressNum</columnName>
-        <columnName index="9">originating  PartyId</columnName>
-        <columnName index="10">printerName</columnName>
-        <columnName index="11">default Ind</columnName>
-       </columnNames>
-       <sheetName index="10">Manual-Getprinterlist</sheetName>
-       <data index="10">true</data>
-       <columnNames size="14" index="10">
-        <columnName index="0">SNO</columnName>
-        <columnName index="1">Testcase ID</columnName>
-        <columnName index="2">Testcase Name</columnName>
-        <columnName index="3">Precondition</columnName>
-        <columnName index="4">Test Steps</columnName>
-        <columnName index="5">Message ID</columnName>
-        <columnName index="6">Tracebility ID</columnName>
-        <columnName index="7">Oath Token</columnName>
-        <columnName index="8">workstation  TerminalNum</columnName>
-        <columnName index="9">workstationSerialNum</columnName>
-        <columnName index="10">internet   Protocol AddressNum</columnName>
-        <columnName index="11">originating  PartyId</columnName>
-        <columnName index="12">printerName</columnName>
-        <columnName index="13">default Ind</columnName>
-       </columnNames>
-       <sheetName index="11">Negative-Getprinterlist</sheetName>
-       <data index="11">true</data>
-       <columnNames size="13" index="11">
-        <columnName index="0">SNO</columnName>
-        <columnName index="1">Testcase ID</columnName>
-        <columnName index="2">Testcase Name</columnName>
-        <columnName index="3">Precondition</columnName>
-        <columnName index="4">Message ID</columnName>
-        <columnName index="5">Tracebility ID</columnName>
-        <columnName index="6">Oath Token</columnName>
-        <columnName index="7">workstation  TerminalNum</columnName>
-        <columnName index="8">workstationSerialNum</columnName>
-        <columnName index="9">internet   Protocol AddressNum</columnName>
-        <columnName index="10">originating  PartyId</columnName>
-        <columnName index="11">printerName</columnName>
-        <columnName index="12">default Ind</columnName>
-       </columnNames>
-      </sheets>
-      <file>true</file>
-      <RelativeLocation className="com.parasoft.util.RelativeLocation" version="1.4">
-       <path>C:\SOAtest\data\OCP2.0\DocDelivery.xlsx</path>
-      </RelativeLocation>
-      <sheetName>Pos-Registration</sheetName>
-     </ExcelDataSourceImpl>
-     <name>Pos-Registration</name>
-    </DataSource>
-    <DataSource className="com.parasoft.data.DataSource" version="1.20">
-     <id>ds_-268024700_1500965943160_974437422</id>
-     <ExcelDataSourceImpl className="com.parasoft.data.ExcelDataSourceImpl" version="1.5.5">
-      <sheets size="12">
-       <sheetName index="0">Neg-Registration</sheetName>
-       <data index="0">true</data>
-       <columnNames size="20" index="0">
-        <columnName index="0">S.No.</columnName>
-        <columnName index="1">Test Case ID  </columnName>
-        <columnName index="2">Test Case Name</columnName>
-        <columnName index="3">Message  ID</columnName>
-        <columnName index="4">TraceabilityID</columnName>
-        <columnName index="5">Oauth token</columnName>
-        <columnName index="6">workstationTerminalNum</columnName>
-        <columnName index="7">workstationSerialNum</columnName>
-        <columnName index="8">workstationTypeCd</columnName>
-        <columnName index="9">udpPortNum</columnName>
-        <columnName index="10">internetProtocolAddressNum</columnName>
-        <columnName index="11">printerName1</columnName>
-        <columnName index="12">defaultInd1</columnName>
-        <columnName index="13">printerName2</columnName>
-        <columnName index="14">defaultInd2</columnName>
-        <columnName index="15">Logon UserID</columnName>
-        <columnName index="16">Domain</columnName>
-        <columnName index="17">Serverstatuscode</columnName>
-        <columnName index="18">Expected -Serverstatuscode</columnName>
-        <columnName index="19">Actual -Serverstatuscode</columnName>
-       </columnNames>
-       <sheetName index="1">Manual-registration</sheetName>
-       <data index="1">true</data>
-       <columnNames size="19" index="1">
-        <columnName index="0">S.No.</columnName>
-        <columnName index="1">Test Case ID  </columnName>
-        <columnName index="2">Test Case Name</columnName>
-        <columnName index="3">Precondition</columnName>
-        <columnName index="4">TestSteps</columnName>
-        <columnName index="5">MessageID</columnName>
-        <columnName index="6">TraceabilityID</columnName>
-        <columnName index="7">Oauth token</columnName>
-        <columnName index="8">workstationTerminalNum</columnName>
-        <columnName index="9">workstationSerialNum</columnName>
-        <columnName index="10">workstationTypeCd</columnName>
-        <columnName index="11">udpPortNum</columnName>
-        <columnName index="12">internetProtocolAddressNum</columnName>
-        <columnName index="13">printerName</columnName>
-        <columnName index="14">defaultInd</columnName>
-        <columnName index="15">leaseDuration</columnName>
-        <columnName index="16">serverStatusCode</columnName>
-        <columnName index="17">statusCode</columnName>
-        <columnName index="18">statusDesc</columnName>
-       </columnNames>
-       <sheetName index="2">Pos-Registration</sheetName>
-       <data index="2">true</data>
-       <columnNames size="27" index="2">
-        <columnName index="0">S.No.</columnName>
-        <columnName index="1">Test Case ID  </columnName>
-        <columnName index="2">Test Case Name</columnName>
-        <columnName index="3">Message  ID</columnName>
-        <columnName index="4">TraceabilityID</columnName>
-        <columnName index="5">Oauth token</columnName>
-        <columnName index="6">workstationTerminalNum</columnName>
-        <columnName index="7">workstationSerialNum</columnName>
-        <columnName index="8">workstationTypeCd</columnName>
-        <columnName index="9">udpPortNum</columnName>
-        <columnName index="10">internetProtocolAddressNum</columnName>
-        <columnName index="11">printerName_1</columnName>
-        <columnName index="12">defaultInd_1</columnName>
-        <columnName index="13">printerName_2</columnName>
-        <columnName index="14">defaultInd_2</columnName>
-        <columnName index="15">printerName_3</columnName>
-        <columnName index="16">defaultInd_3</columnName>
-        <columnName index="17">printerName_4</columnName>
-        <columnName index="18">defaultInd_4</columnName>
-        <columnName index="19">printerName_5</columnName>
-        <columnName index="20">defaultInd_5</columnName>
-        <columnName index="21">printerName_6</columnName>
-        <columnName index="22">defaultInd_6</columnName>
-        <columnName index="23">Logon UserID</columnName>
-        <columnName index="24">Domain</columnName>
-        <columnName index="25">leaseDuration</columnName>
-        <columnName index="26">ServerStatusCode</columnName>
-       </columnNames>
-       <sheetName index="3">Pos-printing</sheetName>
-       <data index="3">true</data>
-       <columnNames size="16" index="3">
-        <columnName index="0">SNO</columnName>
-        <columnName index="1">TestcaseID</columnName>
-        <columnName index="2">Testcase Name</columnName>
-        <columnName index="3">MessageID</columnName>
-        <columnName index="4">TracebilityID</columnName>
-        <columnName index="5">OathToken</columnName>
-        <columnName index="6">printerName</columnName>
-        <columnName index="7">internet Protocol  AddressNum</columnName>
-        <columnName index="8">workstation SerialNum</columnName>
-        <columnName index="9">workstation TerminalNum</columnName>
-        <columnName index="10">user</columnName>
-        <columnName index="11">Print Job Name</columnName>
-        <columnName index="12">printer TrayCd</columnName>
-        <columnName index="13">printCopy Cnt</columnName>
-        <columnName index="14">pdfFile</columnName>
-        <columnName index="15">Server Status code</columnName>
-       </columnNames>
-       <sheetName index="4">Neg-Printing</sheetName>
-       <data index="4">true</data>
-       <columnNames size="16" index="4">
-        <columnName index="0">SNO</columnName>
-        <columnName index="1">TestcaseID</columnName>
-        <columnName index="2">Testcase Name</columnName>
-        <columnName index="3">MessageID</columnName>
-        <columnName index="4">TracebilityID</columnName>
-        <columnName index="5">OathToken</columnName>
-        <columnName index="6">printerName</columnName>
-        <columnName index="7">internet Protocol  AddressNum</columnName>
-        <columnName index="8">workstation SerialNum</columnName>
-        <columnName index="9">workstation TerminalNum</columnName>
-        <columnName index="10">user</columnName>
-        <columnName index="11">Print Job Name</columnName>
-        <columnName index="12">printer TrayCd</columnName>
-        <columnName index="13">printCopy Cnt</columnName>
-        <columnName index="14">pdfFile</columnName>
-        <columnName index="15">Server Status Code</columnName>
-       </columnNames>
-       <sheetName index="5">Manual-Printing</sheetName>
-       <data index="5">true</data>
-       <columnNames size="17" index="5">
-        <columnName index="0">SNO</columnName>
-        <columnName index="1">TestcaseID</columnName>
-        <columnName index="2">Testcase Name</columnName>
-        <columnName index="3">Pre condition</columnName>
-        <columnName index="4">Test Steps</columnName>
-        <columnName index="5">MessageID</columnName>
-        <columnName index="6">TracebilityID</columnName>
-        <columnName index="7">OathToken</columnName>
-        <columnName index="8">printerName</columnName>
-        <columnName index="9">internet Protocol  AddressNum</columnName>
-        <columnName index="10">workstation SerialNum</columnName>
-        <columnName index="11">workstation TerminalNum</columnName>
-        <columnName index="12">user</columnName>
-        <columnName index="13">Print Job Name</columnName>
-        <columnName index="14">printer TrayCd</columnName>
-        <columnName index="15">printCopy Cnt</columnName>
-        <columnName index="16">pdfFile</columnName>
-       </columnNames>
-       <sheetName index="6">Mailing_positive</sheetName>
-       <data index="6">true</data>
-       <columnNames size="13" index="6">
-        <columnName index="0">S.No</columnName>
-        <columnName index="1">Test case ID</columnName>
-        <columnName index="2">Testcase Name </columnName>
-        <columnName index="3">MessageId</columnName>
-        <columnName index="4">Tracebility ID</columnName>
-        <columnName index="5">OathToken</columnName>
-        <columnName index="6">initiating   BranchNum</columnName>
-        <columnName index="7">initiating  ApplicationName</columnName>
-        <columnName index="8">user</columnName>
-        <columnName index="9">referenceNum</columnName>
-        <columnName index="10">output    TemplateId</columnName>
-        <columnName index="11">PDF File</columnName>
-        <columnName index="12">HTTPCode</columnName>
-       </columnNames>
-       <sheetName index="7">Mailing_Negative</sheetName>
-       <data index="7">true</data>
-       <columnNames size="14" index="7">
-        <columnName index="0">SNO</columnName>
-        <columnName index="1">TestcaseID</columnName>
-        <columnName index="2">Testcase Name</columnName>
-        <columnName index="3">MessageID</columnName>
-        <columnName index="4">TracebilityID</columnName>
-        <columnName index="5">OathToken</columnName>
-        <columnName index="6">initiating   BranchNum</columnName>
-        <columnName index="7">initiating  ApplicationName</columnName>
-        <columnName index="8">user</columnName>
-        <columnName index="9">referenceNum</columnName>
-        <columnName index="10">output    TemplateId</columnName>
-        <columnName index="11">PDF File</columnName>
-        <columnName index="12">HTTPCode</columnName>
-        <columnName index="13">Comments</columnName>
-       </columnNames>
-       <sheetName index="8">Mailing_Manual</sheetName>
-       <data index="8">true</data>
-       <columnNames size="7" index="8">
-        <columnName index="0">SNO</columnName>
-        <columnName index="1">TestcaseID</columnName>
-        <columnName index="2">Testcase Name</columnName>
-        <columnName index="3">Precondition</columnName>
-        <columnName index="4">Test Steps</columnName>
-        <columnName index="5">MessageID</columnName>
-        <columnName index="6">TracebilityID</columnName>
-       </columnNames>
-       <sheetName index="9">Pos-Getprinterlist</sheetName>
-       <data index="9">true</data>
-       <columnNames size="13" index="9">
-        <columnName index="0">SNO</columnName>
-        <columnName index="1">Testcase ID</columnName>
-        <columnName index="2">Testcase Name</columnName>
-        <columnName index="3">Message ID</columnName>
-        <columnName index="4">Tracebility ID</columnName>
-        <columnName index="5">Oath Token</columnName>
-        <columnName index="6">workstation  TerminalNum</columnName>
-        <columnName index="7">workstationSerialNum</columnName>
-        <columnName index="8">internet   Protocol AddressNum</columnName>
-        <columnName index="9">originating  PartyId</columnName>
-        <columnName index="10">printerName</columnName>
-        <columnName index="11">default Ind</columnName>
-        <columnName index="12">HTTPCode</columnName>
-       </columnNames>
-       <sheetName index="10">Manual-Getprinterlist</sheetName>
-       <data index="10">true</data>
-       <columnNames size="14" index="10">
-        <columnName index="0">SNO</columnName>
-        <columnName index="1">Testcase ID</columnName>
-        <columnName index="2">Testcase Name</columnName>
-        <columnName index="3">Precondition</columnName>
-        <columnName index="4">Test Steps</columnName>
-        <columnName index="5">Message ID</columnName>
-        <columnName index="6">Tracebility ID</columnName>
-        <columnName index="7">Oath Token</columnName>
-        <columnName index="8">workstation  TerminalNum</columnName>
-        <columnName index="9">workstationSerialNum</columnName>
-        <columnName index="10">internet   Protocol AddressNum</columnName>
-        <columnName index="11">originating  PartyId</columnName>
-        <columnName index="12">printerName</columnName>
-        <columnName index="13">default Ind</columnName>
-       </columnNames>
-       <sheetName index="11">Negative-Getprinterlist</sheetName>
-       <data index="11">true</data>
-       <columnNames size="14" index="11">
-        <columnName index="0">SNO</columnName>
-        <columnName index="1">Testcase ID</columnName>
-        <columnName index="2">Testcase Name</columnName>
-        <columnName index="3">Precondition</columnName>
-        <columnName index="4">Message ID</columnName>
-        <columnName index="5">Tracebility ID</columnName>
-        <columnName index="6">Oath Token</columnName>
-        <columnName index="7">workstation  TerminalNum</columnName>
-        <columnName index="8">workstationSerialNum</columnName>
-        <columnName index="9">internet   Protocol AddressNum</columnName>
-        <columnName index="10">originating  PartyId</columnName>
-        <columnName index="11">printerName</columnName>
-        <columnName index="12">default Ind</columnName>
-        <columnName index="13">HTTPCode</columnName>
-       </columnNames>
-      </sheets>
-      <file>true</file>
-      <RelativeLocation className="com.parasoft.util.RelativeLocation" version="1.4">
-       <path>C:\SOAtest\data\OCP2.0\DocDelivery.xlsx</path>
-      </RelativeLocation>
-      <sheetName>Neg-Registration</sheetName>
-     </ExcelDataSourceImpl>
-     <name>Neg-Registration</name>
-     <firstRow>30</firstRow>
-     <lastRow>30</lastRow>
-    </DataSource>           
-   <testsSize>4</testsSize>
+    <testsSize>2</testsSize>
+    <ToolTest className="webtool.test.ToolTest" version="4.15.2">
+     <DebugAssets className="webtool.test.debug.DebugAssets" version="1">
+     </DebugAssets>
+     <ReportingSettings className="webtool.test.ReportingSettings" version="1.1">
+      <TestGRSSettings className="webtool.test.grs.TestGRSSettings" version="1.4.3">
+      </TestGRSSettings>
+     </ReportingSettings>
+     <testLogic>true</testLogic>
+     <TestLogic className="webtool.test.logic.TestLogic" version="1.7">
+      <TestExecutionDelay className="webtool.test.logic.TestExecutionDelay" version="1.2">
+      </TestExecutionDelay>
+      <TestExecutionDelay className="webtool.test.logic.TestExecutionDelay" version="1.2">
+      </TestExecutionDelay>
+      <condition>true</condition>
+      <TestLogicVariableCondition className="webtool.test.logic.TestLogicVariableCondition" version="1.2">
+      </TestLogicVariableCondition>
+      <TestDependencyLogic className="webtool.test.logic.TestDependencyLogic" version="1.2">
+      </TestDependencyLogic>
+     </TestLogic>
+     <testID>142</testID>
+     <name>DB Tool</name>
+     <DbTool className="webtool.db.DbTool" version="v.2.11.14">
+      <dataSourceNames size="1">
+       <dataSourceName index="0">AddDocument</dataSourceName>
+      </dataSourceNames>
+      <iconName>DBTool</iconName>
+      <name>DB Tool</name>
+      <MultiValue className="webtool.data.MultiValue" version="1.4">
+       <StringTestValue className="webtool.data.StringTestValue" version="4.1">
+        <value>GO</value>
+       </StringTestValue>
+       <ParameterizedTestValue className="webtool.data.ParameterizedTestValue" version="3.1">
+       </ParameterizedTestValue>
+      </MultiValue>
+      <SimpleMessagingOutputProvider className="webtool.messaging.SimpleMessagingOutputProvider" version="1">
+       <NamedXMLToolOutputProvider className="webtool.xml.NamedXMLToolOutputProvider" version="1.2.1">
+        <name>SQL Query</name>
+       </NamedXMLToolOutputProvider>
+       <NamedXMLToolOutputProvider className="webtool.xml.NamedXMLToolOutputProvider" version="1.2.1">
+        <outputToolsSize>1</outputToolsSize>
+        <XMLAssertionTool className="webtool.xml.assertion.XMLAssertionTool" version="v.2.2.1.14">
+         <dataSourceNames size="1">
+          <dataSourceName index="0">AddDocument</dataSourceName>
+         </dataSourceNames>
+         <iconName>XMLAssertor</iconName>
+         <name>XML Assertor</name>
+         <assertionsSize>1</assertionsSize>
+         <StringComparisonAssertion className="webtool.assertion.xml.StringComparisonAssertion" version="3.6.2">
+          <timestamp>1501696594894</timestamp>
+          <name>documentID</name>
+          <Assertion_XPath>/results/resultSet/rows/row[1]/DOCUMENT_ID</Assertion_XPath>
+          <NameValuePair className="webtool.data.NameValuePair" version="3.3">
+           <name>String Comparison Assertion</name>
+           <MultiValue className="webtool.data.MultiValue" version="1.4">
+            <StringTestValue className="webtool.data.StringTestValue" version="4.1">
+            </StringTestValue>
+            <ParameterizedTestValue className="webtool.data.ParameterizedTestValue" version="3.1">
+             <column>Test 1: documentId</column>
+            </ParameterizedTestValue>
+            <selectedIndex>-2</selectedIndex>
+           </MultiValue>
+          </NameValuePair>
+         </StringComparisonAssertion>
+         <ExpectedXMLMessage className="webtool.xml.ExpectedXMLMessage" version="1.2.1">
+          <saveExpectedMessage>true</saveExpectedMessage>
+          <message>true</message>
+          <Message className="webtool.traffic.Message" version="1.5">
+           <content>PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHJlc3VsdHM+CiA8U1FMRXhjZXB0aW9uPmNvbS5taWNyb3NvZnQuc3Fsc2VydmVyLmpkYmMuU1FMU2VydmVyRXhjZXB0aW9uOiBDb252ZXJzaW9uIGZhaWxlZCB3aGVuIGNvbnZlcnRpbmcgdGhlIHZhcmNoYXIgdmFsdWUgJiMzOTsxMjNhYmMmIzM5OyB0byBkYXRhIHR5cGUgaW50LjwvU1FMRXhjZXB0aW9uPgo8L3Jlc3VsdHM+</content>
+           <editable>true</editable>
+           <headersAvailable>false</headersAvailable>
+           <mimeType>true</mimeType>
+           <MIMEType className="webtool.mime.MIMEType" version="5">
+            <extensions size="1">
+             <extension index="0">xml</extension>
+            </extensions>
+            <isXML>true</isXML>
+            <isText>true</isText>
+            <Argv className="com.parasoft.util.Argv" version="4">
+            </Argv>
+            <type>text/xml</type>
+           </MIMEType>
+          </Message>
+         </ExpectedXMLMessage>
+        </XMLAssertionTool>
+        <name>Results as XML</name>
+       </NamedXMLToolOutputProvider>
+       <ObjectOutputProvider className="webtool.messaging.ObjectOutputProvider" version="1.3.1">
+        <outputToolsSize>1</outputToolsSize>
+        <TrafficViewer className="webtool.traffic.TrafficViewer" version="v.2.3.14">
+         <iconName>TrafficViewer</iconName>
+         <name>Traffic Viewer</name>
+        </TrafficViewer>
+        <name>Traffic Object</name>
+       </ObjectOutputProvider>
+      </SimpleMessagingOutputProvider>
+      <MultiValue className="webtool.data.MultiValue" version="1.4">
+       <StringTestValue className="webtool.data.StringTestValue" version="4.1">
+       </StringTestValue>
+       <ParameterizedTestValue className="webtool.data.ParameterizedTestValue" version="3.1">
+       </ParameterizedTestValue>
+      </MultiValue>
+      <MultiValue className="webtool.data.MultiValue" version="1.4">
+       <StringTestValue className="webtool.data.StringTestValue" version="4.1">
+        <useMultipleLines>true</useMultipleLines>
+        <value>SELECT * FROM [jbpm_shared_services].[dbo].[DOCUMENT_DETAIL] &#xD;
+where BUSINESS_ID=&#39;534&#39;&#xD;
+</value>
+       </StringTestValue>
+       <ParameterizedTestValue className="webtool.data.ParameterizedTestValue" version="3.1">
+        <column>Query</column>
+       </ParameterizedTestValue>
+       <selectedIndex>-2</selectedIndex>
+      </MultiValue>
+      <failOnSQLException>true</failOnSQLException>
+      <DbAccount className="com.parasoft.db.DbAccount" version="1.8">
+       <DbConfigSettings className="com.parasoft.db.DbConfigSettings" version="1.2.2">
+        <password>AgAAACD259hXSbgh16sT0KqGTrIY5xe19MUaK6Evi9QC8Is3Qg==</password>
+        <uri>jdbc:sqlserver://TDL05115578:1433;databaseName=jbpm_shared_services</uri>
+        <username>demoid</username>
+        <driver>AgAAAECzyMS93EoS3Rb9iXHSeoBWUcf0aCk4WhzzXl/jrubqjxcdOIZfyZNGPxbG8C2hOg1Abr1GtQuJXc/ZF1Vqc2RE</driver>
+       </DbConfigSettings>
+      </DbAccount>
+     </DbTool>
+    </ToolTest>
+    <RESTClientToolTest className="webtool.soap.http.RESTClientToolTest" version="2.1.4.15.2">
+     <DebugAssets className="webtool.test.debug.DebugAssets" version="1">
+     </DebugAssets>
+     <ReportingSettings className="webtool.test.ReportingSettings" version="1.1">
+      <TestGRSSettings className="webtool.test.grs.TestGRSSettings" version="1.4.3">
+      </TestGRSSettings>
+     </ReportingSettings>
+     <testLogic>true</testLogic>
+     <TestLogic className="webtool.test.logic.TestLogic" version="1.7">
+      <TestExecutionDelay className="webtool.test.logic.TestExecutionDelay" version="1.2">
+      </TestExecutionDelay>
+      <TestExecutionDelay className="webtool.test.logic.TestExecutionDelay" version="1.2">
+      </TestExecutionDelay>
+      <condition>true</condition>
+      <TestLogicVariableCondition className="webtool.test.logic.TestLogicVariableCondition" version="1.2">
+      </TestLogicVariableCondition>
+      <TestDependencyLogic className="webtool.test.logic.TestDependencyLogic" version="1.2">
+      </TestDependencyLogic>
+     </TestLogic>
+     <testID>143</testID>
+     <enabled>true</enabled>
+     <name>GET - Search 2</name>
+     <performanceGroup>0</performanceGroup>
+     <RESTClient className="webtool.soap.http.RESTClient" version="v.2.15.28.14">
+      <dataSourceNames size="1">
+       <dataSourceName index="0">AddDocument</dataSourceName>
+      </dataSourceNames>
+      <iconName>RESTClient</iconName>
+      <name>GET Token</name>
+      <MessagingSchemaElement className="webtool.soap.http.MessagingSchemaElement" version="2">
+       <ElementValue className="webtool.soap.ElementValue" version="1.11.12">
+        <writeType>true</writeType>
+        <ElementType className="webtool.soap.ElementType" version="2.12.3">
+         <hash>1</hash>
+         <localName>root</localName>
+         <ComplexType className="webtool.soap.ComplexType" version="2.10.3">
+          <hash>2</hash>
+          <attributesSize>1</attributesSize>
+          <AttributeType className="webtool.soap.AttributeType" version="2.3.3">
+           <hash>3</hash>
+           <name>type</name>
+           <fixed>object</fixed>
+           <StringType className="webtool.soap.StringType" version="2.5.3">
+            <hash>4</hash>
+           </StringType>
+           <required>true</required>
+          </AttributeType>
+          <name>rootType</name>
+          <compositor>true</compositor>
+          <AllCompositor className="webtool.soap.AllCompositor" version="2.1.3.3">
+           <hash>5</hash>
+          </AllCompositor>
+         </ComplexType>
+        </ElementType>
+        <size>1</size>
+        <ComplexValue className="webtool.soap.ComplexValue" version="1.10.12">
+         <attributesSize>1</attributesSize>
+         <AttributeValue className="webtool.soap.AttributeValue" version="1.3.12">
+          <StringValue className="webtool.soap.StringValue" version="1.7.1.12">
+           <value>object</value>
+          </StringValue>
+          <useValue>true</useValue>
+         </AttributeValue>
+         <compositorValue>true</compositorValue>
+         <CompositorValue className="webtool.soap.CompositorValue" version="1.3.12">
+          <CompositorValueSetCollectionSet className="webtool.soap.CompositorValueSetCollectionSet" version="1.1">
+           <setSize>1</setSize>
+           <CompositorValueSet className="webtool.soap.CompositorValueSet" version="1.1">
+           </CompositorValueSet>
+          </CompositorValueSetCollectionSet>
+         </CompositorValue>
+        </ComplexValue>
+       </ElementValue>
+       <elementTypeName>root</elementTypeName>
+      </MessagingSchemaElement>
+      <hasServiceInfo>true</hasServiceInfo>
+      <ServiceInfo className="webtool.tool.ServiceInfo" version="1.2">
+       <StandardServiceDescriptor className="com.parasoft.service.catalog.impl.StandardServiceDescriptor" version="1.1">
+        <location>file:///C:/SOAtest/RAML/FileNet 0.0.14/0.0.14/Documents.1.raml</location>
+       </StandardServiceDescriptor>
+      </ServiceInfo>
+      <JSONBuilder className="webtool.ecmascript.json.JSONBuilder" version="2">
+       <hasValue>true</hasValue>
+       <JSONObjectValue className="webtool.ecmascript.json.JSONObjectValue" version="1.1.1">
+        <nameIsNull>true</nameIsNull>
+        <JSONValueCollection className="webtool.ecmascript.json.JSONValueCollection" version="2">
+        </JSONValueCollection>
+       </JSONObjectValue>
+      </JSONBuilder>
+      <LocationObject className="webtool.wsdl.LocationObject" version="2">
+      </LocationObject>
+      <MessagingSchemaElement className="webtool.soap.http.MessagingSchemaElement" version="2">
+       <ElementValue className="webtool.soap.ElementValue" version="1.11.12">
+        <writeType>true</writeType>
+        <ElementType className="webtool.soap.ElementType" version="2.12.3">
+         <hash>1</hash>
+         <ComplexType className="webtool.soap.ComplexType" version="2.10.3">
+          <hash>2</hash>
+          <name>anonymous</name>
+          <compositor>true</compositor>
+          <SequenceCompositor className="webtool.soap.SequenceCompositor" version="2.1.3.3">
+           <hash>3</hash>
+          </SequenceCompositor>
+         </ComplexType>
+        </ElementType>
+        <size>1</size>
+        <ComplexValue className="webtool.soap.ComplexValue" version="1.10.12">
+         <compositorValue>true</compositorValue>
+         <CompositorValue className="webtool.soap.CompositorValue" version="1.3.12">
+          <CompositorValueSetCollectionSet className="webtool.soap.CompositorValueSetCollectionSet" version="1.1">
+           <setSize>1</setSize>
+           <CompositorValueSet className="webtool.soap.CompositorValueSet" version="1.1">
+           </CompositorValueSet>
+          </CompositorValueSetCollectionSet>
+         </CompositorValue>
+        </ComplexValue>
+       </ElementValue>
+      </MessagingSchemaElement>
+      <constrainToSchema>false</constrainToSchema>
+      <DefaultCustomTimeout className="webtool.tool.DefaultCustomTimeout" version="1.2.1">
+       <useDefault>false</useDefault>
+       <timeout>90000</timeout>
+      </DefaultCustomTimeout>
+      <NameValueProperties className="webtool.data.NameValueProperties" version="1.4">
+      </NameValueProperties>
+      <MapMessageProperties className="webtool.soap.jms.MapMessageProperties" version="1.1">
+      </MapMessageProperties>
+      <JMSMessageOutputProvider className="webtool.soap.jms.JMSMessageOutputProvider" version="3.1.1">
+       <JMSOutputProvider className="webtool.soap.jms.JMSOutputProvider" version="1.1">
+        <name>Request Object</name>
+        <menuName>Object</menuName>
+       </JMSOutputProvider>
+       <JMSOutputProvider className="webtool.soap.jms.JMSOutputProvider" version="1.1">
+        <name>Response Message Object</name>
+        <menuName>Message Object</menuName>
+       </JMSOutputProvider>
+      </JMSMessageOutputProvider>
+      <ValidResponseRange className="webtool.messaging.ValidResponseRange" version="1.3">
+       <MultiValue className="webtool.data.MultiValue" version="1.4">
+        <StringTestValue className="webtool.data.StringTestValue" version="4.1">
+         <validResponseRange>200</validResponseRange>
+        </StringTestValue>
+        <ParameterizedTestValue className="webtool.data.ParameterizedTestValue" version="3.1">
+         <column>HTTPCode</column>
+        </ParameterizedTestValue>
+        <valuesSize>1</valuesSize>
+        <ScriptedValue className="webtool.data.ScriptedValue" version="1.1">
+         <UserMethod className="com.parasoft.scripting.UserMethod" version="2.2">
+          <code>true</code>
+          <ScriptCode className="com.parasoft.scripting.jsr223.ScriptCode" version="2.1.1.1">
+           <ScriptingInput className="com.parasoft.scripting.ScriptingInput" version="6">
+            <useText>true</useText>
+            <ScriptingTextInput className="com.parasoft.scripting.ScriptingTextInput" version="1.3">
+            </ScriptingTextInput>
+           </ScriptingInput>
+           <ScriptEngineIdentifier className="com.parasoft.scripting.jsr223.ScriptEngineIdentifier" version="1.1">
+           </ScriptEngineIdentifier>
+          </ScriptCode>
+          <methodId>true</methodId>
+          <ScriptMethodIdentifier className="com.parasoft.scripting.jsr223.ScriptMethodIdentifier" version="2.1.1">
+          </ScriptMethodIdentifier>
+         </UserMethod>
+        </ScriptedValue>
+       </MultiValue>
+      </ValidResponseRange>
+      <NameValueProperties className="webtool.data.NameValueProperties" version="1.4">
+      </NameValueProperties>
+      <MultiValue className="webtool.data.MultiValue" version="1.4">
+       <StringTestValue className="webtool.data.StringTestValue" version="4.1">
+        <HTTPClient_Endpoint>https://pingfederate.sys.td.com:9031/as/token.oauth2?client_id=TestScopeClient&amp;client_secret=2Federate&amp;grant_type=client_credentials&amp;scope=docm.fn.repo.r+docm.fn.repo.w+docm.fn.repo.r</HTTPClient_Endpoint>
+       </StringTestValue>
+       <ParameterizedTestValue className="webtool.data.ParameterizedTestValue" version="3.1">
+       </ParameterizedTestValue>
+       <valuesSize>1</valuesSize>
+       <ScriptedValue className="webtool.data.ScriptedValue" version="1.1">
+        <UserMethod className="com.parasoft.scripting.UserMethod" version="2.2">
+         <code>true</code>
+         <ScriptCode className="com.parasoft.scripting.jsr223.ScriptCode" version="2.1.1.1">
+          <ScriptingInput className="com.parasoft.scripting.ScriptingInput" version="6">
+           <useText>true</useText>
+           <ScriptingTextInput className="com.parasoft.scripting.ScriptingTextInput" version="1.3">
+           </ScriptingTextInput>
+          </ScriptingInput>
+          <ScriptEngineIdentifier className="com.parasoft.scripting.jsr223.ScriptEngineIdentifier" version="1.1">
+          </ScriptEngineIdentifier>
+         </ScriptCode>
+         <methodId>true</methodId>
+         <ScriptMethodIdentifier className="com.parasoft.scripting.jsr223.ScriptMethodIdentifier" version="2.1.1">
+         </ScriptMethodIdentifier>
+        </UserMethod>
+       </ScriptedValue>
+      </MultiValue>
+      <NameValueProperties className="webtool.data.NameValueProperties" version="1.4">
+       <propertiesSize>4</propertiesSize>
+       <NameValuePair className="webtool.data.NameValuePair" version="3.3">
+        <name>client_id</name>
+        <MultiValue className="webtool.data.MultiValue" version="1.4">
+         <StringTestValue className="webtool.data.StringTestValue" version="4.1">
+          <value>TestScopeClient</value>
+         </StringTestValue>
+         <ParameterizedTestValue className="webtool.data.ParameterizedTestValue" version="3.1">
+         </ParameterizedTestValue>
+         <valuesSize>1</valuesSize>
+         <ScriptedValue className="webtool.data.ScriptedValue" version="1.1">
+          <UserMethod className="com.parasoft.scripting.UserMethod" version="2.2">
+           <code>true</code>
+           <ScriptCode className="com.parasoft.scripting.jsr223.ScriptCode" version="2.1.1.1">
+            <ScriptingInput className="com.parasoft.scripting.ScriptingInput" version="6">
+             <useText>true</useText>
+             <ScriptingTextInput className="com.parasoft.scripting.ScriptingTextInput" version="1.3">
+             </ScriptingTextInput>
+            </ScriptingInput>
+            <ScriptEngineIdentifier className="com.parasoft.scripting.jsr223.ScriptEngineIdentifier" version="1.1">
+            </ScriptEngineIdentifier>
+           </ScriptCode>
+           <methodId>true</methodId>
+           <ScriptMethodIdentifier className="com.parasoft.scripting.jsr223.ScriptMethodIdentifier" version="2.1.1">
+           </ScriptMethodIdentifier>
+          </UserMethod>
+         </ScriptedValue>
+        </MultiValue>
+       </NameValuePair>
+       <NameValuePair className="webtool.data.NameValuePair" version="3.3">
+        <name>client_secret</name>
+        <MultiValue className="webtool.data.MultiValue" version="1.4">
+         <StringTestValue className="webtool.data.StringTestValue" version="4.1">
+          <value>2Federate</value>
+         </StringTestValue>
+         <ParameterizedTestValue className="webtool.data.ParameterizedTestValue" version="3.1">
+         </ParameterizedTestValue>
+         <valuesSize>1</valuesSize>
+         <ScriptedValue className="webtool.data.ScriptedValue" version="1.1">
+          <UserMethod className="com.parasoft.scripting.UserMethod" version="2.2">
+           <code>true</code>
+           <ScriptCode className="com.parasoft.scripting.jsr223.ScriptCode" version="2.1.1.1">
+            <ScriptingInput className="com.parasoft.scripting.ScriptingInput" version="6">
+             <useText>true</useText>
+             <ScriptingTextInput className="com.parasoft.scripting.ScriptingTextInput" version="1.3">
+             </ScriptingTextInput>
+            </ScriptingInput>
+            <ScriptEngineIdentifier className="com.parasoft.scripting.jsr223.ScriptEngineIdentifier" version="1.1">
+            </ScriptEngineIdentifier>
+           </ScriptCode>
+           <methodId>true</methodId>
+           <ScriptMethodIdentifier className="com.parasoft.scripting.jsr223.ScriptMethodIdentifier" version="2.1.1">
+           </ScriptMethodIdentifier>
+          </UserMethod>
+         </ScriptedValue>
+        </MultiValue>
+       </NameValuePair>
+       <NameValuePair className="webtool.data.NameValuePair" version="3.3">
+        <name>grant_type</name>
+        <MultiValue className="webtool.data.MultiValue" version="1.4">
+         <StringTestValue className="webtool.data.StringTestValue" version="4.1">
+          <value>client_credentials</value>
+         </StringTestValue>
+         <ParameterizedTestValue className="webtool.data.ParameterizedTestValue" version="3.1">
+         </ParameterizedTestValue>
+         <valuesSize>1</valuesSize>
+         <ScriptedValue className="webtool.data.ScriptedValue" version="1.1">
+          <UserMethod className="com.parasoft.scripting.UserMethod" version="2.2">
+           <code>true</code>
+           <ScriptCode className="com.parasoft.scripting.jsr223.ScriptCode" version="2.1.1.1">
+            <ScriptingInput className="com.parasoft.scripting.ScriptingInput" version="6">
+             <useText>true</useText>
+             <ScriptingTextInput className="com.parasoft.scripting.ScriptingTextInput" version="1.3">
+             </ScriptingTextInput>
+            </ScriptingInput>
+            <ScriptEngineIdentifier className="com.parasoft.scripting.jsr223.ScriptEngineIdentifier" version="1.1">
+            </ScriptEngineIdentifier>
+           </ScriptCode>
+           <methodId>true</methodId>
+           <ScriptMethodIdentifier className="com.parasoft.scripting.jsr223.ScriptMethodIdentifier" version="2.1.1">
+           </ScriptMethodIdentifier>
+          </UserMethod>
+         </ScriptedValue>
+        </MultiValue>
+       </NameValuePair>
+       <NameValuePair className="webtool.data.NameValuePair" version="3.3">
+        <name>scope</name>
+        <MultiValue className="webtool.data.MultiValue" version="1.4">
+         <StringTestValue className="webtool.data.StringTestValue" version="4.1">
+          <value>docm.fn.repo.r docm.fn.repo.w docm.fn.repo.r</value>
+         </StringTestValue>
+         <ParameterizedTestValue className="webtool.data.ParameterizedTestValue" version="3.1">
+         </ParameterizedTestValue>
+         <valuesSize>1</valuesSize>
+         <ScriptedValue className="webtool.data.ScriptedValue" version="1.1">
+          <UserMethod className="com.parasoft.scripting.UserMethod" version="2.2">
+           <code>true</code>
+           <ScriptCode className="com.parasoft.scripting.jsr223.ScriptCode" version="2.1.1.1">
+            <ScriptingInput className="com.parasoft.scripting.ScriptingInput" version="6">
+             <useText>true</useText>
+             <ScriptingTextInput className="com.parasoft.scripting.ScriptingTextInput" version="1.3">
+             </ScriptingTextInput>
+            </ScriptingInput>
+            <ScriptEngineIdentifier className="com.parasoft.scripting.jsr223.ScriptEngineIdentifier" version="1.1">
+            </ScriptEngineIdentifier>
+           </ScriptCode>
+           <methodId>true</methodId>
+           <ScriptMethodIdentifier className="com.parasoft.scripting.jsr223.ScriptMethodIdentifier" version="2.1.1">
+           </ScriptMethodIdentifier>
+          </UserMethod>
+         </ScriptedValue>
+        </MultiValue>
+       </NameValuePair>
+      </NameValueProperties>
+      <TransportProperties className="webtool.messaging.TransportProperties" version="11">
+       <ProtocolPropertiesManager className="webtool.messaging.ProtocolPropertiesManager" version="1">
+        <size>3</size>
+        <HTTPClientHTTPProperties className="webtool.soap.http.HTTPClientHTTPProperties" version="3.15">
+         <HTTPCompressionConfiguration className="webtool.messaging.HTTPCompressionConfiguration" version="1.1">
+         </HTTPCompressionConfiguration>
+         <CommonHTTPProperties className="webtool.messaging.CommonHTTPProperties" version="4">
+          <MultiValue className="webtool.data.MultiValue" version="1.4">
+           <HTTPMethodTestValue className="webtool.messaging.HTTPMethodTestValue" version="1.1">
+            <method>POST</method>
+           </HTTPMethodTestValue>
+           <ParameterizedTestValue className="webtool.data.ParameterizedTestValue" version="3.1">
+           </ParameterizedTestValue>
+           <valuesSize>1</valuesSize>
+           <ScriptedValue className="webtool.data.ScriptedValue" version="1.1">
+            <UserMethod className="com.parasoft.scripting.UserMethod" version="2.2">
+             <code>true</code>
+             <ScriptCode className="com.parasoft.scripting.jsr223.ScriptCode" version="2.1.1.1">
+              <ScriptingInput className="com.parasoft.scripting.ScriptingInput" version="6">
+               <useText>true</useText>
+               <ScriptingTextInput className="com.parasoft.scripting.ScriptingTextInput" version="1.3">
+               </ScriptingTextInput>
+              </ScriptingInput>
+              <ScriptEngineIdentifier className="com.parasoft.scripting.jsr223.ScriptEngineIdentifier" version="1.1">
+              </ScriptEngineIdentifier>
+             </ScriptCode>
+             <methodId>true</methodId>
+             <ScriptMethodIdentifier className="com.parasoft.scripting.jsr223.ScriptMethodIdentifier" version="2.1.1">
+             </ScriptMethodIdentifier>
+            </UserMethod>
+           </ScriptedValue>
+          </MultiValue>
+          <OAuthConfiguration className="webtool.security.oauth.OAuthConfiguration" version="1">
+           <MultiValue className="webtool.data.MultiValue" version="1.4">
+            <StringTestValue className="webtool.data.StringTestValue" version="4.1">
+            </StringTestValue>
+            <ParameterizedTestValue className="webtool.data.ParameterizedTestValue" version="3.1">
+            </ParameterizedTestValue>
+           </MultiValue>
+           <MultiValue className="webtool.data.MultiValue" version="1.4">
+            <StringTestValue className="webtool.data.StringTestValue" version="4.1">
+            </StringTestValue>
+            <ParameterizedTestValue className="webtool.data.ParameterizedTestValue" version="3.1">
+            </ParameterizedTestValue>
+           </MultiValue>
+           <OAuthSignRequestConfiguration className="webtool.security.oauth.OAuthSignRequestConfiguration" version="1">
+            <MultiValue className="webtool.data.MultiValue" version="1.4">
+             <StringTestValue className="webtool.data.StringTestValue" version="4.1">
+             </StringTestValue>
+             <ParameterizedTestValue className="webtool.data.ParameterizedTestValue" version="3.1">
+             </ParameterizedTestValue>
+            </MultiValue>
+            <MultiValue className="webtool.data.MultiValue" version="1.4">
+             <StringTestValue className="webtool.data.StringTestValue" version="4.1">
+             </StringTestValue>
+             <ParameterizedTestValue className="webtool.data.ParameterizedTestValue" version="3.1">
+             </ParameterizedTestValue>
+            </MultiValue>
+           </OAuthSignRequestConfiguration>
+           <OAuthGetRequestTokenConfiguration className="webtool.security.oauth.OAuthGetRequestTokenConfiguration" version="1">
+            <MultiValue className="webtool.data.MultiValue" version="1.4">
+             <StringTestValue className="webtool.data.StringTestValue" version="4.1">
+             </StringTestValue>
+             <ParameterizedTestValue className="webtool.data.ParameterizedTestValue" version="3.1">
+             </ParameterizedTestValue>
+            </MultiValue>
+           </OAuthGetRequestTokenConfiguration>
+           <OAuthGetAccessTokenConfiguration className="webtool.security.oauth.OAuthGetAccessTokenConfiguration" version="1">
+            <MultiValue className="webtool.data.MultiValue" version="1.4">
+             <StringTestValue className="webtool.data.StringTestValue" version="4.1">
+             </StringTestValue>
+             <ParameterizedTestValue className="webtool.data.ParameterizedTestValue" version="3.1">
+             </ParameterizedTestValue>
+            </MultiValue>
+            <MultiValue className="webtool.data.MultiValue" version="1.4">
+             <StringTestValue className="webtool.data.StringTestValue" version="4.1">
+             </StringTestValue>
+             <ParameterizedTestValue className="webtool.data.ParameterizedTestValue" version="3.1">
+             </ParameterizedTestValue>
+            </MultiValue>
+            <MultiValue className="webtool.data.MultiValue" version="1.4">
+             <StringTestValue className="webtool.data.StringTestValue" version="4.1">
+             </StringTestValue>
+             <ParameterizedTestValue className="webtool.data.ParameterizedTestValue" version="3.1">
+             </ParameterizedTestValue>
+            </MultiValue>
+           </OAuthGetAccessTokenConfiguration>
+           <NameValueProperties className="webtool.data.NameValueProperties" version="1.4">
+           </NameValueProperties>
+          </OAuthConfiguration>
+          <ApplyableResetExistingCookiesConfiguration className="webtool.tool.ApplyableResetExistingCookiesConfiguration" version="1.1.2">
+           <ResetExistingCookiesPreferenceProviderImpl className="webtool.tool.ResetExistingCookiesPreferenceProviderImpl" version="1.1">
+           </ResetExistingCookiesPreferenceProviderImpl>
+           <DefaultResetExistingCookies className="webtool.tool.DefaultResetExistingCookies" version="1.1.1">
+           </DefaultResetExistingCookies>
+          </ApplyableResetExistingCookiesConfiguration>
+          <ClientSideSSLProperties className="webtool.security.ClientSideSSLProperties" version="1.1">
+          </ClientSideSSLProperties>
+          <NameValueProperties className="webtool.data.NameValueProperties" version="1.4">
+          </NameValueProperties>
+          <Authentication className="webtool.security.Authentication" version="2.4">
+           <NameValuePair className="webtool.data.NameValuePair" version="3.3">
+            <name>Service</name>
+            <MultiValue className="webtool.data.MultiValue" version="1.4">
+             <StringTestValue className="webtool.data.StringTestValue" version="4.1">
+             </StringTestValue>
+             <ParameterizedTestValue className="webtool.data.ParameterizedTestValue" version="3.1">
+             </ParameterizedTestValue>
+            </MultiValue>
+           </NameValuePair>
+           <NameValuePair className="webtool.data.NameValuePair" version="3.3">
+            <name>Username</name>
+            <MultiValue className="webtool.data.MultiValue" version="1.4">
+             <StringTestValue className="webtool.data.StringTestValue" version="4.1">
+             </StringTestValue>
+             <ParameterizedTestValue className="webtool.data.ParameterizedTestValue" version="3.1">
+             </ParameterizedTestValue>
+            </MultiValue>
+           </NameValuePair>
+           <NameValuePair className="webtool.data.NameValuePair" version="3.3">
+            <name>Password</name>
+            <MultiValue className="webtool.data.MultiValue" version="1.4">
+             <PasswordTestValue className="webtool.data.PasswordTestValue" version="1.1">
+             </PasswordTestValue>
+             <ParameterizedTestValue className="webtool.data.ParameterizedTestValue" version="3.1">
+             </ParameterizedTestValue>
+            </MultiValue>
+           </NameValuePair>
+          </Authentication>
+         </CommonHTTPProperties>
+         <ApplyableBooleanConfiguration className="com.parasoft.gui.ApplyableBooleanConfiguration" version="1.2.2">
+         </ApplyableBooleanConfiguration>
+         <ApplyableBooleanConfiguration className="com.parasoft.gui.ApplyableBooleanConfiguration" version="1.2.2">
+         </ApplyableBooleanConfiguration>
+         <ApplyableBooleanConfiguration className="com.parasoft.gui.ApplyableBooleanConfiguration" version="1.2.2">
+          <bool>true</bool>
+         </ApplyableBooleanConfiguration>
+        </HTTPClientHTTPProperties>
+        <HTTPClientHTTPProperties className="webtool.soap.http.HTTPClientHTTPProperties" version="3.15">
+         <HTTPCompressionConfiguration className="webtool.messaging.HTTPCompressionConfiguration" version="1.1">
+         </HTTPCompressionConfiguration>
+         <CommonHTTPProperties className="webtool.messaging.CommonHTTPProperties" version="4">
+          <MultiValue className="webtool.data.MultiValue" version="1.4">
+           <HTTPMethodTestValue className="webtool.messaging.HTTPMethodTestValue" version="1.1">
+            <method>POST</method>
+           </HTTPMethodTestValue>
+           <ParameterizedTestValue className="webtool.data.ParameterizedTestValue" version="3.1">
+           </ParameterizedTestValue>
+           <valuesSize>1</valuesSize>
+           <ScriptedValue className="webtool.data.ScriptedValue" version="1.1">
+            <UserMethod className="com.parasoft.scripting.UserMethod" version="2.2">
+             <code>true</code>
+             <ScriptCode className="com.parasoft.scripting.jsr223.ScriptCode" version="2.1.1.1">
+              <ScriptingInput className="com.parasoft.scripting.ScriptingInput" version="6">
+               <useText>true</useText>
+               <ScriptingTextInput className="com.parasoft.scripting.ScriptingTextInput" version="1.3">
+               </ScriptingTextInput>
+              </ScriptingInput>
+              <ScriptEngineIdentifier className="com.parasoft.scripting.jsr223.ScriptEngineIdentifier" version="1.1">
+              </ScriptEngineIdentifier>
+             </ScriptCode>
+             <methodId>true</methodId>
+             <ScriptMethodIdentifier className="com.parasoft.scripting.jsr223.ScriptMethodIdentifier" version="2.1.1">
+             </ScriptMethodIdentifier>
+            </UserMethod>
+           </ScriptedValue>
+          </MultiValue>
+          <OAuthConfiguration className="webtool.security.oauth.OAuthConfiguration" version="1">
+           <MultiValue className="webtool.data.MultiValue" version="1.4">
+            <StringTestValue className="webtool.data.StringTestValue" version="4.1">
+            </StringTestValue>
+            <ParameterizedTestValue className="webtool.data.ParameterizedTestValue" version="3.1">
+            </ParameterizedTestValue>
+           </MultiValue>
+           <MultiValue className="webtool.data.MultiValue" version="1.4">
+            <StringTestValue className="webtool.data.StringTestValue" version="4.1">
+            </StringTestValue>
+            <ParameterizedTestValue className="webtool.data.ParameterizedTestValue" version="3.1">
+            </ParameterizedTestValue>
+           </MultiValue>
+           <OAuthSignRequestConfiguration className="webtool.security.oauth.OAuthSignRequestConfiguration" version="1">
+            <MultiValue className="webtool.data.MultiValue" version="1.4">
+             <StringTestValue className="webtool.data.StringTestValue" version="4.1">
+             </StringTestValue>
+             <ParameterizedTestValue className="webtool.data.ParameterizedTestValue" version="3.1">
+             </ParameterizedTestValue>
+            </MultiValue>
+            <MultiValue className="webtool.data.MultiValue" version="1.4">
+             <StringTestValue className="webtool.data.StringTestValue" version="4.1">
+             </StringTestValue>
+             <ParameterizedTestValue className="webtool.data.ParameterizedTestValue" version="3.1">
+             </ParameterizedTestValue>
+            </MultiValue>
+           </OAuthSignRequestConfiguration>
+           <OAuthGetRequestTokenConfiguration className="webtool.security.oauth.OAuthGetRequestTokenConfiguration" version="1">
+            <MultiValue className="webtool.data.MultiValue" version="1.4">
+             <StringTestValue className="webtool.data.StringTestValue" version="4.1">
+             </StringTestValue>
+             <ParameterizedTestValue className="webtool.data.ParameterizedTestValue" version="3.1">
+             </ParameterizedTestValue>
+            </MultiValue>
+           </OAuthGetRequestTokenConfiguration>
+           <OAuthGetAccessTokenConfiguration className="webtool.security.oauth.OAuthGetAccessTokenConfiguration" version="1">
+            <MultiValue className="webtool.data.MultiValue" version="1.4">
+             <StringTestValue className="webtool.data.StringTestValue" version="4.1">
+             </StringTestValue>
+             <ParameterizedTestValue className="webtool.data.ParameterizedTestValue" version="3.1">
+             </ParameterizedTestValue>
+            </MultiValue>
+            <MultiValue className="webtool.data.MultiValue" version="1.4">
+             <StringTestValue className="webtool.data.StringTestValue" version="4.1">
+             </StringTestValue>
+             <ParameterizedTestValue className="webtool.data.ParameterizedTestValue" version="3.1">
+             </ParameterizedTestValue>
+            </MultiValue>
+            <MultiValue className="webtool.data.MultiValue" version="1.4">
+             <StringTestValue className="webtool.data.StringTestValue" version="4.1">
+             </StringTestValue>
+             <ParameterizedTestValue className="webtool.data.ParameterizedTestValue" version="3.1">
+             </ParameterizedTestValue>
+            </MultiValue>
+           </OAuthGetAccessTokenConfiguration>
+           <NameValueProperties className="webtool.data.NameValueProperties" version="1.4">
+           </NameValueProperties>
+          </OAuthConfiguration>
+          <ApplyableResetExistingCookiesConfiguration className="webtool.tool.ApplyableResetExistingCookiesConfiguration" version="1.1.2">
+           <ResetExistingCookiesPreferenceProviderImpl className="webtool.tool.ResetExistingCookiesPreferenceProviderImpl" version="1.1">
+           </ResetExistingCookiesPreferenceProviderImpl>
+           <DefaultResetExistingCookies className="webtool.tool.DefaultResetExistingCookies" version="1.1.1">
+           </DefaultResetExistingCookies>
+          </ApplyableResetExistingCookiesConfiguration>
+          <ClientSideSSLProperties className="webtool.security.ClientSideSSLProperties" version="1.1">
+          </ClientSideSSLProperties>
+          <NameValueProperties className="webtool.data.NameValueProperties" version="1.4">
+          </NameValueProperties>
+          <Authentication className="webtool.security.Authentication" version="2.4">
+           <NameValuePair className="webtool.data.NameValuePair" version="3.3">
+            <name>Service</name>
+            <MultiValue className="webtool.data.MultiValue" version="1.4">
+             <StringTestValue className="webtool.data.StringTestValue" version="4.1">
+             </StringTestValue>
+             <ParameterizedTestValue className="webtool.data.ParameterizedTestValue" version="3.1">
+             </ParameterizedTestValue>
+            </MultiValue>
+           </NameValuePair>
+           <NameValuePair className="webtool.data.NameValuePair" version="3.3">
+            <name>Username</name>
+            <MultiValue className="webtool.data.MultiValue" version="1.4">
+             <StringTestValue className="webtool.data.StringTestValue" version="4.1">
+             </StringTestValue>
+             <ParameterizedTestValue className="webtool.data.ParameterizedTestValue" version="3.1">
+             </ParameterizedTestValue>
+            </MultiValue>
+           </NameValuePair>
+           <NameValuePair className="webtool.data.NameValuePair" version="3.3">
+            <name>Password</name>
+            <MultiValue className="webtool.data.MultiValue" version="1.4">
+             <PasswordTestValue className="webtool.data.PasswordTestValue" version="1.1">
+             </PasswordTestValue>
+             <ParameterizedTestValue className="webtool.data.ParameterizedTestValue" version="3.1">
+             </ParameterizedTestValue>
+            </MultiValue>
+           </NameValuePair>
+          </Authentication>
+         </CommonHTTPProperties>
+         <protocol>1</protocol>
+         <ApplyableBooleanConfiguration className="com.parasoft.gui.ApplyableBooleanConfiguration" version="1.2.2">
+         </ApplyableBooleanConfiguration>
+         <ApplyableBooleanConfiguration className="com.parasoft.gui.ApplyableBooleanConfiguration" version="1.2.2">
+         </ApplyableBooleanConfiguration>
+         <ApplyableBooleanConfiguration className="com.parasoft.gui.ApplyableBooleanConfiguration" version="1.2.2">
+          <bool>true</bool>
+         </ApplyableBooleanConfiguration>
+        </HTTPClientHTTPProperties>
+        <NoneTransportProperties className="webtool.messaging.NoneTransportProperties" version="1">
+        </NoneTransportProperties>
+       </ProtocolPropertiesManager>
+       <ApplyableBooleanConfiguration className="com.parasoft.gui.ApplyableBooleanConfiguration" version="1.2.2">
+        <inverted>true</inverted>
+       </ApplyableBooleanConfiguration>
+      </TransportProperties>
+      <MessagingOutputProvider className="webtool.messaging.MessagingOutputProvider" version="1.2">
+       <HTTPNamedToolOutputProvider className="webtool.tool.HTTPNamedToolOutputProvider" version="1.1.2.1">
+        <menuName>Transport Header</menuName>
+        <name>Request Transport Header</name>
+       </HTTPNamedToolOutputProvider>
+       <HTTPNamedToolOutputProvider className="webtool.tool.HTTPNamedToolOutputProvider" version="1.1.2.1">
+        <menuName>Transport Header</menuName>
+        <name>Response Transport Header</name>
+       </HTTPNamedToolOutputProvider>
+       <NamedXMLToolOutputProvider className="webtool.xml.NamedXMLToolOutputProvider" version="1.2.1">
+        <menuName>Traffic</menuName>
+        <name>Request Traffic</name>
+       </NamedXMLToolOutputProvider>
+       <HTTPOutputProvider className="webtool.messaging.HTTPOutputProvider" version="1">
+        <m_name>Traffic Stream</m_name>
+        <m_outputsSize>1</m_outputsSize>
+        <FileStreamWriter className="webtool.stream.FileStreamWriter" version="2.5">
+         <FileWriterProperties className="webtool.stream.FileWriterProperties" version="5">
+          <targetDirectory>true</targetDirectory>
+          <RelativeLocation className="com.parasoft.util.RelativeLocation" version="1.4">
+           <path>${OUTPUT}\System\Search\</path>
+          </RelativeLocation>
+          <createDirectories>true</createDirectories>
+          <targetPattern>%b--%d--%t.txt</targetPattern>
+         </FileWriterProperties>
+        </FileStreamWriter>
+       </HTTPOutputProvider>
+       <ObjectOutputProvider className="webtool.messaging.ObjectOutputProvider" version="1.3.1">
+        <outputToolsSize>1</outputToolsSize>
+        <TrafficViewer className="webtool.traffic.TrafficViewer" version="v.2.3.14">
+         <iconName>TrafficViewer</iconName>
+         <name>Traffic Viewer</name>
+         <showRequestHeaders>true</showRequestHeaders>
+        </TrafficViewer>
+        <name>Traffic Object</name>
+       </ObjectOutputProvider>
+      </MessagingOutputProvider>
+      <outputToolsSize>3</outputToolsSize>
+      <GenericDataBank className="webtool.databank.GenericDataBank" version="v.2.1.14">
+       <dataSourceNames size="1">
+        <dataSourceName index="0">AddDocument</dataSourceName>
+       </dataSourceNames>
+       <iconName>XMLDataBank</iconName>
+       <name>JSON Data Bank</name>
+       <XMLtoDataSource className="webtool.xml.XMLtoDataSource" version="v.2.8.14.14">
+        <dataSourceNames size="1">
+         <dataSourceName index="0">AddDocument</dataSourceName>
+        </dataSourceNames>
+        <iconName>XMLDataBank</iconName>
+        <name>XML Data Bank</name>
+        <selectedXPathsSize>1</selectedXPathsSize>
+        <SelectedXPath className="webtool.xml.SelectedXPath" version="1.3">
+         <elementOption>1</elementOption>
+         <contentOption>1</contentOption>
+         <XMLDataBank_ExtractXPath>/root/access_token[1]/text()</XMLDataBank_ExtractXPath>
+         <mode>1</mode>
+        </SelectedXPath>
+        <canonicalizeOutput>true</canonicalizeOutput>
+        <xmlMessage>true</xmlMessage>
+        <VirtualDataSourceCreatorImpl className="webtool.data.VirtualDataSourceCreatorImpl" version="1.1">
+         <writableColumnsSize>1</writableColumnsSize>
+         <WritableColumn className="webtool.data.WritableColumn" version="1.5">
+          <dataSourceNames size="1">
+           <dataSourceName index="0">TOKEN: TOKEN</dataSourceName>
+          </dataSourceNames>
+          <mode>2</mode>
+          <customName>Test 4: access_token</customName>
+         </WritableColumn>
+        </VirtualDataSourceCreatorImpl>
+       </XMLtoDataSource>
+       <TextXmlConversionStrategySerializer className="webtool.textxmlconvert.TextXmlConversionStrategySerializer" version="3">
+        <dataFormatName>JSON</dataFormatName>
+        <conversionStrategyId>JSON</conversionStrategyId>
+        <conversionStrategyClassName>com.parasoft.xml.convert.json.JsonConversionStrategy</conversionStrategyClassName>
+       </TextXmlConversionStrategySerializer>
+       <ConversionOptionSetSerializer className="webtool.textxmlconvert.ConversionOptionSetSerializer" version="2">
+       </ConversionOptionSetSerializer>
+       <TextXmlModelTypeSerializer className="webtool.textxmlconvert.TextXmlModelTypeSerializer" version="2">
+       </TextXmlModelTypeSerializer>
+      </GenericDataBank>
+      <MethodTool className="webtool.scripting.MethodTool" version="v.2.5.2.14">
+       <dataSourceNames size="1">
+        <dataSourceName index="0">TOKEN</dataSourceName>
+       </dataSourceNames>
+       <iconName>Method</iconName>
+       <name>Extension Tool</name>
+       <OutputProviderImpl className="com.parasoft.tool.OutputProviderImpl" version="1.1">
+        <outputToolsSize>1</outputToolsSize>
+        <XMLtoDataSource className="webtool.xml.XMLtoDataSource" version="v.2.8.14.14">
+         <dataSourceNames size="1">
+          <dataSourceName index="0">AddDocument</dataSourceName>
+         </dataSourceNames>
+         <allowToolbar>false</allowToolbar>
+         <iconName>XMLDataBank</iconName>
+         <name>XML Data Bank</name>
+         <selectedXPathsSize>1</selectedXPathsSize>
+         <SelectedXPath className="webtool.xml.SelectedXPath" version="1.3">
+          <elementOption>1</elementOption>
+          <contentOption>1</contentOption>
+          <XMLDataBank_ExtractXPath>/root/z0[1]/text()</XMLDataBank_ExtractXPath>
+          <mode>1</mode>
+         </SelectedXPath>
+         <xmlMessage>true</xmlMessage>
+         <VirtualDataSourceCreatorImpl className="webtool.data.VirtualDataSourceCreatorImpl" version="1.1">
+          <writableColumnsSize>1</writableColumnsSize>
+          <WritableColumn className="webtool.data.WritableColumn" version="1.5">
+           <dataSourceNames size="1">
+            <dataSourceName index="0">TOKEN: DocumentID</dataSourceName>
+           </dataSourceNames>
+           <customName>Test 1: Token_FileNet</customName>
+          </WritableColumn>
+         </VirtualDataSourceCreatorImpl>
+        </XMLtoDataSource>
+       </OutputProviderImpl>
+       <UserMethod className="com.parasoft.scripting.UserMethod" version="2.2">
+        <useDataSource>true</useDataSource>
+        <code>true</code>
+        <JythonCode className="com.parasoft.scripting.jython.JythonCode" version="2.2.1.1">
+         <ScriptingInput className="com.parasoft.scripting.ScriptingInput" version="6">
+          <useText>true</useText>
+          <ScriptingTextInput className="com.parasoft.scripting.ScriptingTextInput" version="1.3">
+           <text>from com.parasoft.api import *&#xD;
+from sys import *&#xD;
+from soaptest.api import *&#xD;
+&#xD;
+def TokenAdd(input,context):&#xD;
+    input_one = context.getValue(&quot;TOKEN&quot;,&quot;TOKEN&quot;)&#xD;
+    input_two = &quot;Bearer &quot;&#xD;
+    &#xD;
+    result = input_two + input_one&#xD;
+    return SOAPUtil.getXMLFromString([result])</text>
+          </ScriptingTextInput>
+         </ScriptingInput>
+        </JythonCode>
+        <methodId>true</methodId>
+        <JythonMethodIdentifier className="com.parasoft.scripting.jython.JythonMethodIdentifier" version="2.1.1">
+         <methodName>TokenAdd</methodName>
+        </JythonMethodIdentifier>
+       </UserMethod>
+      </MethodTool>
+      <GenericAssertionTool className="webtool.assertor.GenericAssertionTool" version="v.2.1.14">
+       <iconName>XMLAssertor</iconName>
+       <name>JSON Assertor</name>
+       <XMLAssertionTool className="webtool.xml.assertion.XMLAssertionTool" version="v.2.2.1.14">
+        <iconName>XMLAssertor</iconName>
+        <name>XML Assertor</name>
+        <ExpectedXMLMessage className="webtool.xml.ExpectedXMLMessage" version="1.2.1">
+         <message>true</message>
+        </ExpectedXMLMessage>
+       </XMLAssertionTool>
+       <TextXmlConversionStrategySerializer className="webtool.textxmlconvert.TextXmlConversionStrategySerializer" version="3">
+        <dataFormatName>JSON</dataFormatName>
+        <conversionStrategyId>JSON</conversionStrategyId>
+        <conversionStrategyClassName>com.parasoft.xml.convert.json.JsonConversionStrategy</conversionStrategyClassName>
+       </TextXmlConversionStrategySerializer>
+       <ConversionOptionSetSerializer className="webtool.textxmlconvert.ConversionOptionSetSerializer" version="2">
+       </ConversionOptionSetSerializer>
+       <TextXmlModelTypeSerializer className="webtool.textxmlconvert.TextXmlModelTypeSerializer" version="2">
+       </TextXmlModelTypeSerializer>
+      </GenericAssertionTool>
+      <UserMethod className="com.parasoft.scripting.UserMethod" version="2.2">
+       <code>true</code>
+       <ScriptCode className="com.parasoft.scripting.jsr223.ScriptCode" version="2.1.1.1">
+        <ScriptingInput className="com.parasoft.scripting.ScriptingInput" version="6">
+         <useText>true</useText>
+         <ScriptingTextInput className="com.parasoft.scripting.ScriptingTextInput" version="1.3">
+         </ScriptingTextInput>
+        </ScriptingInput>
+        <ScriptEngineIdentifier className="com.parasoft.scripting.jsr223.ScriptEngineIdentifier" version="1.1">
+        </ScriptEngineIdentifier>
+       </ScriptCode>
+       <methodId>true</methodId>
+       <ScriptMethodIdentifier className="com.parasoft.scripting.jsr223.ScriptMethodIdentifier" version="2.1.1">
+       </ScriptMethodIdentifier>
+      </UserMethod>
+      <XMLBuilder className="webtool.xml.builder.XMLBuilder" version="6.6">
+      </XMLBuilder>
+      <InputUsable className="webtool.tool.InputUsable" version="5">
+       <use>1</use>
+       <TextUsable className="webtool.packet.TextUsable" version="4">
+        <MessagingClient_LiteralMessage></MessagingClient_LiteralMessage>
+        <type>application/json</type>
+       </TextUsable>
+       <InputUsableDataSource className="webtool.tool.InputUsableDataSource" version="1">
+        <columnName>REPOSITORY ID</columnName>
+       </InputUsableDataSource>
+      </InputUsable>
+      <mode>Literal</mode>
+      <QueryParametersLiteral className="webtool.soap.http.QueryParametersLiteral" version="1.1">
+       <isPropertiesRef>true</isPropertiesRef>
+      </QueryParametersLiteral>
+      <QueryParametersWadl className="webtool.soap.http.QueryParametersWadl" version="1.1">
+      </QueryParametersWadl>
+      <UrlPathParametersLiteral className="webtool.soap.http.UrlPathParametersLiteral" version="1.1">
+       <pathElementss size="2">
+        <MultiValue className="webtool.data.MultiValue" index="0" version="1.4">
+         <StringTestValue className="webtool.data.StringTestValue" version="4.1">
+          <value>as</value>
+         </StringTestValue>
+         <ParameterizedTestValue className="webtool.data.ParameterizedTestValue" version="3.1">
+         </ParameterizedTestValue>
+         <valuesSize>1</valuesSize>
+         <ScriptedValue className="webtool.data.ScriptedValue" version="1.1">
+          <UserMethod className="com.parasoft.scripting.UserMethod" version="2.2">
+           <code>true</code>
+           <ScriptCode className="com.parasoft.scripting.jsr223.ScriptCode" version="2.1.1.1">
+            <ScriptingInput className="com.parasoft.scripting.ScriptingInput" version="6">
+             <useText>true</useText>
+             <ScriptingTextInput className="com.parasoft.scripting.ScriptingTextInput" version="1.3">
+             </ScriptingTextInput>
+            </ScriptingInput>
+            <ScriptEngineIdentifier className="com.parasoft.scripting.jsr223.ScriptEngineIdentifier" version="1.1">
+            </ScriptEngineIdentifier>
+           </ScriptCode>
+           <methodId>true</methodId>
+           <ScriptMethodIdentifier className="com.parasoft.scripting.jsr223.ScriptMethodIdentifier" version="2.1.1">
+           </ScriptMethodIdentifier>
+          </UserMethod>
+         </ScriptedValue>
+        </MultiValue>
+        <MultiValue className="webtool.data.MultiValue" index="1" version="1.4">
+         <StringTestValue className="webtool.data.StringTestValue" version="4.1">
+          <value>token.oauth2</value>
+         </StringTestValue>
+         <ParameterizedTestValue className="webtool.data.ParameterizedTestValue" version="3.1">
+         </ParameterizedTestValue>
+         <valuesSize>1</valuesSize>
+         <ScriptedValue className="webtool.data.ScriptedValue" version="1.1">
+          <UserMethod className="com.parasoft.scripting.UserMethod" version="2.2">
+           <code>true</code>
+           <ScriptCode className="com.parasoft.scripting.jsr223.ScriptCode" version="2.1.1.1">
+            <ScriptingInput className="com.parasoft.scripting.ScriptingInput" version="6">
+             <useText>true</useText>
+             <ScriptingTextInput className="com.parasoft.scripting.ScriptingTextInput" version="1.3">
+             </ScriptingTextInput>
+            </ScriptingInput>
+            <ScriptEngineIdentifier className="com.parasoft.scripting.jsr223.ScriptEngineIdentifier" version="1.1">
+            </ScriptEngineIdentifier>
+           </ScriptCode>
+           <methodId>true</methodId>
+           <ScriptMethodIdentifier className="com.parasoft.scripting.jsr223.ScriptMethodIdentifier" version="2.1.1">
+           </ScriptMethodIdentifier>
+          </UserMethod>
+         </ScriptedValue>
+        </MultiValue>
+       </pathElementss>
+      </UrlPathParametersLiteral>
+      <UrlPathParametersWadl className="webtool.soap.http.UrlPathParametersWadl" version="1.1">
+      </UrlPathParametersWadl>
+      <RESTResourceMethod className="webtool.soap.http.RESTResourceMethod" version="2.2">
+       <httpMethod>GET</httpMethod>
+      </RESTResourceMethod>
+      <MultiValue className="webtool.data.MultiValue" version="1.4">
+       <StringTestValue className="webtool.data.StringTestValue" version="4.1">
+       </StringTestValue>
+       <ParameterizedTestValue className="webtool.data.ParameterizedTestValue" version="3.1">
+       </ParameterizedTestValue>
+       <valuesSize>2</valuesSize>
+       <ScriptedValue className="webtool.data.ScriptedValue" version="1.1">
+        <UserMethod className="com.parasoft.scripting.UserMethod" version="2.2">
+         <code>true</code>
+         <ScriptCode className="com.parasoft.scripting.jsr223.ScriptCode" version="2.1.1.1">
+          <ScriptingInput className="com.parasoft.scripting.ScriptingInput" version="6">
+           <useText>true</useText>
+           <ScriptingTextInput className="com.parasoft.scripting.ScriptingTextInput" version="1.3">
+           </ScriptingTextInput>
+          </ScriptingInput>
+          <ScriptEngineIdentifier className="com.parasoft.scripting.jsr223.ScriptEngineIdentifier" version="1.1">
+          </ScriptEngineIdentifier>
+         </ScriptCode>
+         <methodId>true</methodId>
+         <ScriptMethodIdentifier className="com.parasoft.scripting.jsr223.ScriptMethodIdentifier" version="2.1.1">
+         </ScriptMethodIdentifier>
+        </UserMethod>
+       </ScriptedValue>
+       <WadlTestValue className="webtool.messaging.wadl.WadlTestValue" version="1.1">
+       </WadlTestValue>
+      </MultiValue>
+     </RESTClient>
+    </RESTClientToolTest>
+   </TestSuite>   
+  <TestSuite className="webtool.test.TestSuite" version="43.15.2">
+   <DebugAssets className="webtool.test.debug.DebugAssets" version="1">
+   </DebugAssets>
+   <ReportingSettings className="webtool.test.ReportingSettings" version="1.1">
+    <TestGRSSettings className="webtool.test.grs.TestGRSSettings" version="1.4.3">
+    </TestGRSSettings>
+   </ReportingSettings>
+   <testLogic>true</testLogic>
+   <TestLogic className="webtool.test.logic.TestLogic" version="1.7">
+    <TestExecutionDelay className="webtool.test.logic.TestExecutionDelay" version="1.2">
+    </TestExecutionDelay>
+    <TestExecutionDelay className="webtool.test.logic.TestExecutionDelay" version="1.2">
+    </TestExecutionDelay>
+    <TestDependencyLogic className="webtool.test.logic.TestDependencyLogic" version="1.2">
+    </TestDependencyLogic>
+   </TestLogic>
+   <testID>1</testID>
+   <enabled>true</enabled>
+   <name>DocDelivery.1.raml</name>
+   <TestSuitePerformanceOptions className="webtool.test.performance.TestSuitePerformanceOptions" version="1.5">
+    <APMPerformanceProfileProviderContainer className="webtool.test.performance.apm.APMPerformanceProfileProviderContainer" version="1.1">
+    </APMPerformanceProfileProviderContainer>
+    <profiless size="0">
+    </profiless>
+   </TestSuitePerformanceOptions>
+   <AdvancedExecutionOptions className="webtool.test.AdvancedExecutionOptions" version="1.3">
+   </AdvancedExecutionOptions>
+   <TestSuiteLoadTestOptions className="webtool.loadtest.sim.component.soatest.TestSuiteLoadTestOptions" version="1.1">
+   </TestSuiteLoadTestOptions>
+   <SetupTeardownOptions className="webtool.test.SetupTeardownOptions" version="1.1">
+   </SetupTeardownOptions>
+   <browserOptions>true</browserOptions>
+   <TestSuiteBrowserTestingOptions className="webtool.test.TestSuiteBrowserTestingOptions" version="1.14">
+    <DefaultCustomFrameworkOption className="webtool.tool.DefaultCustomFrameworkOption" version="1.1.1">
+    </DefaultCustomFrameworkOption>
+    <InheritingAuthentication className="webtool.test.InheritingAuthentication" version="1.4">
+    </InheritingAuthentication>
+    <DefaultCustomHeadlessOption className="webtool.tool.DefaultCustomHeadlessOption" version="1.1.1">
+    </DefaultCustomHeadlessOption>
+    <DefaultCustomBrowserType className="webtool.tool.DefaultCustomBrowserType" version="1.8.1">
+     <CompositeBrowserType className="com.parasoft.util.CompositeBrowserType" version="1.1.1">
+      <browserTypes size="3">
+       <SingleBrowserType className="com.parasoft.util.SingleBrowserType" index="0" version="1.1.1">
+        <typeValue>0</typeValue>
+       </SingleBrowserType>
+       <SingleBrowserType className="com.parasoft.util.SingleBrowserType" index="1" version="1.1.1">
+        <typeValue>1</typeValue>
+       </SingleBrowserType>
+       <SingleBrowserType className="com.parasoft.util.SingleBrowserType" index="2" version="1.1.1">
+        <typeValue>3</typeValue>
+       </SingleBrowserType>
+      </browserTypes>
+     </CompositeBrowserType>
+    </DefaultCustomBrowserType>
+   </TestSuiteBrowserTestingOptions>
+   <TestSuiteSoapClientOptions className="webtool.test.TestSuiteSoapClientOptions" version="1.2">
+    <WsdlEndpointOptions className="webtool.tool.WsdlEndpointOptions" version="1.1">
+     <DefaultCustomWsdl className="webtool.tool.DefaultCustomWsdl" version="1.1.1">
+     </DefaultCustomWsdl>
+     <DefaultCustomEndpoint className="webtool.tool.DefaultCustomEndpoint" version="1.1.1">
+     </DefaultCustomEndpoint>
+    </WsdlEndpointOptions>
+    <SOAPRPCToolOptions className="webtool.app.SOAPRPCToolOptions" version="1.5">
+     <ResetExistingCookiesPreferenceProviderImpl className="webtool.tool.ResetExistingCookiesPreferenceProviderImpl" version="1.1">
+     </ResetExistingCookiesPreferenceProviderImpl>
+     <DefaultResetExistingCookies className="webtool.tool.DefaultResetExistingCookies" version="1.1.1">
+     </DefaultResetExistingCookies>
+     <RequestHeaderConstrainProviderImpl className="webtool.tool.RequestHeaderConstrainProviderImpl" version="1.1">
+     </RequestHeaderConstrainProviderImpl>
+     <DefaultCustomConstrain className="webtool.tool.DefaultCustomConstrain" version="1.1.1">
+     </DefaultCustomConstrain>
+     <DefaultCustomEncoding className="webtool.tool.DefaultCustomEncoding" version="1.1.1">
+     </DefaultCustomEncoding>
+     <DefaultCustomTimeout className="webtool.tool.DefaultCustomTimeout" version="1.2.1">
+     </DefaultCustomTimeout>
+     <DefaultCustomSoapVersion className="webtool.tool.DefaultCustomSoapVersion" version="1.1.1">
+     </DefaultCustomSoapVersion>
+     <DefaultCustomAttachment className="webtool.tool.DefaultCustomAttachment" version="1.1.1">
+     </DefaultCustomAttachment>
+     <DefaultCustomTransport className="webtool.tool.DefaultCustomTransport" version="1.1.1">
+     </DefaultCustomTransport>
+    </SOAPRPCToolOptions>
+   </TestSuiteSoapClientOptions>
+   <profileMappingID>1</profileMappingID>
+   <PropertyOwnerImpl className="com.parasoft.property.PropertyOwnerImpl" version="1.1">
+   </PropertyOwnerImpl>
+   <dataSourcesSize>1</dataSourcesSize>
+<testsSize>4</testsSize>
  </TestSuite>
  </TestSuite>
 </SOAtestProject>

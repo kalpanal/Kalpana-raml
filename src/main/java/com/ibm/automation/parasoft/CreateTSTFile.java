@@ -213,7 +213,7 @@ public class CreateTSTFile {
 			}
 
 		}*/
-		return current;
+		return testSuiteMain.getParentElement();
 	}
 
 	private static void printSpaces(int n) {
@@ -239,12 +239,12 @@ private static Element buildTestPathXML(
 					incrementerFirstTime.getAndIncrement();
 					if(incrementerFirstTime.get() == 1){
 						testSuiteXML = new XMLElementBuilder().loadTestSuiteTemplateXML();					
-						listChildren(testSuiteMain, 0, configurationTOEndPointList);
-						XMLElementBuilder.updateTemplateXMLForTestSuite(testSuiteMain, incrementerForTestID, configurationTO, true);
+						Element testSuiteMain1 = listChildren(testSuiteMain, 0, configurationTOEndPointList);
+						XMLElementBuilder.updateTemplateXMLForTestSuite(testSuiteMain1, incrementerForTestID, configurationTO, true);
 					} else{
 						testSuiteXML = new XMLElementBuilder().loadTestSuiteTemplateXML();					
-						listChildren(testSuiteMain, 0, configurationTOEndPointList);
-						XMLElementBuilder.updateTemplateXMLForTestSuite(testSuiteMain, incrementerForTestID, configurationTO, false);
+						Element testSuiteMain1 = listChildren(testSuiteMain, 0, configurationTOEndPointList);
+						XMLElementBuilder.updateTemplateXMLForTestSuite(testSuiteMain1, incrementerForTestID, configurationTO, false);
 						
 					}
 					

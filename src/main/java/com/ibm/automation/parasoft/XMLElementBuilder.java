@@ -16,6 +16,10 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 
+
+
+
+
 import org.jdom2.Attribute;
 import org.jdom2.Content;
 import org.jdom2.Document;
@@ -25,6 +29,7 @@ import org.jdom2.input.SAXBuilder;
 import org.jdom2.util.IteratorIterable;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.raml.v2.api.model.v08.parameters.Parameter;
 import org.xml.sax.SAXException;
 
 import com.fasterxml.jackson.core.JsonParseException;
@@ -34,6 +39,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.ibm.automation.excelOps.InputExcelFileVO;
 import com.ibm.automation.parasoft.domain.ConfigurationTO;
+import com.ibm.automation.parasoft.util.Util;
 
 public class XMLElementBuilder {
 
@@ -327,8 +333,13 @@ public class XMLElementBuilder {
 	
 			// Element testSuite = doc1.getRootElement();
 			try {
-				listChildrenForTestSuite(testSuiteMain, 0, incrementerForTestID,
-						configurationTO, firstTime);
+				try {
+					listChildrenForTestSuite(testSuiteMain, 0, incrementerForTestID,
+							configurationTO, firstTime);
+				} catch (ParserConfigurationException | SAXException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -337,10 +348,10 @@ public class XMLElementBuilder {
 			return testSuiteMain;
 		}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "unused" })
 	private static Element listChildrenForTestSuite(Element current, int depth,
 			AtomicInteger increment, ConfigurationTO configurationTO, boolean firstTime)
-					throws IOException {
+					throws IOException, ParserConfigurationException, SAXException {
 		// printSpaces(depth);
 		// System.out.println("Building test suite for end point URL"
 		// +configurationTO.getEndPointUrl());
@@ -350,7 +361,8 @@ public class XMLElementBuilder {
 		Element testID = null, testID1 = null, name1 = null, httpMethodTestValue = null, httpClientEndPoint = null;
 		Element docDelivery = null, ftpDeliveries = null, restClient = null, dataSourceName = null, nameValuePair = null;
 		Element restClientToolTest = null, messagingSchema = null, testsSize=null, profileMappingIDEle=null;
-		Element dataSourcesSize = null;
+		Element dataSourcesSize = null, fileWriterProperties = null, fileStreamWriter =null, nameValuePropertiesForQueryParams = null;
+		Element ftpDeliveriesRestClient = null, pathElementss = null, UrlPathParamsMultiValue=null, urlPathParametersLiteralElement = null;
 		IteratorIterable<Content> descendantsOfChannel = current
 				.getDescendants();
 		
@@ -370,6 +382,11 @@ public class XMLElementBuilder {
 								"ftpdeliveries-positive-testSuite")) {
 					ftpDeliveries = child;
 
+				}else if (child.getName().equalsIgnoreCase("name")
+						&& child.getTextNormalize().equals(
+								"ftpdeliveries-positive")) {
+					ftpDeliveriesRestClient = child;
+
 				} else if (child.getName().equalsIgnoreCase("testID")
 						&& child.getTextNormalize().equals("74")) {
 					testID1 = child;
@@ -382,10 +399,9 @@ public class XMLElementBuilder {
 							.getParent();
 					dataSourceName = child;
 
-				}*/ else if (child.getName().equalsIgnoreCase(
-						"HTTPClient_Endpoint")
-						&& child.getTextNormalize()
-						.equals("http://ocp.api.sys.td.com/com-td-ocp-delivery-api/ftpdeliveries")) {
+				}*/ else if (child.getName().equalsIgnoreCase("HTTPClient_Endpoint") && 
+						child.getTextTrim().equals("http://ocp.api.sys.td.com/com-td-ocp-delivery-api")
+						) {
 					// Element restClientElement = (Element)
 					// child.getParent().getParent();
 					httpClientEndPoint = child;
@@ -403,13 +419,21 @@ public class XMLElementBuilder {
 					// Element restClientElement = (Element)
 					// child.getParent().getParent();
 
-				} else if (child.getName().equalsIgnoreCase(
+				}else if(child.getName().equalsIgnoreCase("UrlPathParametersLiteral") && child.getTextTrim().equalsIgnoreCase("template")){ 
+					urlPathParametersLiteralElement = child;
+				}
+				else if (child.getName().equalsIgnoreCase(
 						"RESTClientToolTest")) {
 					// Element restClientElement = (Element)
 					// child.getParent().getParent();
 					restClientToolTest = child;
 				}else if(child.getName().equalsIgnoreCase("profileMappingID")){
 					profileMappingIDEle = child;
+				}
+				else if(child.getName().equalsIgnoreCase("FileStreamWriter")){
+					fileStreamWriter = child;
+				}else if(child.getName().equalsIgnoreCase("NameValueProperties") && child.getTextTrim().equalsIgnoreCase("templateforNameValuePair")){
+					nameValuePropertiesForQueryParams = child;
 				}
 				else if (child.getName().equalsIgnoreCase(
 						"MessagingSchemaElement")) {
@@ -425,8 +449,29 @@ public class XMLElementBuilder {
 				}else if(child.getName().equalsIgnoreCase("testsSize")){
 					testsSize = child;
 					
-				}
+				}/*else if(child.getName().equalsIgnoreCase("testRunsSize") && child.getText().equals("template")){
+					testRunsSize = child;
+				}*/
 			}}
+		
+		if(urlPathParametersLiteralElement != null){
+			urlPathParametersLiteralElement.removeContent();
+			String[] urlPaths = Util.tokenizePathURLEndpoint(configurationTO.getEndPointUrl());
+			urlPathParametersLiteralElement.addContent(new Element("pathElementss").setAttribute("size", urlPaths.length+""));
+			
+			
+			for (int i = 0; i < urlPaths.length; i++) {
+				
+	            System.out.println("paths::"+i+" "+urlPaths[i]+"\n");
+	            UrlPathParamsMultiValue = new XMLElementBuilder().loadElementValueTemplateXML("urlPathParamsMultiValue.xml").detachRootElement();
+	           // UrlPathParamsMultiValue = document.getRootElement();
+	           
+	            UrlPathParamsMultiValue.getChild("StringTestValue").getChild("value").removeContent();
+	            UrlPathParamsMultiValue.getChild("StringTestValue").getChild("value").addContent(urlPaths[i]);
+	            
+	            urlPathParametersLiteralElement.getChild("pathElementss").setContent(UrlPathParamsMultiValue);
+	        }
+		}
 
 		if (testID != null) {
 			testID.removeContent();
@@ -438,6 +483,8 @@ public class XMLElementBuilder {
 		}
 		ftpDeliveries.removeContent();
 		ftpDeliveries.addContent(configurationTO.getEndPointUrl());
+		ftpDeliveriesRestClient.removeContent();
+		ftpDeliveriesRestClient.addContent(configurationTO.getEndPointUrl());
 		if(testID1 != null){
 			testID1.removeContent();
 			testID1.addContent(increment.getAndIncrement() + "");
@@ -460,14 +507,56 @@ public class XMLElementBuilder {
 		.getChild("value").removeContent();
 		nameValuePair.getChild("MultiValue").getChild("StringTestValue")
 		.getChild("value")
-		.addContent("${ENV_VARIABLE_TOKEN_BYKALPANA}");
-
-		httpClientEndPoint.removeContent();
-		httpClientEndPoint.addContent(configurationTO.getEndPointUrl());
+		.addContent("${TOKEN}");
+		if(httpClientEndPoint != null){
+			httpClientEndPoint.removeContent();
+			String paramStr = null;
+			if(configurationTO.getQueryParameters() != null){
+				for(int i=0; i<  configurationTO.getQueryParameters().size(); i++){
+					Parameter parameter = configurationTO.getQueryParameters().get(i);
+					if(i == (configurationTO.getQueryParameters().size()-1)){
+						paramStr = paramStr+parameter.toString()+"=${"+parameter.toString()+"}";
+					}else{
+						paramStr = paramStr+parameter.toString()+"=${"+parameter.toString()+"}&amp;";
+					}
+				}
+				httpClientEndPoint.addContent(configurationTO.getEndPointUrl()+"?"+paramStr);
+			}else{
+				httpClientEndPoint.addContent(configurationTO.getEndPointUrl());
+			}
+		}
 		
 		testsSize.removeContent();
 		testsSize.addContent(configurationTO.getDataSource().size()+"");
-
+		if(nameValuePropertiesForQueryParams != null ){
+				
+				if(configurationTO.getQueryParameters() != null){
+					nameValuePropertiesForQueryParams.removeContent();
+					buildNameValuePropertiesForQueryParama(nameValuePropertiesForQueryParams, configurationTO.getQueryParameters());
+				}else{
+					nameValuePropertiesForQueryParams.removeContent();
+				}
+		}
+		/*if(testRunsSize != null){
+			buildTestRuns();
+		}*/
+		
+		Element fileWriterPropertiesPath = null;
+		if(fileWriterProperties != null){
+			IteratorIterable<Content> descendantsOfileWriter = fileWriterProperties.getDescendants();			
+			
+			for (Content descendant : descendantsOfileWriter) {
+				if (descendant.getCType().equals(Content.CType.Element)) {
+					Element child = (Element) descendant;
+					if (child.getName().equalsIgnoreCase("path")) {
+						fileWriterPropertiesPath = child;
+		}}}
+		}
+		if(fileWriterPropertiesPath != null){
+			fileWriterPropertiesPath.removeContent();
+			fileWriterPropertiesPath.addContent("$OUTPUT"+configurationTO.getEndPointUrl());
+		}
+		
 		restClientToolTest.getChild("name").removeContent();
 			restClientToolTest.getChild("name").addContent(
 					configurationTO.getDataSourcePath() + " - "
@@ -481,6 +570,44 @@ public class XMLElementBuilder {
 	}
 
 	
+	private static void buildNameValuePropertiesForQueryParama(Element nameValuePropertiesForQueryParams,
+			List<Parameter> queryParametersList) throws IOException {
+		Element propertiesSize = new Element("propertiesSize");
+		propertiesSize.addContent(queryParametersList.size()+"");
+		
+		nameValuePropertiesForQueryParams.addContent(propertiesSize);
+		
+		for(int i=0; i<  queryParametersList.size(); i++){
+			Parameter parameter = queryParametersList.get(i);
+			
+			Element nameValuePairElement = new XMLElementBuilder().loadElementValueTemplateXML("nameValuePair.xml").detachRootElement();
+			
+			IteratorIterable<Content> descendantsOfNameValuePair = nameValuePairElement.getDescendants();
+			Element name = null, column = null;
+			Element secondTimeMessaingSchema = null;
+			for (Content descendant : descendantsOfNameValuePair) {
+				if (descendant.getCType().equals(Content.CType.Element)) {
+					Element child = (Element) descendant;
+					if (child.getName().equalsIgnoreCase("name")) {
+						name = child;
+						
+					}else if(child.getName().equalsIgnoreCase("column")){
+						column = child;
+						
+					}
+				}
+			}
+			name.removeContent();
+			name.addContent(parameter.displayName().toString());
+			column.removeContent();
+			column.addContent(parameter.displayName().toString());
+			
+			nameValuePropertiesForQueryParams.addContent(nameValuePairElement);
+			
+		}
+		
+	}
+
 	private static void buildRESTClientToolTest(Element restClientToolTest, Element messagingSchema,
 			ConfigurationTO configurationTO, boolean firstTime, AtomicInteger increment) {
 		Element restClientToolTestParent = (Element) restClientToolTest.getParent();
@@ -518,7 +645,7 @@ public class XMLElementBuilder {
 						try {
 							//restClientToolTestParent.addContent(new XMLElementBuilder().loadElementValueTemplateXML("restClientToolTestTemplateXML.xml").detachRootElement());
 							Element secondRestClientToolTestParent = new XMLElementBuilder().loadElementValueTemplateXML("restClientToolTestTemplateXML.xml").detachRootElement();
-							updateRestToolTest(secondRestClientToolTestParent, increment, configurationTO);
+							secondRestClientToolTestParent = updateRestToolTest(secondRestClientToolTestParent, increment, configurationTO);
 							IteratorIterable<Content> descendantsOfChannel = secondRestClientToolTestParent
 									.getDescendants();
 							Element secondTimeMessaingSchema = null;
@@ -1082,8 +1209,14 @@ public class XMLElementBuilder {
 		.loadElementValueTemplateXML("objectTypeValueTemplateXML.xml");
 		//elementForObject.getRootElement().getChild("localName").setText(columnName);
 		//System.out.println(innerMostChildForComplexType);
-		innerMostChildForComplexType.getChild("valuesSize").removeContent();
-		innerMostChildForComplexType.getChild("valuesSize").addContent(valueSize+"");
+		if(innerMostChildForComplexType.getChild("valuesSize").getText().equals("template")){
+			innerMostChildForComplexType.getChild("valuesSize").removeContent();
+			innerMostChildForComplexType.getChild("valuesSize").addContent("1");
+		}else{
+			innerMostChildForComplexType.getChild("valuesSize").removeContent();
+			innerMostChildForComplexType.getChild("valuesSize").addContent(valueSize + "");
+		}
+		
 		innerMostChildForComplexType.addContent(
 				elementForObject.detachRootElement());
 		return current;
@@ -1258,11 +1391,13 @@ public class XMLElementBuilder {
 	}
 
 
-	public static void updateRestToolTest(Element current, AtomicInteger increment, ConfigurationTO configurationTO){
+	@SuppressWarnings("unused")
+	public static Element updateRestToolTest(Element current, AtomicInteger increment, ConfigurationTO configurationTO) throws ParserConfigurationException, SAXException, IOException{
 
 		Element testID = null, testID1 = null, name1 = null, httpMethodTestValue = null, httpClientEndPoint = null;
 		Element docDelivery = null, ftpDeliveries = null, restClient = null, dataSourceName = null, nameValuePair = null;
-		Element restClientToolTest = null, messagingSchema = null;
+		Element restClientToolTest = null, messagingSchema = null, pathElementss = null, UrlPathParamsMultiValue=null;
+		Element urlPathParametersLiteralElement = null;
 
 		IteratorIterable<Content> descendantsOfChannel = current
 				.getDescendants();
@@ -1270,19 +1405,21 @@ public class XMLElementBuilder {
 			if (descendant.getCType().equals(Content.CType.Element)) {
 				Element child = (Element) descendant;
 				if (child.getName().equalsIgnoreCase("name")
-						&& child.getTextNormalize().equals(
+						&& child.getText().equalsIgnoreCase(
 								"ftpdeliveries-positive")) {
 					ftpDeliveries = child;
+					//child.removeContent();
+					//child.addContent(configurationTO.getEndPointUrl());
 
 				} else if (child.getName().equalsIgnoreCase("testID")
-						&& child.getTextNormalize().equals("74")) {
+						&& child.getText().equals("74")) {
 					testID1 = child;
 				} else if (child.getName().equalsIgnoreCase("name")
-						&& child.getTextNormalize().equals("REST Client")) {
+						&& child.getText().equals("REST Client")) {
 					restClient = child;
 				} else if (child.getName().equalsIgnoreCase(
 						"HTTPClient_Endpoint")
-						&& child.getTextNormalize()
+						&& child.getTextTrim()
 						.equals("http://ocp.api.sys.td.com/com-td-ocp-delivery-api/ftpdeliveries")) {
 					httpClientEndPoint = child;
 
@@ -1301,6 +1438,9 @@ public class XMLElementBuilder {
 						"RESTClientToolTest")) {
 					restClientToolTest = child;
 				}
+				else if(child.getName().equalsIgnoreCase("UrlPathParametersLiteral") && child.getText().equalsIgnoreCase("template")){ 
+					urlPathParametersLiteralElement = child;
+				}
 				/*else if (child.getName().equalsIgnoreCase(
 						"MessagingSchemaElement")) {
 					if(child.getChildren().size()>0){
@@ -1314,7 +1454,24 @@ public class XMLElementBuilder {
 				 				
 			}
 		}
-
+		if(urlPathParametersLiteralElement != null){
+			urlPathParametersLiteralElement.removeContent();
+			String[] urlPaths = Util.tokenizePathURLEndpoint(configurationTO.getEndPointUrl());
+			urlPathParametersLiteralElement.addContent(new Element("pathElementss").setAttribute("size", urlPaths.length+""));
+			
+			
+			for (int i = 0; i < urlPaths.length; i++) {
+				
+	            System.out.println("paths::"+i+" "+urlPaths[i]+"\n");
+	            UrlPathParamsMultiValue = new XMLElementBuilder().loadElementValueTemplateXML("urlPathParamsMultiValue.xml").detachRootElement();
+	            //UrlPathParamsMultiValue = document.getRootElement();
+	           
+	            UrlPathParamsMultiValue.getChild("StringTestValue").getChild("value").removeContent();
+	            UrlPathParamsMultiValue.getChild("StringTestValue").getChild("value").addContent(urlPaths[i]);
+	            
+	            urlPathParametersLiteralElement.getChild("pathElementss").setContent(UrlPathParamsMultiValue);
+	        }
+		}
 	if (testID != null) {
 		testID.removeContent();
 		testID.addContent(increment.getAndIncrement() + "");
@@ -1323,8 +1480,10 @@ public class XMLElementBuilder {
 		docDelivery.removeContent();
 		docDelivery.addContent(configurationTO.getRamlFileName());
 	}
-	ftpDeliveries.removeContent();
-	ftpDeliveries.addContent(configurationTO.getEndPointUrl());
+	if(ftpDeliveries != null){
+		ftpDeliveries.removeContent();
+		ftpDeliveries.addContent(configurationTO.getEndPointUrl());
+	}
 	if(testID1 != null){
 		testID1.removeContent();
 		testID1.addContent(increment.getAndIncrement() + "");
@@ -1345,11 +1504,33 @@ public class XMLElementBuilder {
 	.getChild("value").removeContent();
 	nameValuePair.getChild("MultiValue").getChild("StringTestValue")
 	.getChild("value")
-	.addContent("${ENV_VARIABLE_TOKEN_BYKALPANA}");
+	.addContent("${TOKEN}");
 
-	httpClientEndPoint.removeContent();
-	httpClientEndPoint.addContent(configurationTO.getEndPointUrl());
+	/*if(httpClientEndPoint !=null){
+		httpClientEndPoint.removeContent();
+		httpClientEndPoint.addContent(configurationTO.getEndPointUrl());
 
+	}*/
+	
+	if(httpClientEndPoint != null){
+		httpClientEndPoint.removeContent();
+		String paramStr = null;
+		if(configurationTO.getQueryParameters() != null){
+			for(int i=0; i<  configurationTO.getQueryParameters().size(); i++){
+				Parameter parameter = configurationTO.getQueryParameters().get(i);
+				if(i == (configurationTO.getQueryParameters().size()-1)){
+					paramStr = paramStr+parameter.toString()+"=${"+parameter.toString()+"}";
+				}else{
+					paramStr = paramStr+parameter.toString()+"=${"+parameter.toString()+"}&amp;";
+				}
+			}
+			httpClientEndPoint.addContent(configurationTO.getEndPointUrl()+"?"+paramStr);
+		}else{
+			httpClientEndPoint.addContent(configurationTO.getEndPointUrl());
+		}
+	}
+	return current;	
 
 }
+	
 	}

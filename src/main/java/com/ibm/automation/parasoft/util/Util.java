@@ -92,6 +92,13 @@ public class Util {
 		return propertyValue;
 	}
 
+	public static String[] tokenizePathURLEndpoint(String tokenizePathURLEndpoint){
+		tokenizePathURLEndpoint = tokenizePathURLEndpoint.substring(tokenizePathURLEndpoint.indexOf("/"));
+		System.out.println("splitting of sprint starts \n");
+        String[] urlPathTokens = tokenizePathURLEndpoint.split("/");
+		return urlPathTokens;
+		
+	}
 /*	@SuppressWarnings("unchecked")
 	public static void main(String[] args) throws Exception {
 		ArrayList<DataSheetEndpoint> list = loadProperties();

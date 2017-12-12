@@ -42,8 +42,7 @@ public class ParasoftTstGeneratorMain {
 		
 		
 		
-		RamlModelResult ramlModelResult = new RamlModelBuilder()
-		.buildApi(filesListWithFullPath.get(0));
+		RamlModelResult ramlModelResult = new RamlModelBuilder().buildApi(filesListWithFullPath.get(0));
 		ramlModelResult.getApiV08();
 		ramlModelResult.getSecurityScheme();
 	
@@ -84,7 +83,8 @@ public class ParasoftTstGeneratorMain {
 					
 					// if(urlEndPointsNode.resources().size() > 0){
 					urlEndPointsNode.resources().forEach(
-							(urlEndPointsSubNode) -> {
+							(urlEndPointsSubNode) -> {						
+								//System.out.println(urlEndPointsSubNode.methods().get(0).queryParameters());
 								ArrayList<ConfigurationTO> configurationTOSubNodeLevelDSList = new ArrayList<ConfigurationTO>();
 								List<AppConfigurationPropertiesForDataSheet> dataSheetsListSubNodeLevel = appConfigPropertiesForDatasheets.stream().filter(p -> p.getEndpointUrl().equals(urlEndPointsSubNode.resourcePath())).collect(Collectors.toList());
 								System.out.println(dataSheetsListSubNodeLevel);							
@@ -95,6 +95,7 @@ public class ParasoftTstGeneratorMain {
 										configurationTOSubNode.setRamlFileName(filesList.get(0));
 										configurationTOSubNode.setAppConfigPath(appConfigPath);
 										configurationTOSubNode.setInputTstFile(inputTstFile);
+										configurationTOSubNode.setQueryParameters(urlEndPointsSubNode.methods().get(0).queryParameters());
 										//configurationTOSubNodeLevelDSList.add(configurationTOSubNode);
 									} catch (Exception e) {
 										// TODO Auto-generated catch block
@@ -149,7 +150,7 @@ public class ParasoftTstGeneratorMain {
 		String inputMethodType = urlEndPointsSubNode.methods().get(0).method();
 		configurationTO.setMethod(inputMethodType);
 		configurationTO.setDataSourcePath(Util.loadProperties("DATA_SOURCE_PATH", appConfigPath));
-		configurationTO.setEndPointUrl("${BASEURL}"
+		configurationTO.setEndPointUrl(Util.loadProperties("BASE_URL", appConfigPath)
 				+ urlEndPointsSubNode.resourcePath());
 		configurationTO.setTestPathUrl(Util.loadProperties("BASE_URL", appConfigPath)+urlEndPointsSubNode.resourcePath());
 		configurationTO.setSecuredBy(urlEndPointsSubNode.methods().get(0)
@@ -183,6 +184,8 @@ public class ParasoftTstGeneratorMain {
 				//System.out.println("generation without settings"+new JsonGenerator(schema1, null).generate());
 				//System.out.println("generation with settings"+generateWithSettings(schema1));
 				if(urlEndPointsSubNode.methods().get(0).body().size() >0){
+					System.out.println(JsonGeneratorFromSchema.generateInputSampleString(urlEndPointsSubNode
+						.methods().get(0).body().get(0).schemaContent()).toString());
 				configurationTO.setInputSampleString(JsonGeneratorFromSchema.generateInputSampleString(urlEndPointsSubNode
 						.methods().get(0).body().get(0).schemaContent()).toString());
 				}

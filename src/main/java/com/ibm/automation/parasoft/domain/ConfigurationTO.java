@@ -3,6 +3,8 @@ package com.ibm.automation.parasoft.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.raml.v2.api.model.v08.parameters.Parameter;
+
 public class ConfigurationTO {
 
 	public String getMethod() {
@@ -50,7 +52,14 @@ public class ConfigurationTO {
 	String profileMappingID;
 	String appConfigPath;
 	String inputTstFile;
+	List<Parameter> queryParameters;
 	
+	public List<Parameter> getQueryParameters() {
+		return queryParameters;
+	}
+	public void setQueryParameters(List<Parameter> queryParameters) {
+		this.queryParameters = queryParameters;
+	}
 	public String getInputTstFile() {
 		return inputTstFile;
 	}
@@ -133,5 +142,6 @@ public class ConfigurationTO {
 	public void setSecuredBy(String securedBy) {
 		this.securedBy = securedBy;
 	}
+	
 	
 }
