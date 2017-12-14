@@ -1457,8 +1457,7 @@ public class XMLElementBuilder {
 		if(urlPathParametersLiteralElement != null){
 			urlPathParametersLiteralElement.removeContent();
 			String[] urlPaths = Util.tokenizePathURLEndpoint(configurationTO.getEndPointUrl());
-			urlPathParametersLiteralElement.addContent(new Element("pathElementss").setAttribute("size", (urlPaths.length-1)+""));
-			
+			urlPathParametersLiteralElement.addContent(new Element("pathElementss").setAttribute("size", (urlPaths.length-1)+""));			
 			
 			for (int i = 1; i < urlPaths.length; i++) {
 				

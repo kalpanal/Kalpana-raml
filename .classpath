@@ -34,6 +34,6 @@
 	<classpathentry kind="lib" path="C:/KalpanaTAEWorkspace/Kalpana-raml/lib/json-schema-1.1.0-alpha1.jar"/>
 	<classpathentry kind="lib" path="C:/KalpanaTAEWorkspace/Kalpana-raml/lib/json-wrapper-1.1.0-alpha1.jar"/>
 	<classpathentry kind="lib" path="C:/KalpanaTAEWorkspace/Kalpana-raml/lib/model-generator-1.1.0-alpha1.jar"/>
-	<classpathentry kind="lib" path="C:/apache-tomcat-7.0.70/apache-tomcat-7.0.70/lib/json-lib.jar"/>
+	<classpathentry kind="lib" path="C:/KalpanaTAEWorkspace/Kalpana-raml/lib/json-lib-0.9.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

@@ -1,0 +1,22 @@
+#%RAML 0.8
+title: Document Deliveries
+version: v1
+protocols: [HTTPS]
+/printdeliveries:
+  is: [Mex,StandardErrorResponses] 
+  post:
+    securedBy: ["oauth_2_0":{ "scopes": [ "docd.ocp.docd.w" ] }]    
+    description: | 
+      Create a print job to deliver document to a specified printer.
+    body:
+       application/json:
+          schema: AddPrintDeliveryRq   
+    responses:
+     200:
+        description: 200 -  success
+     207:
+        description: 207 -  Partial success
+        body:
+          application/json: 
+            schema: Status
+ 
