@@ -422,10 +422,7 @@ public class XMLElementBuilder {
 				}else if(child.getName().equalsIgnoreCase("UrlPathParametersLiteral") && child.getTextTrim().equalsIgnoreCase("template")){ 
 					urlPathParametersLiteralElement = child;
 				}
-				else if (child.getName().equalsIgnoreCase(
-						"RESTClientToolTest")) {
-					// Element restClientElement = (Element)
-					// child.getParent().getParent();
+				else if (child.getName().equalsIgnoreCase("RESTClientToolTest")) {
 					restClientToolTest = child;
 				}else if(child.getName().equalsIgnoreCase("profileMappingID")){
 					profileMappingIDEle = child;
@@ -522,12 +519,12 @@ public class XMLElementBuilder {
 				}
 				httpClientEndPoint.addContent(configurationTO.getEndPointUrl()+"?"+paramStr);
 			}else{
-				httpClientEndPoint.addContent(configurationTO.getEndPointUrl());
 			}
 		}
 		
 		testsSize.removeContent();
-		testsSize.addContent(configurationTO.getDataSource().size()+"");
+		//testsSize.addContent(configurationTO.getDataSource().size()+"");
+		testsSize.addContent("1");
 		if(nameValuePropertiesForQueryParams != null ){
 				
 				if(configurationTO.getQueryParameters() != null){
@@ -615,24 +612,20 @@ public class XMLElementBuilder {
 
 		AtomicInteger firstTimeRestClientToolSet = new AtomicInteger();
 		System.out.println("for END POINT URL ------->"+configurationTO.getEndPointUrl() + "-----data soruces======>"+configurationTO.getDataSource());
-		configurationTO.getDataSource().forEach(
-				(dataSheetName) -> {
+/*		configurationTO.getDataSource().forEach(
+				(dataSheetName) -> {*/
 					if(firstTimeRestClientToolSet.get() == 0){
 						firstTimeRestClientToolSet.incrementAndGet();
-						Element elementToAddElementValueXML = null;
 						try {
-							messagingSchema.addContent(0, new XMLElementBuilder()
-							.loadElementValueTemplateXML("rootElementTemplateXML.xml")
+							messagingSchema.addContent(0, new XMLElementBuilder().loadElementValueTemplateXML("rootElementTemplateXML.xml")
 							.getRootElement().detach());
 							
-						buildCompositorValueSet(messagingSchema,
-								configurationTO.getInputSampleString());
+						buildCompositorValueSet(messagingSchema, configurationTO.getInputSampleString());
 						updatedHashTagValues(messagingSchema);
-						buildComplexValueUnderMessagingSchema(messagingSchema,
-								configurationTO.getInputSampleString());
+						buildComplexValueUnderMessagingSchema(messagingSchema, configurationTO.getInputSampleString());
 						
 						/** update messagingSchemaElement with empty <ElementType> and emtpy <ElementValue>
-						 * nodes if incoming request json is empty,
+						 * nodes if incoming request 	json is empty,
 						 * this should be called only for first time messaging schema(if loop)
 						 * , not in else loop
 						 */						
@@ -692,7 +685,7 @@ public class XMLElementBuilder {
 
 
 					//restClientToolTestParent.
-				});
+				//});
 
 
 	}

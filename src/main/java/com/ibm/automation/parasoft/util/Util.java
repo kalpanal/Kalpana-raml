@@ -39,7 +39,6 @@ public class Util {
 		finally {
 			scanAppConfigFile.close();
 	    }
-
 		return endPointURLAndDataSheetName;
 	}
 	
@@ -110,4 +109,15 @@ public class Util {
 		List<DataSheetEndpoint> filteredlist = list.stream().filter(p -> p.getEndpointUrl().equals("/printdeliveries")).collect(Collectors.toList());
 		System.out.println(filteredlist);
 	}*/
+
+	public static ArrayList<String> loadDataSheets(String appConfigPath) throws Exception {
+		ArrayList<String> dataSheetsList = new ArrayList<String>();
+		  File dir = new File(loadProperties("DATA_SOURCE_PATH", appConfigPath));
+		  for (File file : dir.listFiles()) {
+		    if (file.getName().endsWith((".xlsx"))) {
+		    	dataSheetsList.add(file.getName());
+		    }
+		  }
+		return dataSheetsList;
+	}
 }

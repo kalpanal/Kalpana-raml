@@ -21,6 +21,14 @@
         <url>http://central.maven.org/maven2/</url>
       </repository>
   </repositories> -->
+  
+<!--   <repositories>
+    <repository>
+        <id>local-maven-repo</id>
+        <url>file://${project.basedir}/lib</url>
+    </repository>
+</repositories> -->
+
 	<build>
 		<plugins>
 			<plugin>

@@ -35,8 +35,8 @@ public class CreateTSTFile {
 	public static void createTstFile() {
 
 		boolean foundUPC = false;
-		try {
-			String FILE_NAME = "C:/Kalpana/TD Bank/datasheets/DocDelivery.xlsx";
+		//try {
+			/*String FILE_NAME = "C:/Kalpana/TD Bank/datasheets/DocDelivery.xlsx";
 			FileInputStream spreadsheet = new FileInputStream(new File(
 					FILE_NAME));
 			// Create workbook instance to hold file reference to .xlsxfile
@@ -131,7 +131,7 @@ public class CreateTSTFile {
 		}
 
 		System.out.println("Done");
-	}
+*/	}
 
 	public static void writeFileUsingJDOM(ArrayList<ConfigurationTO> configurationTOEndPointList)
 			throws Exception {

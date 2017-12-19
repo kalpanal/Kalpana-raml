@@ -29,13 +29,13 @@ import com.ibm.automation.parasoft.util.Util;
 
 
 public class ReadExcelDataSheet {
-	private static final String FILE_NAME = "C:/Kalpana/TD Bank/datasheets/DocDelivery.xlsx";
-
 	public static void buildDataSources(Element testSuiteMain, String appConfigPath) throws FileNotFoundException, Exception {
 		
 		IteratorIterable<Content> descendantsOfChannel = testSuiteMain.getDescendants();
 		Element dataSourcesSize = null;
 		ArrayList<AppConfigurationPropertiesForDataSheet> appConfigPropertiesForDatasheets = Util.loadPropertiesForDataSheets(appConfigPath);
+		
+		ArrayList<String> listOfDataSheetNames = Util.loadDataSheets(appConfigPath);
 		String dataSheetPath = Util.loadProperties("DATA_SOURCE_PATH", appConfigPath);
 		
 		for (Content descendant : descendantsOfChannel) {
@@ -50,7 +50,7 @@ public class ReadExcelDataSheet {
 		
 		dataSourcesSize.removeContent();
 		dataSourcesSize.addContent((appConfigPropertiesForDatasheets.size())+"");
-		for (AppConfigurationPropertiesForDataSheet appConfigurationPropertiesForDataSheet : appConfigPropertiesForDatasheets) {
+		for (String dataSheet : listOfDataSheetNames) {
 			try {
 				//inputExcelFileVO = parse(configurationTO.getDataSourcePath()+"/"+dataSheetName);
 				Element dataSource = new Element("DataSource");
@@ -62,12 +62,12 @@ public class ReadExcelDataSheet {
 				Element excelDataSourceImpl = new Element("ExcelDataSourceImpl");
 				excelDataSourceImpl.setAttribute("className", "com.parasoft.data.ExcelDataSourceImpl");
 				excelDataSourceImpl.setAttribute("version", "1.5.5");
-				System.out.println("appConfigurationPropertiesForDataSheet.getDatasheetName()"+appConfigurationPropertiesForDataSheet.getDatasheetName());
+				System.out.println("appConfigurationPropertiesForDataSheet.getDatasheetName()"+dataSheet);
 				
 				Element name = new Element("name");
-				name.addContent(StringUtilsCustom.getSheetNameAlone(appConfigurationPropertiesForDataSheet.getDatasheetName()));
+				name.addContent(dataSheet);
 				
-				Element sheets = generateDatasheets(dataSheetPath+"/"+appConfigurationPropertiesForDataSheet.getDatasheetName());
+				Element sheets = generateDatasheets(dataSheetPath+"/"+dataSheet);
 				excelDataSourceImpl.addContent(sheets);
 				
 				dataSource.addContent(excelDataSourceImpl);
@@ -88,7 +88,7 @@ public class ReadExcelDataSheet {
 		
 		System.out.println("StringUtilsCustom.getFileNameWithOutSheet(fileNameWithPath)====>"+fileNameWithPath);
 		FileInputStream spreadsheet = new FileInputStream(new File(
-				StringUtilsCustom.getFileNameWithOutSheet(fileNameWithPath)));
+				fileNameWithPath));
 		
 		XSSFWorkbook workbook = new XSSFWorkbook(spreadsheet);
 		Element sheets = new Element("sheets");
@@ -96,7 +96,7 @@ public class ReadExcelDataSheet {
 		int indexNum = 0;
 		for (int i = 0; i< workbook.getNumberOfSheets() - 1; i++) {
             XSSFSheet individualSheet = workbook.getSheetAt(i);
-            InputExcelFileVO inputExcelFileVO = parse(StringUtilsCustom.getFileNameWithOutSheet(fileNameWithPath)+":"+individualSheet.getSheetName());
+            InputExcelFileVO inputExcelFileVO = parse(fileNameWithPath+":"+individualSheet.getSheetName());
             inputExcelFileVO.getHeaders();
             Element sheetName = new Element("sheetName");
             sheetName.setAttribute("index", indexNum+"");
@@ -110,12 +110,14 @@ public class ReadExcelDataSheet {
             
             int j=0;
             for(String columnNameStr : inputExcelFileVO.getHeaders()) {
-            	if(!columnNameStr.equals("")){
+            	if(columnNameStr!= null){
+            		if(!columnNameStr.equals("")){
 		               Element columnName = new Element("columnName");
 		               columnName.setAttribute("index", j+"");
 		               j++;
 		               columnName.addContent(columnNameStr);
 		               columnNames.addContent(columnName);
+            		}
             	}
            }
             
@@ -140,9 +142,9 @@ public class ReadExcelDataSheet {
 			XSSFWorkbook workbook = new XSSFWorkbook(spreadsheet);
 			
 			// Get first/desire sheed from the workbook
-
+			System.out.println("fileNameWithPath==========>"+fileNameWithPath);
 			XSSFSheet sheet = workbook.getSheet(StringUtilsCustom.getDataSheetName(
-					fileNameWithPath).trim());
+					fileNameWithPath));
 			Iterator<Row> rows = sheet.rowIterator();
 
 			List<String> headers = new ArrayList<>();
@@ -159,7 +161,7 @@ public class ReadExcelDataSheet {
 	        XSSFRow rowHeader = sheet.getRow(0);
 	        for (int j = 0; j < colNum; j++) {
 	            XSSFCell cell = rowHeader.getCell(j);
-	            headers.add(cell.getStringCellValue());
+	            headers.add(getCellValue(cell));
 	            //String cellValue = getCellValue(cell);
 	         
 	        }
@@ -175,8 +177,12 @@ public class ReadExcelDataSheet {
 						// TODO safeguard for header resolving, cell column
 						// index
 						// might be out of bound of header array
-						dataRow.put(headers.get(cell.getColumnIndex()),
+						//if(getCellValue(cell)!=null){
+						if(!(cell.getColumnIndex() >= colNum)){
+							dataRow.put(headers.get(cell.getColumnIndex()),
 								getCellValue(cell));
+						}
+						//}
 					}
 					//System.out.println("dataRow====>" + dataRow);
 					contents.add(dataRow);
