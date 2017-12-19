@@ -352,12 +352,7 @@ public class XMLElementBuilder {
 	private static Element listChildrenForTestSuite(Element current, int depth,
 			AtomicInteger increment, ConfigurationTO configurationTO, boolean firstTime)
 					throws IOException, ParserConfigurationException, SAXException {
-		// printSpaces(depth);
-		// System.out.println("Building test suite for end point URL"
-		// +configurationTO.getEndPointUrl());
-		List children = current.getChildren();
-		Iterator iteratorTemplateXML = children.iterator();
-
+		
 		Element testID = null, testID1 = null, name1 = null, httpMethodTestValue = null, httpClientEndPoint = null;
 		Element docDelivery = null, ftpDeliveries = null, restClient = null, dataSourceName = null, nameValuePair = null;
 		Element restClientToolTest = null, messagingSchema = null, testsSize=null, profileMappingIDEle=null;
@@ -399,17 +394,13 @@ public class XMLElementBuilder {
 							.getParent();
 					dataSourceName = child;
 
-				}*/ else if (child.getName().equalsIgnoreCase("HTTPClient_Endpoint") && 
-						child.getTextTrim().equals("http://ocp.api.sys.td.com/com-td-ocp-delivery-api")
-						) {
-					// Element restClientElement = (Element)
-					// child.getParent().getParent();
+				}*/ else if (child.getName().equalsIgnoreCase("HTTPClient_Endpoint")){
+					if(child.getText().contains("/ftpdeliveries-template")){
+					System.out.println("else if (child.getName().equalsIgnoreCase"+child.getText());
 					httpClientEndPoint = child;
-
+					}
 				} else if (child.getName().equalsIgnoreCase(
 						"HTTPMethodTestValue")) {
-					// Element restClientElement = (Element)
-					// child.getParent().getParent();
 					httpMethodTestValue = child;
 
 				} else if (child.getName().equalsIgnoreCase("NameValuePair")
@@ -519,6 +510,7 @@ public class XMLElementBuilder {
 				}
 				httpClientEndPoint.addContent(configurationTO.getEndPointUrl()+"?"+paramStr);
 			}else{
+				httpClientEndPoint.addContent(configurationTO.getEndPointUrl());
 			}
 		}
 		
@@ -676,6 +668,7 @@ public class XMLElementBuilder {
 							 * nodes if incoming request json is empty
 							 */
 							//updateMessagingSchemaForEmptyRequest(secondTimeMessaingSchema, configurationTO.getInputSampleString());
+							updateAllOtherValueInsideRestClientToolTestTag(secondTimeMessaingSchema, configurationTO);
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -688,6 +681,41 @@ public class XMLElementBuilder {
 				//});
 
 
+	}
+
+	private static void updateAllOtherValueInsideRestClientToolTestTag(Element messagingSchema, ConfigurationTO configurationTO) {
+		IteratorIterable<Content> descendantsOfChannel = messagingSchema.getDescendants();
+		Element httpClientEndPoint = null;
+		for (Content descendant : descendantsOfChannel) {
+			if (descendant.getCType().equals(Content.CType.Element)) {
+				Element child = (Element) descendant;
+				if (child.getName().equalsIgnoreCase("HTTPClient_Endpoint")) { 
+						if(child.getText().contains("/ftpdeliveries-template")){
+						
+					httpClientEndPoint = child;
+
+				} }
+			}
+		}
+
+		if(httpClientEndPoint != null){
+			httpClientEndPoint.removeContent();
+			String paramStr = null;
+			if(configurationTO.getQueryParameters() != null){
+				for(int i=0; i<  configurationTO.getQueryParameters().size(); i++){
+					Parameter parameter = configurationTO.getQueryParameters().get(i);
+					if(i == (configurationTO.getQueryParameters().size()-1)){
+						paramStr = paramStr+parameter.toString()+"=${"+parameter.toString()+"}";
+					}else{
+						paramStr = paramStr+parameter.toString()+"=${"+parameter.toString()+"}&amp;";
+					}
+				}
+				httpClientEndPoint.addContent(configurationTO.getEndPointUrl()+"?"+paramStr);
+			}else{
+				httpClientEndPoint.addContent(configurationTO.getEndPointUrl());
+			}
+		}
+		
 	}
 
 	private static void updatedHashTagValues(Element messagingSchema) {

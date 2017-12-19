@@ -59,49 +59,51 @@ public class ParasoftTstGeneratorMain {
 							+ urlEndPointsNode.displayName()
 							+ "===>resources size====>"
 							+ urlEndPointsNode.resources().size());
-					System.out.println(appConfigPropertiesForDatasheets.stream().filter(p -> p.getEndpointUrl().equals(urlEndPointsNode.resourcePath())));
-					
-					List<AppConfigurationPropertiesForDataSheet> dataSheetsListNodeLevel = appConfigPropertiesForDatasheets.stream().filter(p -> p.getEndpointUrl().equals(urlEndPointsNode.resourcePath())).collect(Collectors.toList());
-					
-					System.out.println(dataSheetsListNodeLevel);
-
+					AtomicInteger methodPosition = new AtomicInteger();
+					urlEndPointsNode.methods().forEach(methodType -> {
+						
+						List<AppConfigurationPropertiesForDataSheet> dataSheetsListNodeLevel = appConfigPropertiesForDatasheets.stream().filter(p -> p.getEndpointUrl().equals(urlEndPointsNode.resourcePath())).collect(Collectors.toList());
 						ConfigurationTO configurationTO = null;
-						try {
-							configurationTO = copyRAMLDataToDTO(urlEndPointsNode);							
-							configurationTO.setDataSource(dataSheetsListNodeLevel.stream().map(i -> i.getDatasheetName()).collect(Collectors.toList()));
-							configurationTO.setProfileMappingID(profileMappingID.getAndIncrement()+"");
-							configurationTO.setRamlFileName(filesList.get(0));
-							configurationTO.setAppConfigPath(appConfigPath);
-							configurationTO.setInputTstFile(inputTstFile);
+							try {
+								configurationTO = copyRAMLDataToDTO(urlEndPointsNode, methodPosition.get());							
+								configurationTO.setDataSource(dataSheetsListNodeLevel.stream().map(i -> i.getDatasheetName()).collect(Collectors.toList()));
+								configurationTO.setProfileMappingID(profileMappingID.getAndIncrement()+"");
+								configurationTO.setRamlFileName(filesList.get(0));
+								configurationTO.setAppConfigPath(appConfigPath);
+								configurationTO.setInputTstFile(inputTstFile);
+								methodPosition.incrementAndGet();
 
-						} catch (Exception e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					configurationTOEndPointList.add(configurationTO);
-					
-					
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						configurationTOEndPointList.add(configurationTO);
+						
+					});
+					/* below code is to iterate over sub-node URLs under main endpoint URL in RAML file */
 					// if(urlEndPointsNode.resources().size() > 0){
+					int methodPos = 0;
 					urlEndPointsNode.resources().forEach(
 							(urlEndPointsSubNode) -> {						
-								//System.out.println(urlEndPointsSubNode.methods().get(0).queryParameters());
-								ArrayList<ConfigurationTO> configurationTOSubNodeLevelDSList = new ArrayList<ConfigurationTO>();
 								List<AppConfigurationPropertiesForDataSheet> dataSheetsListSubNodeLevel = appConfigPropertiesForDatasheets.stream().filter(p -> p.getEndpointUrl().equals(urlEndPointsSubNode.resourcePath())).collect(Collectors.toList());
-								System.out.println(dataSheetsListSubNodeLevel);							
+								System.out.println(dataSheetsListSubNodeLevel);	
+								AtomicInteger methodPosition1 = new AtomicInteger();
+								urlEndPointsNode.methods().forEach(methodType -> {
 									ConfigurationTO configurationTOSubNode = null;
 									try {
-										configurationTOSubNode = copyRAMLDataToDTO(urlEndPointsSubNode);	
+										configurationTOSubNode = copyRAMLDataToDTO(urlEndPointsSubNode,methodPosition1.get());	
 										configurationTOSubNode.setDataSource(dataSheetsListSubNodeLevel.stream().map(i -> i.getDatasheetName()).collect(Collectors.toList()));
 										configurationTOSubNode.setRamlFileName(filesList.get(0));
 										configurationTOSubNode.setAppConfigPath(appConfigPath);
 										configurationTOSubNode.setInputTstFile(inputTstFile);
-										configurationTOSubNode.setQueryParameters(urlEndPointsSubNode.methods().get(0).queryParameters());
+										configurationTOSubNode.setQueryParameters(urlEndPointsSubNode.methods().get(methodPos).queryParameters());
+										methodPosition1.incrementAndGet();
 										//configurationTOSubNodeLevelDSList.add(configurationTOSubNode);
 									} catch (Exception e) {
-										// TODO Auto-generated catch block
 										e.printStackTrace();
 									}
 								configurationTOEndPointList.add(configurationTOSubNode);
+								});
 								
 							});
 
@@ -130,36 +132,36 @@ public class ParasoftTstGeneratorMain {
 		}
 	}
 
-	public static ConfigurationTO copyRAMLDataToDTO(Resource urlEndPointsSubNode) throws Exception {
+	public static ConfigurationTO copyRAMLDataToDTO(Resource urlEndPointsSubNode, int index) throws Exception {
 		// System.out.println("EndPoints are ==>"+urlEndPointsNode.displayName()+urlEndPointsSubNode.displayName());
 		System.out.println("Method type is GET/PUT/POST/DELETE ==>"
-				+ urlEndPointsSubNode.methods().get(0).method());
+				+ urlEndPointsSubNode.methods().get(index).method());
 		System.out.println("endpoint URL is  ==>"
 				+ urlEndPointsSubNode.resourcePath());
 		System.out.println("securedBy ==>"
-				+ urlEndPointsSubNode.methods().get(0).securedBy().get(0)
+				+ urlEndPointsSubNode.methods().get(index).securedBy().get(0)
 						.name());
 		System.out.println("responses code ==>"
-				+ urlEndPointsSubNode.methods().get(0).responses().get(0)
+				+ urlEndPointsSubNode.methods().get(index).responses().get(0)
 						.code().value());
 		// System.out.println("schema sample string ---->"+urlEndPointsSubNode
 		// .methods().get(0).body().get(0).example().value());
 
 		ConfigurationTO configurationTO = new ConfigurationTO();
 
-		String inputMethodType = urlEndPointsSubNode.methods().get(0).method();
+		String inputMethodType = urlEndPointsSubNode.methods().get(index).method();
 		configurationTO.setMethod(inputMethodType);
 		configurationTO.setDataSourcePath(Util.loadProperties("DATA_SOURCE_PATH", appConfigPath));
 		configurationTO.setEndPointUrl(Util.loadProperties("BASE_URL", appConfigPath)
 				+ urlEndPointsSubNode.resourcePath());
 		configurationTO.setTestPathUrl(Util.loadProperties("BASE_URL", appConfigPath)+urlEndPointsSubNode.resourcePath());
-		configurationTO.setSecuredBy(urlEndPointsSubNode.methods().get(0)
+		configurationTO.setSecuredBy(urlEndPointsSubNode.methods().get(index)
 				.securedBy().get(0).name());
-		configurationTO.setValidRange(urlEndPointsSubNode.methods().get(0).responses().get(0).code().toString());
+		configurationTO.setValidRange(urlEndPointsSubNode.methods().get(index).responses().get(0).code().toString());
 		//if(urlEndPointsSubNode.methods().get(0).method().equalsIgnoreCase("POST"))
-		if(urlEndPointsSubNode.methods().get(0).body().size() > 0){
+		if(urlEndPointsSubNode.methods().get(index).body().size() > 0){
 			configurationTO.setInputSampleString(urlEndPointsSubNode.methods()
-					.get(0).body().get(0).example().value());
+					.get(index).body().get(0).example().value());
 		}
 		//configurationTO.setDataSource(dataSheetName);
 		
@@ -173,7 +175,7 @@ public class ParasoftTstGeneratorMain {
 			schemadefinitionsArray = null;
 			try {
 				schemaPropertiesArray = mapper.readTree(urlEndPointsSubNode
-						.methods().get(0).body().get(0).schemaContent()
+						.methods().get(index).body().get(0).schemaContent()
 						.toString());
 				/*System.out.println(urlEndPointsSubNode
 						.methods().get(0).body().get(0).schemaContent().replaceAll("$ref", "type"));
@@ -183,17 +185,17 @@ public class ParasoftTstGeneratorMain {
 				
 				//System.out.println("generation without settings"+new JsonGenerator(schema1, null).generate());
 				//System.out.println("generation with settings"+generateWithSettings(schema1));
-				if(urlEndPointsSubNode.methods().get(0).body().size() >0){
+				if(urlEndPointsSubNode.methods().get(index).body().size() >0){
 					System.out.println(JsonGeneratorFromSchema.generateInputSampleString(urlEndPointsSubNode
-						.methods().get(0).body().get(0).schemaContent()).toString());
+						.methods().get(index).body().get(0).schemaContent()).toString());
 				configurationTO.setInputSampleString(JsonGeneratorFromSchema.generateInputSampleString(urlEndPointsSubNode
-						.methods().get(0).body().get(0).schemaContent()).toString());
+						.methods().get(index).body().get(0).schemaContent()).toString());
 				}
 				schemaRequiredArray = mapper.readTree(
-						urlEndPointsSubNode.methods().get(0).body().get(0)
+						urlEndPointsSubNode.methods().get(index).body().get(0)
 								.schemaContent().getBytes()).get("required");
 				schemadefinitionsArray = mapper.readTree(
-						urlEndPointsSubNode.methods().get(0).body().get(0)
+						urlEndPointsSubNode.methods().get(index).body().get(0)
 								.schemaContent().toString()).get("definitions");
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -202,9 +204,9 @@ public class ParasoftTstGeneratorMain {
 			
 			break;
 		case "GET":
-			if(urlEndPointsSubNode.methods().get(0).body().size() >0){
+			if(urlEndPointsSubNode.methods().get(index).body().size() >0){
 			configurationTO.setInputSampleString(JsonGeneratorFromSchema.generateInputSampleString(urlEndPointsSubNode
-					.methods().get(0).body().get(0).schemaContent()).toString());
+					.methods().get(index).body().get(0).schemaContent()).toString());
 			}
 
 

@@ -196,7 +196,7 @@
        </NameValueProperties>
        <MultiValue className="webtool.data.MultiValue" version="1.4">
         <StringTestValue className="webtool.data.StringTestValue" version="4.1">
-         <HTTPClient_Endpoint>http://ocp.api.sys.td.com/com-td-ocp-delivery-api/ftpdeliveries</HTTPClient_Endpoint>
+         <HTTPClient_Endpoint>http://ocp.api.sys.td.com/com-td-ocp-delivery-api/ftpdeliveries-template</HTTPClient_Endpoint>
         </StringTestValue>
         <ParameterizedTestValue className="webtool.data.ParameterizedTestValue" version="3.1">
         </ParameterizedTestValue>

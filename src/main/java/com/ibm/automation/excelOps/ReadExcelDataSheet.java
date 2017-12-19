@@ -49,7 +49,7 @@ public class ReadExcelDataSheet {
 		}
 		
 		dataSourcesSize.removeContent();
-		dataSourcesSize.addContent((appConfigPropertiesForDatasheets.size())+"");
+		dataSourcesSize.addContent((listOfDataSheetNames.size())+"");
 		for (String dataSheet : listOfDataSheetNames) {
 			try {
 				//inputExcelFileVO = parse(configurationTO.getDataSourcePath()+"/"+dataSheetName);
@@ -67,13 +67,33 @@ public class ReadExcelDataSheet {
 				Element name = new Element("name");
 				name.addContent(dataSheet);
 				
+				Element file = new Element("file");
+				file.addContent("true");
+				
+				Element relativeLocation = new Element("RelativeLocation");
+				relativeLocation.setAttribute("className", "com.parasoft.util.RelativeLocation");
+				relativeLocation.setAttribute("version", "1.4");
+				
+				Element path = new Element("path");
+				path.addContent(dataSheetPath+"/"+dataSheet);
+				
+				relativeLocation.addContent(path);
+				
 				Element sheets = generateDatasheets(dataSheetPath+"/"+dataSheet);
 				excelDataSourceImpl.addContent(sheets);
 				
+				excelDataSourceImpl.addContent(file);
+				
 				dataSource.addContent(excelDataSourceImpl);
-				dataSource.addContent(name);
+				dataSource.addContent(name);	
 				
+				Element firstRow = new Element("firstRow");
+				firstRow.addContent("1");
+				Element lastRow = new Element("lastRow");
+				lastRow.addContent("2");
 				
+				dataSource.addContent(firstRow);
+				dataSource.addContent(lastRow);
 				dataSourcesSize.getParentElement().addContent(34, dataSource);
 				
 				//dataSourcesSize
