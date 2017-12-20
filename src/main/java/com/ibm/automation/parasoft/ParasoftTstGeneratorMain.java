@@ -12,6 +12,7 @@ import org.raml.v2.api.RamlModelResult;
 import org.raml.v2.api.model.common.ValidationResult;
 import org.raml.v2.api.model.v08.api.Api;
 import org.raml.v2.api.model.v08.resources.Resource;
+import org.raml.v2.api.model.v08.methods.Method;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -60,8 +61,8 @@ public class ParasoftTstGeneratorMain {
 							+ "===>resources size====>"
 							+ urlEndPointsNode.resources().size());
 					AtomicInteger methodPosition = new AtomicInteger();
-					urlEndPointsNode.methods().forEach(methodType -> {
-						
+					List<Method> methodTypes = urlEndPointsNode.methods();
+					for(Method methodName : methodTypes)  {						
 						List<AppConfigurationPropertiesForDataSheet> dataSheetsListNodeLevel = appConfigPropertiesForDatasheets.stream().filter(p -> p.getEndpointUrl().equals(urlEndPointsNode.resourcePath())).collect(Collectors.toList());
 						ConfigurationTO configurationTO = null;
 							try {
@@ -79,7 +80,7 @@ public class ParasoftTstGeneratorMain {
 							}
 						configurationTOEndPointList.add(configurationTO);
 						
-					});
+					}
 					/* below code is to iterate over sub-node URLs under main endpoint URL in RAML file */
 					// if(urlEndPointsNode.resources().size() > 0){
 					int methodPos = 0;
@@ -88,7 +89,8 @@ public class ParasoftTstGeneratorMain {
 								List<AppConfigurationPropertiesForDataSheet> dataSheetsListSubNodeLevel = appConfigPropertiesForDatasheets.stream().filter(p -> p.getEndpointUrl().equals(urlEndPointsSubNode.resourcePath())).collect(Collectors.toList());
 								System.out.println(dataSheetsListSubNodeLevel);	
 								AtomicInteger methodPosition1 = new AtomicInteger();
-								urlEndPointsNode.methods().forEach(methodType -> {
+								List<Method> methodTypes1 = urlEndPointsSubNode.methods();
+								for(Method methodName : methodTypes1)  {
 									ConfigurationTO configurationTOSubNode = null;
 									try {
 										configurationTOSubNode = copyRAMLDataToDTO(urlEndPointsSubNode,methodPosition1.get());	
@@ -103,7 +105,7 @@ public class ParasoftTstGeneratorMain {
 										e.printStackTrace();
 									}
 								configurationTOEndPointList.add(configurationTOSubNode);
-								});
+								}
 								
 							});
 
@@ -134,18 +136,10 @@ public class ParasoftTstGeneratorMain {
 
 	public static ConfigurationTO copyRAMLDataToDTO(Resource urlEndPointsSubNode, int index) throws Exception {
 		// System.out.println("EndPoints are ==>"+urlEndPointsNode.displayName()+urlEndPointsSubNode.displayName());
-		System.out.println("Method type is GET/PUT/POST/DELETE ==>"
-				+ urlEndPointsSubNode.methods().get(index).method());
-		System.out.println("endpoint URL is  ==>"
-				+ urlEndPointsSubNode.resourcePath());
-		System.out.println("securedBy ==>"
-				+ urlEndPointsSubNode.methods().get(index).securedBy().get(0)
-						.name());
-		System.out.println("responses code ==>"
-				+ urlEndPointsSubNode.methods().get(index).responses().get(0)
-						.code().value());
-		// System.out.println("schema sample string ---->"+urlEndPointsSubNode
-		// .methods().get(0).body().get(0).example().value());
+		System.out.println("Method type is GET/PUT/POST/DELETE ==>"	+ urlEndPointsSubNode.methods().get(index).method());
+		System.out.println("endpoint URL is  ==>"	+ urlEndPointsSubNode.resourcePath());
+		System.out.println("securedBy ==>"	+ urlEndPointsSubNode.methods().get(index).securedBy().get(0).name());
+		System.out.println("responses schema content ==>"	+ urlEndPointsSubNode.methods().get(index).responses().get(0).body().get(0).schemaContent().toString());
 
 		ConfigurationTO configurationTO = new ConfigurationTO();
 
@@ -163,26 +157,13 @@ public class ParasoftTstGeneratorMain {
 			configurationTO.setInputSampleString(urlEndPointsSubNode.methods()
 					.get(index).body().get(0).example().value());
 		}
-		//configurationTO.setDataSource(dataSheetName);
 		
-		// configurationTO.setHeadersList(headersList);
-
 		switch (inputMethodType.toUpperCase()) {
 		case "POST":
 			ObjectMapper mapper = new ObjectMapper();
-			JsonNode schemaPropertiesArray = null,
-			schemaRequiredArray = null,
+			JsonNode schemaRequiredArray = null,
 			schemadefinitionsArray = null;
 			try {
-				schemaPropertiesArray = mapper.readTree(urlEndPointsSubNode
-						.methods().get(index).body().get(0).schemaContent()
-						.toString());
-				/*System.out.println(urlEndPointsSubNode
-						.methods().get(0).body().get(0).schemaContent().replaceAll("$ref", "type"));
-				SchemaV4 schema1 =  new SchemaV4().wrap((JsonObject) JsonElement.readFrom( urlEndPointsSubNode
-						.methods().get(0).body().get(0).schemaContent().replaceAll("$ref", "type")
-					)); */
-				
 				//System.out.println("generation without settings"+new JsonGenerator(schema1, null).generate());
 				//System.out.println("generation with settings"+generateWithSettings(schema1));
 				if(urlEndPointsSubNode.methods().get(index).body().size() >0){

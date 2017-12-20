@@ -1773,7 +1773,7 @@ def TokenAdd(input,context):&#xD;
    <PropertyOwnerImpl className="com.parasoft.property.PropertyOwnerImpl" version="1.1">
    </PropertyOwnerImpl>
    <dataSourcesSize>1</dataSourcesSize>
-<testsSize>4</testsSize>
+<testsSize>4-template</testsSize>
  </TestSuite>
  </TestSuite>
 </SOAtestProject>

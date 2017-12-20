@@ -29,12 +29,10 @@ import com.ibm.automation.parasoft.util.Util;
 
 
 public class ReadExcelDataSheet {
-	public static void buildDataSources(Element testSuiteMain, String appConfigPath) throws FileNotFoundException, Exception {
+	public static void buildDataSources(Element testSuiteMain, String appConfigPath, int testsSize) throws FileNotFoundException, Exception {
 		
 		IteratorIterable<Content> descendantsOfChannel = testSuiteMain.getDescendants();
-		Element dataSourcesSize = null;
-		ArrayList<AppConfigurationPropertiesForDataSheet> appConfigPropertiesForDatasheets = Util.loadPropertiesForDataSheets(appConfigPath);
-		
+		Element dataSourcesSize = null, testsSizeMain = null;
 		ArrayList<String> listOfDataSheetNames = Util.loadDataSheets(appConfigPath);
 		String dataSheetPath = Util.loadProperties("DATA_SOURCE_PATH", appConfigPath);
 		
@@ -45,11 +43,18 @@ public class ReadExcelDataSheet {
 					dataSourcesSize = child;
 										
 				}
+				 if(child.getName().equalsIgnoreCase("testsSize")){
+					 if(child.getText().equalsIgnoreCase("4-template")){
+						 testsSizeMain = child;
+					 }
+				 }
 			}
 		}
 		
 		dataSourcesSize.removeContent();
 		dataSourcesSize.addContent((listOfDataSheetNames.size())+"");
+		testsSizeMain.removeContent();
+		testsSizeMain.addContent(testsSize+"");
 		for (String dataSheet : listOfDataSheetNames) {
 			try {
 				//inputExcelFileVO = parse(configurationTO.getDataSourcePath()+"/"+dataSheetName);

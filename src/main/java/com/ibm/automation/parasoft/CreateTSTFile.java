@@ -195,6 +195,7 @@ public class CreateTSTFile {
 				if (child.getName().equalsIgnoreCase("testsSize") && child.getTextTrim().contains("4")) {	
 					testSuiteMain = child;
 					
+					
 				}
 			}
 		}
@@ -212,7 +213,8 @@ public class CreateTSTFile {
 				
 			}
 
-		}*/
+		}*/		
+		
 		return testSuiteMain.getParentElement();
 	}
 
@@ -247,25 +249,15 @@ private static Element buildTestPathXML(
 						XMLElementBuilder.updateTemplateXMLForTestSuite(testSuiteMain1, incrementerForTestID, configurationTO, false);
 						
 					}
-					
-					
-					/*XMLOutputter outputter = new XMLOutputter();
-					outputter.setFormat(Format.getPrettyFormat());*/
-					//outputter.output((Document) document, writer);
-					//outputter.output((Document) testSuiteMain.getDocument(), System.out);
-					//testSuiteMain.addContent(updatedTestSuiteXML.detach());	
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}
-				
+				}				
 		
 			});
 		
 		try {
-			ReadExcelDataSheet.buildDataSources(testSuiteMain, configurationTOEndPointList.get(0).getAppConfigPath());
+			ReadExcelDataSheet.buildDataSources(testSuiteMain, configurationTOEndPointList.get(0).getAppConfigPath(), configurationTOEndPointList.size());
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			System.out.println("Error building Data source XML nodes"+e.getMessage());
 			e.printStackTrace();
 		}

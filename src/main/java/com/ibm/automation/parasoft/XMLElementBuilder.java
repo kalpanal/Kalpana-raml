@@ -268,10 +268,10 @@ public class XMLElementBuilder {
 	public Document loadIncomingTSTFile(String incomingTstFile)
 			throws IOException {
 		File xmlFile = new File(incomingTstFile);
-		
+
 		Document document = null;
 		if (xmlFile.exists()) {
-			
+
 			FileInputStream fis = new FileInputStream(xmlFile);
 			SAXBuilder builder = new SAXBuilder();
 			try {
@@ -322,45 +322,45 @@ public class XMLElementBuilder {
 
 	public Document loadElementValueTemplateXML_DOM(String templateName) throws ParserConfigurationException, SAXException, IOException{
 		File file = new File("C:/Users/xxx/Desktop/ff.xml");
-	    DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-	    DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-	    Document document = (Document) documentBuilder.parse(templateName);
-	    return document;
-	    
+		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+		Document document = (Document) documentBuilder.parse(templateName);
+		return document;
+
 	}
-		public static Element updateTemplateXMLForTestSuite(Element testSuiteMain,
-				AtomicInteger incrementerForTestID, ConfigurationTO configurationTO, boolean firstTime) {
-	
-			// Element testSuite = doc1.getRootElement();
+	public static Element updateTemplateXMLForTestSuite(Element testSuiteMain,
+			AtomicInteger incrementerForTestID, ConfigurationTO configurationTO, boolean firstTime) {
+
+		// Element testSuite = doc1.getRootElement();
+		try {
 			try {
-				try {
-					listChildrenForTestSuite(testSuiteMain, 0, incrementerForTestID,
-							configurationTO, firstTime);
-				} catch (ParserConfigurationException | SAXException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			} catch (IOException e) {
+				listChildrenForTestSuite(testSuiteMain, 0, incrementerForTestID,
+						configurationTO, firstTime);
+			} catch (ParserConfigurationException | SAXException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			// System.out.println(testSuiteMain);
-			return testSuiteMain;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		// System.out.println(testSuiteMain);
+		return testSuiteMain;
+	}
 
 	@SuppressWarnings({ "unchecked", "unused" })
 	private static Element listChildrenForTestSuite(Element current, int depth,
 			AtomicInteger increment, ConfigurationTO configurationTO, boolean firstTime)
 					throws IOException, ParserConfigurationException, SAXException {
-		
+
 		Element testID = null, testID1 = null, name1 = null, httpMethodTestValue = null, httpClientEndPoint = null;
 		Element docDelivery = null, ftpDeliveries = null, restClient = null, dataSourceName = null, nameValuePair = null;
 		Element restClientToolTest = null, messagingSchema = null, testsSize=null, profileMappingIDEle=null;
 		Element dataSourcesSize = null, fileWriterProperties = null, fileStreamWriter =null, nameValuePropertiesForQueryParams = null;
 		Element ftpDeliveriesRestClient = null, pathElementss = null, UrlPathParamsMultiValue=null, urlPathParametersLiteralElement = null;
-		IteratorIterable<Content> descendantsOfChannel = current
-				.getDescendants();
-		
+		Element outputToolsSize = null, jsonAssertionTool=null;
+		IteratorIterable<Content> descendantsOfChannel = current.getDescendants();
+
 		AtomicInteger profileMappingId = new AtomicInteger();
 		for (Content descendant : descendantsOfChannel) {
 			if (descendant.getCType().equals(Content.CType.Element)) {
@@ -396,8 +396,8 @@ public class XMLElementBuilder {
 
 				}*/ else if (child.getName().equalsIgnoreCase("HTTPClient_Endpoint")){
 					if(child.getText().contains("/ftpdeliveries-template")){
-					System.out.println("else if (child.getName().equalsIgnoreCase"+child.getText());
-					httpClientEndPoint = child;
+						System.out.println("else if (child.getName().equalsIgnoreCase"+child.getText());
+						httpClientEndPoint = child;
 					}
 				} else if (child.getName().equalsIgnoreCase(
 						"HTTPMethodTestValue")) {
@@ -436,30 +436,19 @@ public class XMLElementBuilder {
 
 				}else if(child.getName().equalsIgnoreCase("testsSize")){
 					testsSize = child;
-					
-				}/*else if(child.getName().equalsIgnoreCase("testRunsSize") && child.getText().equals("template")){
+
+				}else if(child.getName().equalsIgnoreCase("outputToolsSize") && child.getText().equalsIgnoreCase("1-assertiontemplate")){
+
+					outputToolsSize = child;
+				}
+				else if(child.getName().equalsIgnoreCase("JSONAssertionTool")){					
+					jsonAssertionTool = child;
+				}
+				/*else if(child.getName().equalsIgnoreCase("testRunsSize") && child.getText().equals("template")){
 					testRunsSize = child;
 				}*/
 			}}
-		
-		if(urlPathParametersLiteralElement != null){
-			urlPathParametersLiteralElement.removeContent();
-			String[] urlPaths = Util.tokenizePathURLEndpoint(configurationTO.getEndPointUrl());
-			urlPathParametersLiteralElement.addContent(new Element("pathElementss").setAttribute("size", (urlPaths.length-1)+""));
-			
-			
-			for (int i = 1; i < urlPaths.length; i++) {
-				
-	            System.out.println("paths::"+i+" "+urlPaths[i]+"\n");
-	            UrlPathParamsMultiValue = new XMLElementBuilder().loadElementValueTemplateXML("urlPathParamsMultiValue.xml").detachRootElement();
-	           // UrlPathParamsMultiValue = document.getRootElement();
-	           
-	            UrlPathParamsMultiValue.getChild("StringTestValue").getChild("value").removeContent();
-	            UrlPathParamsMultiValue.getChild("StringTestValue").getChild("value").addContent(urlPaths[i]);
-	            
-	            urlPathParametersLiteralElement.getChild("pathElementss").addContent(UrlPathParamsMultiValue);
-	        }
-		}
+
 
 		if (testID != null) {
 			testID.removeContent();
@@ -513,64 +502,64 @@ public class XMLElementBuilder {
 				httpClientEndPoint.addContent(configurationTO.getEndPointUrl());
 			}
 		}
-		
+
 		testsSize.removeContent();
 		//testsSize.addContent(configurationTO.getDataSource().size()+"");
 		testsSize.addContent("1");
 		if(nameValuePropertiesForQueryParams != null ){
-				
-				if(configurationTO.getQueryParameters() != null){
-					nameValuePropertiesForQueryParams.removeContent();
-					buildNameValuePropertiesForQueryParama(nameValuePropertiesForQueryParams, configurationTO.getQueryParameters());
-				}else{
-					nameValuePropertiesForQueryParams.removeContent();
-				}
+
+			if(configurationTO.getQueryParameters() != null){
+				nameValuePropertiesForQueryParams.removeContent();
+				buildNameValuePropertiesForQueryParama(nameValuePropertiesForQueryParams, configurationTO.getQueryParameters());
+			}else{
+				nameValuePropertiesForQueryParams.removeContent();
+			}
 		}
 		/*if(testRunsSize != null){
 			buildTestRuns();
 		}*/
-		
+
 		Element fileWriterPropertiesPath = null;
 		if(fileWriterProperties != null){
 			IteratorIterable<Content> descendantsOfileWriter = fileWriterProperties.getDescendants();			
-			
+
 			for (Content descendant : descendantsOfileWriter) {
 				if (descendant.getCType().equals(Content.CType.Element)) {
 					Element child = (Element) descendant;
 					if (child.getName().equalsIgnoreCase("path")) {
 						fileWriterPropertiesPath = child;
-		}}}
+					}}}
 		}
 		if(fileWriterPropertiesPath != null){
 			fileWriterPropertiesPath.removeContent();
 			fileWriterPropertiesPath.addContent("$OUTPUT"+configurationTO.getEndPointUrl());
 		}
-		
+
 		restClientToolTest.getChild("name").removeContent();
-			restClientToolTest.getChild("name").addContent(
-					configurationTO.getDataSourcePath() + " - "
-							+ configurationTO.getMethod());
-		
+		restClientToolTest.getChild("name").addContent(
+				configurationTO.getDataSourcePath() + " - "
+						+ configurationTO.getMethod());
+
 		/** Kalpana to be uncommented later*/
-		buildRESTClientToolTest(restClientToolTest, messagingSchema, configurationTO, firstTime, increment);
+		buildRESTClientToolTest(restClientToolTest, messagingSchema, configurationTO, firstTime, increment, urlPathParametersLiteralElement);
 
 
 		return current;
 	}
 
-	
+
 	private static void buildNameValuePropertiesForQueryParama(Element nameValuePropertiesForQueryParams,
 			List<Parameter> queryParametersList) throws IOException {
 		Element propertiesSize = new Element("propertiesSize");
 		propertiesSize.addContent(queryParametersList.size()+"");
-		
+
 		nameValuePropertiesForQueryParams.addContent(propertiesSize);
-		
+
 		for(int i=0; i<  queryParametersList.size(); i++){
 			Parameter parameter = queryParametersList.get(i);
-			
+
 			Element nameValuePairElement = new XMLElementBuilder().loadElementValueTemplateXML("nameValuePair.xml").detachRootElement();
-			
+
 			IteratorIterable<Content> descendantsOfNameValuePair = nameValuePairElement.getDescendants();
 			Element name = null, column = null;
 			Element secondTimeMessaingSchema = null;
@@ -579,10 +568,10 @@ public class XMLElementBuilder {
 					Element child = (Element) descendant;
 					if (child.getName().equalsIgnoreCase("name")) {
 						name = child;
-						
+
 					}else if(child.getName().equalsIgnoreCase("column")){
 						column = child;
-						
+
 					}
 				}
 			}
@@ -590,95 +579,101 @@ public class XMLElementBuilder {
 			name.addContent(parameter.displayName().toString());
 			column.removeContent();
 			column.addContent(parameter.displayName().toString());
-			
+
 			nameValuePropertiesForQueryParams.addContent(nameValuePairElement);
-			
+
 		}
-		
+
 	}
 
 	private static void buildRESTClientToolTest(Element restClientToolTest, Element messagingSchema,
-			ConfigurationTO configurationTO, boolean firstTime, AtomicInteger increment) {
+			ConfigurationTO configurationTO, boolean firstTime, AtomicInteger increment, Element urlPathParametersLiteralElement) {
 		Element restClientToolTestParent = (Element) restClientToolTest.getParent();
-		
+
 
 		AtomicInteger firstTimeRestClientToolSet = new AtomicInteger();
 		System.out.println("for END POINT URL ------->"+configurationTO.getEndPointUrl() + "-----data soruces======>"+configurationTO.getDataSource());
-/*		configurationTO.getDataSource().forEach(
+		/*		configurationTO.getDataSource().forEach(
 				(dataSheetName) -> {*/
-					if(firstTimeRestClientToolSet.get() == 0){
-						firstTimeRestClientToolSet.incrementAndGet();
-						try {
-							messagingSchema.addContent(0, new XMLElementBuilder().loadElementValueTemplateXML("rootElementTemplateXML.xml")
-							.getRootElement().detach());
-							
-						buildCompositorValueSet(messagingSchema, configurationTO.getInputSampleString());
-						updatedHashTagValues(messagingSchema);
-						buildComplexValueUnderMessagingSchema(messagingSchema, configurationTO.getInputSampleString());
-						
-						/** update messagingSchemaElement with empty <ElementType> and emtpy <ElementValue>
-						 * nodes if incoming request 	json is empty,
-						 * this should be called only for first time messaging schema(if loop)
-						 * , not in else loop
-						 */						
-						updateMessagingSchemaForEmptyRequest(messagingSchema, configurationTO.getInputSampleString());
-						} catch (Exception e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+		/* for first time we already have RESTClientToolTest 
+		 * XML node inside testSuiteTemplate.xml, therefore this if 
+		 * loop should be called for first time */
+		if(firstTimeRestClientToolSet.get() == 0){
+			firstTimeRestClientToolSet.incrementAndGet();
+			try {
+				messagingSchema.addContent(0, new XMLElementBuilder().loadElementValueTemplateXML("rootElementTemplateXML.xml")
+						.getRootElement().detach());
+
+				buildCompositorValueSet(messagingSchema, configurationTO.getInputSampleString());
+				updatedHashTagValues(messagingSchema);
+				buildComplexValueUnderMessagingSchema(messagingSchema, configurationTO.getInputSampleString());
+
+				/** update messagingSchemaElement with empty <ElementType> and emtpy <ElementValue>
+				 * nodes if incoming request 	json is empty,
+				 * this should be called only for first time messaging schema(if loop)
+				 * , not in else loop
+				 */						
+				updateMessagingSchemaForEmptyRequest(messagingSchema, configurationTO.getInputSampleString());
+				updateUrlPathParametersLiteral(urlPathParametersLiteralElement, configurationTO);
+			} catch (Exception e) {
+				System.out.println("Error while update restclientoolToolTest XML node for first time"+e.getMessage());
+				e.printStackTrace();
+			}
+		}else {
+			/* from second time onwards within a <testSuite> if more than one  RESTClientToolTest xml node is to be built
+			 * else loop to be called, to add RESTClientToolTest node afresh from it;s template xml						 * 
+			 */
+			try {
+				//restClientToolTestParent.addContent(new XMLElementBuilder().loadElementValueTemplateXML("restClientToolTestTemplateXML.xml").detachRootElement());
+				Element secondRestClientToolTestParent = new XMLElementBuilder().loadElementValueTemplateXML("restClientToolTestTemplateXML.xml").detachRootElement();
+				secondRestClientToolTestParent = updateRestToolTest(secondRestClientToolTestParent, increment, configurationTO);
+				IteratorIterable<Content> descendantsOfChannel = secondRestClientToolTestParent.getDescendants();
+				Element secondTimeMessaingSchema = null, outputToolsSize= null, jsonAssertionTool=null;
+				for (Content descendant : descendantsOfChannel) {
+					if (descendant.getCType().equals(Content.CType.Element)) {
+						Element child = (Element) descendant;
+						if (child.getName().equalsIgnoreCase("MessagingSchemaElement")) {
+							if(child.getChildren().size()>0){
+								if(child.getChildren().get(0).getName().equals("elementTypeName")){
+									//getChild("elementTypeName").getTextTrim().equalsIgnoreCase("template")){
+									secondTimeMessaingSchema = child;
+								}}
+
+						}else if(child.getName().equalsIgnoreCase("outputToolsSize") && child.getText().equalsIgnoreCase("1-assertiontemplate")){
+							outputToolsSize = child;
 						}
-					}else {
-						try {
-							//restClientToolTestParent.addContent(new XMLElementBuilder().loadElementValueTemplateXML("restClientToolTestTemplateXML.xml").detachRootElement());
-							Element secondRestClientToolTestParent = new XMLElementBuilder().loadElementValueTemplateXML("restClientToolTestTemplateXML.xml").detachRootElement();
-							secondRestClientToolTestParent = updateRestToolTest(secondRestClientToolTestParent, increment, configurationTO);
-							IteratorIterable<Content> descendantsOfChannel = secondRestClientToolTestParent
-									.getDescendants();
-							Element secondTimeMessaingSchema = null;
-							for (Content descendant : descendantsOfChannel) {
-								if (descendant.getCType().equals(Content.CType.Element)) {
-									Element child = (Element) descendant;
-									if (child.getName().equalsIgnoreCase(
-											"MessagingSchemaElement")) {
-										if(child.getChildren().size()>0){
-											System.out.println(child.getChildren());
-											//System.out.println(child.getChild("elementTypeName").getTextTrim());
-											if(child.getChildren().get(0).getName().equals("elementTypeName")){
-
-												//getChild("elementTypeName").getTextTrim().equalsIgnoreCase("template")){
-												secondTimeMessaingSchema = child;
-											}}
-
-									}
-								}
-							}
-							secondTimeMessaingSchema.addContent(0, new XMLElementBuilder()
-							.loadElementValueTemplateXML("rootElementTemplateXML.xml")
-							.getRootElement().detach());
-							Element elementToAddElementValueXML = secondTimeMessaingSchema.getChild("ElementValue");
-							
-							//messagingSchema = secondTimeMessaingSchema;
-							buildCompositorValueSet(secondTimeMessaingSchema,
-									configurationTO.getInputSampleString());
-							restClientToolTestParent.addContent(secondRestClientToolTestParent.detach());
-							updatedHashTagValues(secondTimeMessaingSchema);
-							buildComplexValueUnderMessagingSchema(secondTimeMessaingSchema,
-									configurationTO.getInputSampleString());
-							
-							/** update messagingSchemaElement with empty <ElementType> and emtpy <ElementValue>
-							 * nodes if incoming request json is empty
-							 */
-							//updateMessagingSchemaForEmptyRequest(secondTimeMessaingSchema, configurationTO.getInputSampleString());
-							updateAllOtherValueInsideRestClientToolTestTag(secondTimeMessaingSchema, configurationTO);
-						} catch (Exception e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+						else if(child.getName().equalsIgnoreCase("JSONAssertionTool")){					
+							jsonAssertionTool = child;
+						}else if(child.getName().equalsIgnoreCase("UrlPathParametersLiteral") && child.getTextTrim().equalsIgnoreCase("template")){ 
+							urlPathParametersLiteralElement = child;
 						}
-
 					}
+				}
+				secondTimeMessaingSchema.addContent(0, new XMLElementBuilder().loadElementValueTemplateXML("rootElementTemplateXML.xml").getRootElement().detach());
+				Element elementToAddElementValueXML = secondTimeMessaingSchema.getChild("ElementValue");
+
+				//messagingSchema = secondTimeMessaingSchema;
+				buildCompositorValueSet(secondTimeMessaingSchema, configurationTO.getInputSampleString());
+				restClientToolTestParent.addContent(secondRestClientToolTestParent.detach());
+				updatedHashTagValues(secondTimeMessaingSchema);
+				buildComplexValueUnderMessagingSchema(secondTimeMessaingSchema,	configurationTO.getInputSampleString());
+
+				/** update messagingSchemaElement with empty <ElementType> and emtpy <ElementValue>
+				 * nodes if incoming request json is empty
+				 */
+				//updateMessagingSchemaForEmptyRequest(secondTimeMessaingSchema, configurationTO.getInputSampleString());
+				updateAllOtherValueInsideRestClientToolTestTag(secondTimeMessaingSchema, configurationTO);
+				updateUrlPathParametersLiteral(urlPathParametersLiteralElement, configurationTO);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
 
 
-					//restClientToolTestParent.
-				//});
+		//restClientToolTestParent.
+		//});
 
 
 	}
@@ -690,11 +685,11 @@ public class XMLElementBuilder {
 			if (descendant.getCType().equals(Content.CType.Element)) {
 				Element child = (Element) descendant;
 				if (child.getName().equalsIgnoreCase("HTTPClient_Endpoint")) { 
-						if(child.getText().contains("/ftpdeliveries-template")){
-						
-					httpClientEndPoint = child;
+					if(child.getText().contains("/ftpdeliveries-template")){
 
-				} }
+						httpClientEndPoint = child;
+
+					} }
 			}
 		}
 
@@ -715,14 +710,14 @@ public class XMLElementBuilder {
 				httpClientEndPoint.addContent(configurationTO.getEndPointUrl());
 			}
 		}
-		
+
 	}
 
 	private static void updatedHashTagValues(Element messagingSchema) {
 		IteratorIterable<Content> descendantsOfChannel = messagingSchema.getDescendants();
 		AtomicInteger hashValue = new AtomicInteger();
 		ArrayList<Element> hashValueElementList = new ArrayList<Element>();
-		
+
 		for (Content descendant : descendantsOfChannel) {
 			if (descendant.getCType().equals(Content.CType.Element)) {
 				Element element = (Element) descendant;
@@ -735,7 +730,7 @@ public class XMLElementBuilder {
 				}
 			}			
 		}
-		
+
 		hashValueElementList.stream().forEachOrdered(hashElement -> {
 			hashElement.removeContent();
 			hashElement.addContent(hashValue.getAndIncrement()+"");
@@ -743,31 +738,26 @@ public class XMLElementBuilder {
 	}
 
 	@SuppressWarnings("unused")
-	private static void buildComplexValueUnderMessagingSchema(
-			Element messagingSchema, String inputSampleString) {
+	private static void buildComplexValueUnderMessagingSchema(Element messagingSchema, String inputSampleString) {
 
-		
-		
 		try {
 			Element rootElementObjectType = new XMLElementBuilder()
-			.loadElementValueTemplateXML(
-					"rootElementValueTemplateXML.xml").getRootElement();
+			.loadElementValueTemplateXML("rootElementValueTemplateXML.xml").getRootElement();
 			messagingSchema.getChild("ElementValue").addContent(rootElementObjectType.detach());
 			Element elementToAddElementValueXML = messagingSchema.getChild("ElementValue");
 			if(inputSampleString == null){
-				
+
 				rootElementObjectType.getChild("CompositorValue").getChild("CompositorValueSetCollectionSet")
 				.getChild("CompositorValueSet").removeChild("valuesSize");
 			}else {
 				Map<String, Object> results = jsonString2MapForComplexValue(elementToAddElementValueXML,
 						inputSampleString, true);				
-				
+
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("Error inside buildComplexValueUnderMessagingSchema method"+e.getMessage());
 		}
-		
+
 	}
 
 	private static void updateMessagingSchemaForEmptyRequest(
@@ -777,15 +767,15 @@ public class XMLElementBuilder {
 		ObjectMapper mapper = new ObjectMapper();
 		System.out.print("\n Incoming json string for reference : " + jsonString);
 		TypeReference<LinkedHashMap<String, Object>> typeRef 
-        = new TypeReference<LinkedHashMap<String,Object>>() {};
-        
-	    // LinkedHashMap<String,?> o = mapper.readValue(jsonString, typeRef); 
+		= new TypeReference<LinkedHashMap<String,Object>>() {};
+
+		// LinkedHashMap<String,?> o = mapper.readValue(jsonString, typeRef); 
 		List<String> sortKey = new ArrayList<String>();
 		if(jsonString == null){
 			messagingSchema.getChild("ElementValue").getChild("ElementType").getChild("ComplexType").getChild("AllCompositor").removeChild("paramTypesSize");
 		}
-		
-		
+
+
 	}
 
 	private static Element buildCompositorValueSet(Element child,
@@ -806,20 +796,6 @@ public class XMLElementBuilder {
 		return child;
 	}
 
-	/*
-	 * public static void parseProfilesJson(String the_json) throws
-	 * ParseException{ try {
-	 * 
-	 * JSONObject myjson = new JSONObject(the_json); JSONArray nameArray =
-	 * myjson.names(); System.out.println( myjson.toMap()); System.out.println(
-	 * jsonString2Map(the_json)); JSONArray valArray =
-	 * myjson.toJSONArray(nameArray); for(int i=0;i<valArray.length();i++) {
-	 * String p = nameArray.getString(i) + "," + valArray.get(i); //
-	 * System.out.println("p"+p); }
-	 * 
-	 * } catch (JSONException e) { e.printStackTrace(); } }
-	 */
-
 	public static Map<String, Object> jsonString2Map(
 			Element incomingElementValueElementForString, String jsonString,
 			boolean firstTime) throws JSONException, IOException {
@@ -828,12 +804,12 @@ public class XMLElementBuilder {
 		ObjectMapper mapper = new ObjectMapper();
 		System.out.print("\n Incoming json string for reference : " + jsonString);
 		TypeReference<LinkedHashMap<String, Object>> typeRef 
-        = new TypeReference<LinkedHashMap<String,Object>>() {};
-        
-	     LinkedHashMap<String,?> o = mapper.readValue(jsonString, typeRef); 
+		= new TypeReference<LinkedHashMap<String,Object>>() {};
+
+		LinkedHashMap<String,?> o = mapper.readValue(jsonString, typeRef); 
 		List<String> sortKey = new ArrayList<String>();
 		int totalSize = o.size();
-		
+
 		for (String key : o.keySet()){
 			//String key = (String) keyset.next();
 			Object value = o.get(key);
@@ -845,10 +821,10 @@ public class XMLElementBuilder {
 				// loadElementValueTemplateXMLForObject();
 				System.out.println("Incomin value is of JSONObject : "+value);
 				ObjectMapper objectMapper = new ObjectMapper();
-	        	//Set pretty printing of json
-	        	objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
-	        	String mapToJson = objectMapper.writeValueAsString(value);
-	        	System.out.println(mapToJson);
+				//Set pretty printing of json
+				objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+				String mapToJson = objectMapper.writeValueAsString(value);
+				System.out.println(mapToJson);
 				updateWithObjectElements(incomingElementValueElementForString,
 						0, ((LinkedHashMap) value).size(), key);
 				keys.put(
@@ -858,10 +834,10 @@ public class XMLElementBuilder {
 			} else if (value instanceof ArrayList) {
 				System.out.println("Incomin value is of JSONArray : "+value);
 				ObjectMapper objectMapper = new ObjectMapper();
-	        	//Set pretty printing of json
-	        	objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
-	        	String mapToJson = objectMapper.writeValueAsString(value);
-	        	System.out.println(mapToJson);
+				//Set pretty printing of json
+				objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+				String mapToJson = objectMapper.writeValueAsString(value);
+				System.out.println(mapToJson);
 				updateWithArrayElements(incomingElementValueElementForString,
 						0, 1, key);
 				// JSONArray jsonArray = new JSONArray(value.toString());
@@ -900,12 +876,12 @@ public class XMLElementBuilder {
 		ObjectMapper mapper = new ObjectMapper();
 		System.out.print("\n Incoming json string for reference : " + jsonString);
 		TypeReference<LinkedHashMap<String, Object>> typeRef 
-        = new TypeReference<LinkedHashMap<String,Object>>() {};
-        
-	     LinkedHashMap<String,?> o = mapper.readValue(jsonString, typeRef); 
+		= new TypeReference<LinkedHashMap<String,Object>>() {};
+
+		LinkedHashMap<String,?> o = mapper.readValue(jsonString, typeRef); 
 		List<String> sortKey = new ArrayList<String>();
 		int totalSize = o.size();
-		
+
 		for (String key : o.keySet()){
 			//String key = (String) keyset.next();
 			Object value = o.get(key);
@@ -914,10 +890,10 @@ public class XMLElementBuilder {
 				// loadElementValueTemplateXMLForObject();
 				System.out.println("Incomin value is of JSONObject : "+value);
 				ObjectMapper objectMapper = new ObjectMapper();
-	        	//Set pretty printing of json
-	        	objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
-	        	String mapToJson = objectMapper.writeValueAsString(value);
-	        	System.out.println(mapToJson);
+				//Set pretty printing of json
+				objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+				String mapToJson = objectMapper.writeValueAsString(value);
+				System.out.println(mapToJson);
 				updateWithObjectElementsForComplexValue(incomingElementValueElementForString,
 						0, ((LinkedHashMap) value).size(), key);
 				keys.put(
@@ -927,10 +903,10 @@ public class XMLElementBuilder {
 			} else if (value instanceof ArrayList) {
 				System.out.println("Incomin value is of JSONArray : "+value);
 				ObjectMapper objectMapper = new ObjectMapper();
-	        	//Set pretty printing of json
-	        	objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
-	        	String mapToJson = objectMapper.writeValueAsString(value);
-	        	System.out.println(mapToJson);
+				//Set pretty printing of json
+				objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+				String mapToJson = objectMapper.writeValueAsString(value);
+				System.out.println(mapToJson);
 				updateWithArrayElementsForComplexValue(incomingElementValueElementForString,
 						0, ((ArrayList) value).size(), key);
 				// JSONArray jsonArray = new JSONArray(value.toString());
@@ -1027,9 +1003,7 @@ public class XMLElementBuilder {
 		return current;
 	}
 	private static Element listChildrenForComplexValue(Element current,
-			int depth, String columnName, String columnValue, String objectSize)
-					throws IOException {
-		// printSpaces(depth);
+			int depth, String columnName, String columnValue, String objectSize) throws IOException {
 
 		List<Element> children = current.getChildren();
 		Iterator<Element> iteratorTemplateXML = children.iterator();
@@ -1038,44 +1012,27 @@ public class XMLElementBuilder {
 		while (iteratorTemplateXML.hasNext()) {
 			Element child = (Element) iteratorTemplateXML.next();
 			if (child.getName().equalsIgnoreCase("ComplexValue")) {
-
-				// innerMostElement =
-				// child.getChild("ElementType").getChild("ComplexType").getChild("AllCompositor").getChild("paramTypesSize");
-
-				IteratorIterable<Content> descendantsOfChannel = child
-						.getDescendants();
+				IteratorIterable<Content> descendantsOfChannel = child.getDescendants();
 				for (Content descendant : descendantsOfChannel) {
 					if (descendant.getCType().equals(Content.CType.Element)) {
 						Element element = (Element) descendant;
 						if (element.getName().equals("valuesSize")) {
-							System.out
-							.println("\n valuesSize--------------->"
-									+ element.getText()); //
+							System.out.println("\n valuesSize--------------->"+ element.getText());
 							innerMostElement = (Element) element.getParent();
 							innerMostElementForValueSize = element;
-							// prints all urls of all thumbnails within the
-							// 'media' namespace
 						}
 					}
 				}
 
-			} /*else if (child.getChildren().size() != 0) {
-
-				listChildrenForComplexValue(child, depth + 1, columnName,
-						columnValue, objectSize);
-			}*/
+			} 
 		}
-		Document elementForString = new XMLElementBuilder()
-		.loadElementValueTemplateXML("stringTypeValueTemplateXML.xml");
+		Document elementForString = new XMLElementBuilder().loadElementValueTemplateXML("stringTypeValueTemplateXML.xml");
 		innerMostElementForValueSize.setText(objectSize);
 		elementForString.getRootElement().getChild("ComplexValue").getChild("StringValue").getChild("columnName").setText(columnName);
-		innerMostElement.addContent(
-				elementForString.getRootElement().detach());
-
+		innerMostElement.addContent(elementForString.getRootElement().detach());
 		return current;
 	}
 
-	@SuppressWarnings("unchecked")
 	private static Element updateWithArrayElements(Element current, int depth,
 			int valueSize, String columnName) throws IOException {
 		// printSpaces(depth);
@@ -1190,13 +1147,9 @@ public class XMLElementBuilder {
 		return current;
 	}
 
-	@SuppressWarnings("unchecked")
 	private static Element updateWithObjectElementsForComplexValue(Element current, int depth,
 			int valueSize, String columnName) throws IOException {
-		// printSpaces(depth);
 
-		List children = current.getChildren();
-		Iterator iteratorTemplateXML = children.iterator();
 		Element innerMostChildForComplexType = null;		
 
 		IteratorIterable<Content> descendantsOfChannel = current
@@ -1237,7 +1190,7 @@ public class XMLElementBuilder {
 			innerMostChildForComplexType.getChild("valuesSize").removeContent();
 			innerMostChildForComplexType.getChild("valuesSize").addContent(valueSize + "");
 		}
-		
+
 		innerMostChildForComplexType.addContent(
 				elementForObject.detachRootElement());
 		return current;
@@ -1310,10 +1263,10 @@ public class XMLElementBuilder {
 		//jsonString = jsonString.replace("'", "\\\\u0027");
 		System.out.print("\n Incoming json string for reference : " + arrayOFKeys);
 		TypeReference<ArrayList<?>> typeRef 
-        = new TypeReference<ArrayList<?>>() {};        
-	     ArrayList<?> arrayOFKeysList = mapper.readValue(arrayOFKeys, typeRef); 
-	     
-	     
+		= new TypeReference<ArrayList<?>>() {};        
+		ArrayList<?> arrayOFKeysList = mapper.readValue(arrayOFKeys, typeRef); 
+
+
 		List<Object> array2List = new ArrayList<Object>();
 		int arraySize;
 		if(arrayOFKeysList.size() ==1){
@@ -1321,35 +1274,35 @@ public class XMLElementBuilder {
 		}else{
 			arraySize = arrayOFKeysList.size()-1;
 		}
-		
+
 		/** always send one item from Array 
 		 * Not all items, therefore sending arraySize as 1
 		 */
 		arraySize = 1;
 		for (int i = 0; i < arraySize; i++) {
 			if (arrayOFKeysList.get(i) instanceof LinkedHashMap) {
-				
+
 				System.out.println("Incomin value is of JSONObject : "+arrayOFKeysList
 						.get(i).toString());
 				ObjectMapper objectMapper = new ObjectMapper();
-	        	//Set pretty printing of json
-	        	objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
-	        	String mapToJson = objectMapper.writeValueAsString(arrayOFKeysList
+				//Set pretty printing of json
+				objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+				String mapToJson = objectMapper.writeValueAsString(arrayOFKeysList
 						.get(i));
-	        	System.out.println(mapToJson);
+				System.out.println(mapToJson);
 				Map<String, Object> subObj2Map = jsonString2Map(
 						incomingElementValueElementForString, mapToJson, false);
 				array2List.add(subObj2Map);
 			} else if (arrayOFKeysList.get(i) instanceof ArrayList) {
-				
+
 				System.out.println("Incomin value is of JSONObject : "+arrayOFKeysList.get(i).toString());
 				ObjectMapper objectMapper = new ObjectMapper();
-	        	//Set pretty printing of json
-	        	objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
-	        	String mapToJson = objectMapper.writeValueAsString(arrayOFKeysList
+				//Set pretty printing of json
+				objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+				String mapToJson = objectMapper.writeValueAsString(arrayOFKeysList
 						.get(i));
-	        	System.out.println(mapToJson);
-	        	
+				System.out.println(mapToJson);
+
 				List<Object> subarray2List = jsonArray2List(mapToJson,
 						incomingElementValueElementForString);
 				array2List.add(subarray2List);
@@ -1368,38 +1321,38 @@ public class XMLElementBuilder {
 		ObjectMapper mapper = new ObjectMapper();
 		System.out.print("\n Incoming json string for reference : " + arrayOFKeys);
 		TypeReference<ArrayList<?>> typeRef = new TypeReference<ArrayList<?>>() {};        
-	     ArrayList<?> arrayOFKeysList = mapper.readValue(arrayOFKeys, typeRef); 	     
-	     
-	     int arraySize;
-			if(arrayOFKeysList.size() ==1){
-				arraySize = arrayOFKeysList.size();
-			}else{
-				arraySize = arrayOFKeysList.size()-1;
-			}
-			
+		ArrayList<?> arrayOFKeysList = mapper.readValue(arrayOFKeys, typeRef); 	     
+
+		int arraySize;
+		if(arrayOFKeysList.size() ==1){
+			arraySize = arrayOFKeysList.size();
+		}else{
+			arraySize = arrayOFKeysList.size()-1;
+		}
+
 		List<Object> array2List = new ArrayList<Object>();
 		for (int i = 0; i < arraySize; i++) {
 			if (arrayOFKeysList.get(i) instanceof LinkedHashMap) {				
 				System.out.println("Incomin value is of JSONObject : "+arrayOFKeysList
 						.get(i).toString());
 				ObjectMapper objectMapper = new ObjectMapper();
-	        	//Set pretty printing of json
-	        	objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
-	        	String mapToJson = objectMapper.writeValueAsString(arrayOFKeysList
+				//Set pretty printing of json
+				objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+				String mapToJson = objectMapper.writeValueAsString(arrayOFKeysList
 						.get(i));
-	        	System.out.println(mapToJson);
+				System.out.println(mapToJson);
 				Map<String, Object> subObj2Map = jsonString2MapForComplexValue(
 						incomingElementValueElementForString, mapToJson, false);
 				array2List.add(subObj2Map);
 			} else if (arrayOFKeysList.get(i) instanceof ArrayList) {
-				
+
 				System.out.println("Incomin value is of JSONObject : "+arrayOFKeysList.get(i).toString());
 				ObjectMapper objectMapper = new ObjectMapper();
-	        	//Set pretty printing of json
-	        	objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
-	        	String mapToJson = objectMapper.writeValueAsString(arrayOFKeysList.get(i));
-	        	System.out.println(mapToJson);
-	        	
+				//Set pretty printing of json
+				objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+				String mapToJson = objectMapper.writeValueAsString(arrayOFKeysList.get(i));
+				System.out.println(mapToJson);
+
 				List<Object> subarray2List = jsonArray2ListForComplexValue(mapToJson,
 						incomingElementValueElementForString);
 				array2List.add(subarray2List);
@@ -1462,95 +1415,90 @@ public class XMLElementBuilder {
 				else if(child.getName().equalsIgnoreCase("UrlPathParametersLiteral") && child.getText().equalsIgnoreCase("template")){ 
 					urlPathParametersLiteralElement = child;
 				}
-				/*else if (child.getName().equalsIgnoreCase(
-						"MessagingSchemaElement")) {
-					if(child.getChildren().size()>0){
-						System.out.println(child.getChildren());
-						//System.out.println(child.getChild("elementTypeName").getTextTrim());
-						if(child.getChildren().get(0).getName().equals("elementTypeName")){
 
-								//getChild("elementTypeName").getTextTrim().equalsIgnoreCase("template")){
-							messagingSchema = child;
-					}}*/
-				 				
 			}
 		}
-		if(urlPathParametersLiteralElement != null){
-			urlPathParametersLiteralElement.removeContent();
-			String[] urlPaths = Util.tokenizePathURLEndpoint(configurationTO.getEndPointUrl());
-			urlPathParametersLiteralElement.addContent(new Element("pathElementss").setAttribute("size", (urlPaths.length-1)+""));			
-			
-			for (int i = 1; i < urlPaths.length; i++) {
-				
-	            System.out.println("paths::"+i+" "+urlPaths[i]+"\n");
-	            UrlPathParamsMultiValue = new XMLElementBuilder().loadElementValueTemplateXML("urlPathParamsMultiValue.xml").detachRootElement();
-	            //UrlPathParamsMultiValue = document.getRootElement();
-	           
-	            UrlPathParamsMultiValue.getChild("StringTestValue").getChild("value").removeContent();
-	            UrlPathParamsMultiValue.getChild("StringTestValue").getChild("value").addContent(urlPaths[i]);
-	            
-	            urlPathParametersLiteralElement.getChild("pathElementss").addContent(UrlPathParamsMultiValue);
-	        }
+
+		if (testID != null) {
+			testID.removeContent();
+			testID.addContent(increment.getAndIncrement() + "");
 		}
-	if (testID != null) {
-		testID.removeContent();
-		testID.addContent(increment.getAndIncrement() + "");
-	}
-	if (docDelivery != null) {
-		docDelivery.removeContent();
-		docDelivery.addContent(configurationTO.getRamlFileName());
-	}
-	if(ftpDeliveries != null){
-		ftpDeliveries.removeContent();
-		ftpDeliveries.addContent(configurationTO.getEndPointUrl());
-	}
-	if(testID1 != null){
-		testID1.removeContent();
-		testID1.addContent(increment.getAndIncrement() + "");
-	}
+		if (docDelivery != null) {
+			docDelivery.removeContent();
+			docDelivery.addContent(configurationTO.getRamlFileName());
+		}
+		if(ftpDeliveries != null){
+			ftpDeliveries.removeContent();
+			ftpDeliveries.addContent(configurationTO.getEndPointUrl());
+		}
+		if(testID1 != null){
+			testID1.removeContent();
+			testID1.addContent(increment.getAndIncrement() + "");
+		}
 
-	restClient.removeContent();
-	restClient.addContent("Kalpana testing REST Client");
+		restClient.removeContent();
+		restClient.addContent("Kalpana testing REST Client");
 
-	//dataSourceName.removeContent();
-	//dataSourceName.addContent(configurationTO.getDataSource());
-	if(httpMethodTestValue != null){
-		httpMethodTestValue.getChild("method").removeContent();
-		httpMethodTestValue.getChild("method").addContent(
-				configurationTO.getMethod());
-	}
+		//dataSourceName.removeContent();
+		//dataSourceName.addContent(configurationTO.getDataSource());
+		if(httpMethodTestValue != null){
+			httpMethodTestValue.getChild("method").removeContent();
+			httpMethodTestValue.getChild("method").addContent(
+					configurationTO.getMethod());
+		}
 
-	nameValuePair.getChild("MultiValue").getChild("StringTestValue")
-	.getChild("value").removeContent();
-	nameValuePair.getChild("MultiValue").getChild("StringTestValue")
-	.getChild("value")
-	.addContent("${TOKEN}");
+		nameValuePair.getChild("MultiValue").getChild("StringTestValue")
+		.getChild("value").removeContent();
+		nameValuePair.getChild("MultiValue").getChild("StringTestValue")
+		.getChild("value")
+		.addContent("${TOKEN}");
 
-	/*if(httpClientEndPoint !=null){
+		/*if(httpClientEndPoint !=null){
 		httpClientEndPoint.removeContent();
 		httpClientEndPoint.addContent(configurationTO.getEndPointUrl());
 
 	}*/
-	
-	if(httpClientEndPoint != null){
-		httpClientEndPoint.removeContent();
-		String paramStr = null;
-		if(configurationTO.getQueryParameters() != null){
-			for(int i=0; i<  configurationTO.getQueryParameters().size(); i++){
-				Parameter parameter = configurationTO.getQueryParameters().get(i);
-				if(i == (configurationTO.getQueryParameters().size()-1)){
-					paramStr = paramStr+parameter.toString()+"=${"+parameter.toString()+"}";
-				}else{
-					paramStr = paramStr+parameter.toString()+"=${"+parameter.toString()+"}&amp;";
+
+		if(httpClientEndPoint != null){
+			httpClientEndPoint.removeContent();
+			String paramStr = null;
+			if(configurationTO.getQueryParameters() != null){
+				for(int i=0; i<  configurationTO.getQueryParameters().size(); i++){
+					Parameter parameter = configurationTO.getQueryParameters().get(i);
+					if(i == (configurationTO.getQueryParameters().size()-1)){
+						paramStr = paramStr+parameter.toString()+"=${"+parameter.toString()+"}";
+					}else{
+						paramStr = paramStr+parameter.toString()+"=${"+parameter.toString()+"}&amp;";
+					}
 				}
+				httpClientEndPoint.addContent(configurationTO.getEndPointUrl()+"?"+paramStr);
+			}else{
+				httpClientEndPoint.addContent(configurationTO.getEndPointUrl());
 			}
-			httpClientEndPoint.addContent(configurationTO.getEndPointUrl()+"?"+paramStr);
-		}else{
-			httpClientEndPoint.addContent(configurationTO.getEndPointUrl());
+		}
+		return current;	
+
+	}
+
+	public static void updateUrlPathParametersLiteral(Element urlPathParametersLiteralElement, ConfigurationTO configurationTO) throws IOException{
+		Element UrlPathParamsMultiValue = null;
+		if(urlPathParametersLiteralElement != null){
+			urlPathParametersLiteralElement.removeContent();
+			String[] urlPaths = Util.tokenizePathURLEndpoint(configurationTO.getEndPointUrl());
+			urlPathParametersLiteralElement.addContent(new Element("pathElementss").setAttribute("size", (urlPaths.length-1)+""));			
+
+			for (int i = 1; i < urlPaths.length; i++) {
+
+				System.out.println("paths::"+i+" "+urlPaths[i]+"\n");
+				UrlPathParamsMultiValue = new XMLElementBuilder().loadElementValueTemplateXML("urlPathParamsMultiValue.xml").detachRootElement();
+				//UrlPathParamsMultiValue = document.getRootElement();
+
+				UrlPathParamsMultiValue.getChild("StringTestValue").getChild("value").removeContent();
+				UrlPathParamsMultiValue.getChild("StringTestValue").getChild("value").addContent(urlPaths[i]);
+
+				urlPathParametersLiteralElement.getChild("pathElementss").addContent(UrlPathParamsMultiValue);
+			}
 		}
 	}
-	return current;	
 
 }
-	
-	}
