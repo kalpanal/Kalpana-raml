@@ -53,7 +53,14 @@ public class ConfigurationTO {
 	String appConfigPath;
 	String inputTstFile;
 	List<Parameter> queryParameters;
+	String responseSchemaString;
 	
+	public String getResponseSchemaString() {
+		return responseSchemaString;
+	}
+	public void setResponseSchemaString(String responseSchemaString) {
+		this.responseSchemaString = responseSchemaString;
+	}
 	public List<Parameter> getQueryParameters() {
 		return queryParameters;
 	}

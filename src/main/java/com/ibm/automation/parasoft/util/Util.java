@@ -5,9 +5,16 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Scanner;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.ibm.automation.common.StringUtilsCustom;
 import com.ibm.automation.parasoft.domain.AppConfigurationPropertiesForDataSheet;
@@ -120,4 +127,47 @@ public class Util {
 		  }
 		return dataSheetsList;
 	}
+	
+	public static Map<String, Object> jsonString2Map( String jsonString ) throws JSONException{
+        Map<String, Object> keys = new HashMap<String, Object>(); 
+
+        org.json.JSONObject jsonObject = new org.json.JSONObject( jsonString ); // HashMap
+        Iterator<?> keyset = jsonObject.keys(); // HM
+
+        while (keyset.hasNext()) {
+            String key =  (String) keyset.next();
+            Object value = jsonObject.get(key);
+            System.out.print("\n Key : "+key);
+            if ( value instanceof org.json.JSONObject ) {
+                System.out.println("Incomin value is of JSONObject : ");
+                keys.put( key, jsonString2Map( value.toString() ));
+            }else if ( value instanceof org.json.JSONArray) {
+                org.json.JSONArray jsonArray = jsonObject.getJSONArray(key);
+                //JSONArray jsonArray = new JSONArray(value.toString());
+                keys.put( key, jsonArray2List( jsonArray ));
+            } else {
+               // keyNode( value);
+                keys.put( key, value );
+            }
+        }
+        return keys;
+    }
+	
+	public static List<Object> jsonArray2List( JSONArray arrayOFKeys ) throws JSONException{
+        System.out.println("Incoming value is of JSONArray : =========");
+        List<Object> array2List = new ArrayList<Object>();
+        for ( int i = 0; i < arrayOFKeys.length(); i++ )  {
+            if ( arrayOFKeys.opt(i) instanceof JSONObject ) {
+                Map<String, Object> subObj2Map = jsonString2Map(arrayOFKeys.opt(i).toString());
+                array2List.add(subObj2Map);
+            }else if ( arrayOFKeys.opt(i) instanceof JSONArray ) {
+                List<Object> subarray2List = jsonArray2List((JSONArray) arrayOFKeys.opt(i));
+                array2List.add(subarray2List);
+            }else {
+                //keyNode( arrayOFKeys.opt(i) );
+                array2List.add( arrayOFKeys.opt(i) );
+            }
+        }
+        return array2List;      
+    }
 }

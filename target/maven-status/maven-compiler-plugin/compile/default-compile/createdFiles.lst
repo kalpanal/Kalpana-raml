@@ -14,9 +14,11 @@ io\apptik\json\schema\SchemaJJv1.class
 io\apptik\json\generator\JsonGenerator.class
 com\ibm\automation\parasoft\XMLElementBuilder$2.class
 io\apptik\json\schema\validation\CommonMatchers$12.class
+com\ibm\automation\parasoft\XMLElementBuilder$6.class
 io\apptik\json\generator\generators\LimitedNumberGenerator.class
 io\apptik\json\generator\matcher\SchemaDefMatchers$4.class
 com\ibm\automation\parasoft\XMLElementBuilder$1.class
+com\ibm\automation\parasoft\XMLElementBuilder$7.class
 io\apptik\json\generator\matcher\ComparableTypeSafeMatcher.class
 io\apptik\json\schema\fetch\SchemaResourceFetcher.class
 io\apptik\json\schema\validation\CommonMatchers$24.class
@@ -65,6 +67,7 @@ io\apptik\json\generator\generators\ObjectGenerator.class
 io\apptik\json\schema\validation\CommonMatchers$13.class
 io\apptik\json\generator\matcher\FormatMatchers$7.class
 com\ibm\automation\excelOps\ReadExcelDataSheet.class
+com\ibm\automation\parasoft\util\JsonUtils.class
 io\apptik\json\schema\validation\CommonMatchers$2.class
 io\apptik\json\generator\matcher\SchemaDefMatchers$5.class
 com\ibm\automation\parasoft\DataRow.class
@@ -74,6 +77,7 @@ io\apptik\json\generator\matcher\SchemaDefMatchers$2.class
 com\ibm\automation\parasoft\XMLElementBuilder.class
 io\apptik\json\generator\matcher\FormatMatchers$10.class
 com\ibm\automation\parasoft\StringComparisonAsssertionDetails.class
+com\ibm\automation\parasoft\XMLElementBuilder$8.class
 io\apptik\json\schema\validation\CommonMatchers$20.class
 com\ibm\automation\excelOps\InputExcelFileVO.class
 io\apptik\json\schema\validation\CommonMatchers$23.class

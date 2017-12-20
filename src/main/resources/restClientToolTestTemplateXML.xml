@@ -1367,9 +1367,8 @@ Content-Type: text/plain; charset=UTF-8</httpHeader>
        </QueryParametersLiteral>
        <QueryParametersWadl className="webtool.soap.http.QueryParametersWadl" version="1.1">
        </QueryParametersWadl>
-       <UrlPathParametersLiteral className="webtool.soap.http.UrlPathParametersLiteral" version="1.1">
-template
-       </UrlPathParametersLiteral>
+       <UrlPathParametersLiteral className="webtool.soap.http.UrlPathParametersLiteral" version="1.1">template
+	   </UrlPathParametersLiteral>
        <UrlPathParametersWadl className="webtool.soap.http.UrlPathParametersWadl" version="1.1">
        </UrlPathParametersWadl>
        <RESTResourceMethod className="webtool.soap.http.RESTResourceMethod" version="2.2">
