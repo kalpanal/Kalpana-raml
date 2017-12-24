@@ -11,6 +11,7 @@ import org.raml.v2.api.RamlModelBuilder;
 import org.raml.v2.api.RamlModelResult;
 import org.raml.v2.api.model.common.ValidationResult;
 import org.raml.v2.api.model.v08.api.Api;
+import org.raml.v2.api.model.v08.bodies.Response;
 import org.raml.v2.api.model.v08.resources.Resource;
 import org.raml.v2.api.model.v08.methods.Method;
 
@@ -139,10 +140,37 @@ public class ParasoftTstGeneratorMain {
 		System.out.println("Method type is GET/PUT/POST/DELETE ==>"	+ urlEndPointsSubNode.methods().get(index).method());
 		System.out.println("endpoint URL is  ==>"	+ urlEndPointsSubNode.resourcePath());
 		System.out.println("securedBy ==>"	+ urlEndPointsSubNode.methods().get(index).securedBy().get(0).name());
-		//System.out.println("responses schema content ==>"	+ urlEndPointsSubNode.methods().get(index).responses().get(0).body().get(0).schemaContent().toString());
+		//System.out.println("responses schema content ==>"	+ urlEndPointsSubNode.methods().get(index).responses().get(0).body().get(0));
+
 
 		ConfigurationTO configurationTO = new ConfigurationTO();
-
+		
+		// set the response schema content
+		AtomicInteger j = new AtomicInteger();
+		HashMap<String, String> responseSchemaMap = new HashMap<String, String>();
+		
+		List<Response> res1 = urlEndPointsSubNode.methods().get(index).responses();
+		for(int k=0; k<2; k++){
+			//response.get(i);
+			Response response = res1.get(k);
+			if(response.body() != null && (!response.body().isEmpty())){
+				//System.out.println(response.body().get(0).schemaContent());
+				try {
+					//System.out.println(response.description().value());
+					responseSchemaMap.put(response.code().value(), JsonGeneratorFromSchema.generateInputSampleString(response.body().get(0).schemaContent()).toString());
+					//configurationTO.setResponseSchemaString(JsonGeneratorFromSchema.generateInputSampleString(response.body().get(0).schemaContent()).toString());
+				} catch (Exception e) {
+					System.out.println("Error while reading response body schema content"+e.getMessage());
+					e.printStackTrace();
+				}
+			}else{
+				System.out.println(response.description().value());
+				responseSchemaMap.put(response.code().value(), "");
+			}
+			
+			
+		}
+ 		configurationTO.setResponseSchemaMap(responseSchemaMap);
 		String inputMethodType = urlEndPointsSubNode.methods().get(index).method();
 		configurationTO.setMethod(inputMethodType);
 		configurationTO.setDataSourcePath(Util.loadProperties("DATA_SOURCE_PATH", appConfigPath));
@@ -152,38 +180,39 @@ public class ParasoftTstGeneratorMain {
 		configurationTO.setSecuredBy(urlEndPointsSubNode.methods().get(index)
 				.securedBy().get(0).name());
 		configurationTO.setValidRange(urlEndPointsSubNode.methods().get(index).responses().get(0).code().toString());
-		//if(urlEndPointsSubNode.methods().get(0).method().equalsIgnoreCase("POST"))
-		if(urlEndPointsSubNode.methods().get(index).body().size() > 0){
-			configurationTO.setInputSampleString(urlEndPointsSubNode.methods()
-					.get(index).body().get(0).example().value());
-		}
+		ObjectMapper mapper = new ObjectMapper();
+
 		try {
 
 			switch (inputMethodType.toUpperCase()) {
 			case "POST":
-				ObjectMapper mapper = new ObjectMapper();
+				
 				if(urlEndPointsSubNode.methods().get(index).body().size() >0){					
 					configurationTO.setInputSampleString(JsonGeneratorFromSchema.generateInputSampleString(urlEndPointsSubNode
 							.methods().get(index).body().get(0).schemaContent()).toString());
+					
 				}
-				configurationTO.setResponseSchemaString(JsonGeneratorFromSchema.generateInputSampleString(urlEndPointsSubNode
-						.methods().get(index).body().get(0).schemaContent()).toString());
+				
+				
+				
 				break;
 			case "GET":
 				if(urlEndPointsSubNode.methods().get(index).body().size() >0){
 					configurationTO.setInputSampleString(JsonGeneratorFromSchema.generateInputSampleString(urlEndPointsSubNode
 							.methods().get(index).body().get(0).schemaContent()).toString());
 				}
-				configurationTO.setResponseSchemaString(JsonGeneratorFromSchema.generateInputSampleString(urlEndPointsSubNode
-						.methods().get(index).body().get(0).schemaContent()).toString());
+				
+
+			//	configurationTO.setResponseSchemaString(JsonGeneratorFromSchema.generateInputSampleString(urlEndPointsSubNode
+				//		.methods().get(index).responses().get(0).body().get(0).schemaContent()).toString());
 			default:
 
 				if(urlEndPointsSubNode.methods().get(index).body().size() >0){
 					configurationTO.setInputSampleString(JsonGeneratorFromSchema.generateInputSampleString(urlEndPointsSubNode
 							.methods().get(index).body().get(0).schemaContent()).toString());
 				}
-				configurationTO.setResponseSchemaString(JsonGeneratorFromSchema.generateInputSampleString(urlEndPointsSubNode
-						.methods().get(index).body().get(0).schemaContent()).toString());
+			//	configurationTO.setResponseSchemaString(JsonGeneratorFromSchema.generateInputSampleString(urlEndPointsSubNode
+				//		.methods().get(index).responses().get(0).body().get(0).schemaContent()).toString());
 
 
 			}
@@ -191,6 +220,7 @@ public class ParasoftTstGeneratorMain {
 		} catch (Exception e) {
 			System.out.println("Error inside swtich case of method type in method copyRAMLDataToDTO()"+e.getMessage());
 		}
+		System.out.println(configurationTO.getInputSampleString());
 		return configurationTO;
 	}
 

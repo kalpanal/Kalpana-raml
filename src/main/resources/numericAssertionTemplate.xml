@@ -1,0 +1,15 @@
+              <NumericAssertion className="webtool.assertion.xml.NumericAssertion" version="1.6.2">
+                <timestamp>1438361196957</timestamp>
+                <name>Numeric Assertion</name>
+                <Assertion_XPath>this[&quot;status&quot;][&quot;serverStatusCode&quot;]</Assertion_XPath>
+                <NameValuePair className="webtool.data.NameValuePair" version="3.3">
+                  <name>Numeric</name>
+                  <MultiValue className="webtool.data.MultiValue" version="1.4">
+                    <StringTestValue className="webtool.data.StringTestValue" version="4.1">
+                      <value>404</value>
+                    </StringTestValue>
+                    <ParameterizedTestValue className="webtool.data.ParameterizedTestValue" version="3.1">
+                    </ParameterizedTestValue>
+                  </MultiValue>
+                </NameValuePair>
+              </NumericAssertion>

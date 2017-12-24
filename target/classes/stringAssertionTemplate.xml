@@ -1,0 +1,18 @@
+<StringComparisonAssertion className="webtool.assertion.xml.StringComparisonAssertion" version="3.6.2">
+                  <timestamp>1437160275915</timestamp>
+                  <name>Key1</name>
+                  <Assertion_XPath>this[&quot;businessToParty&quot;][0][&quot;key&quot;]</Assertion_XPath>
+                  <ignoreCase>true</ignoreCase>
+                  <NameValuePair className="webtool.data.NameValuePair" version="3.3">
+                    <name>String Comparison Assertion</name>
+                    <MultiValue className="webtool.data.MultiValue" version="1.4">
+                      <StringTestValue className="webtool.data.StringTestValue" version="4.1">
+                      </StringTestValue>
+                      <ParameterizedTestValue className="webtool.data.ParameterizedTestValue" version="3.1">
+                        <column>key1</column>
+                      </ParameterizedTestValue>
+                      <selectedIndex>-2</selectedIndex>
+                    </MultiValue>
+                  </NameValuePair>
+                </StringComparisonAssertion>
+                

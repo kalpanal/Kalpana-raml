@@ -1,6 +1,7 @@
 package com.ibm.automation.parasoft.domain;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.raml.v2.api.model.v08.parameters.Parameter;
@@ -38,6 +39,8 @@ public class ConfigurationTO {
 		this.urlParametersList = urlParametersList;
 	}
 	public String method;
+	public HashMap<String, String> responseSchemaMap;
+
 	public String endPointUrl;
 	public ArrayList headersList;
 	public String inputSampleString;
@@ -149,6 +152,12 @@ public class ConfigurationTO {
 	public void setSecuredBy(String securedBy) {
 		this.securedBy = securedBy;
 	}
-	
+	public void setResponseSchemaMap(HashMap<String, String> responseSchemaMap) {
+		this.responseSchemaMap = responseSchemaMap;
+		
+	}
+	public HashMap<String, String> getResponseSchemaMap() {
+		return responseSchemaMap;
+	}
 	
 }

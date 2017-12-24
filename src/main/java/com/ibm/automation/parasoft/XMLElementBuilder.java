@@ -9,6 +9,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -22,6 +23,7 @@ import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 import org.jdom2.util.IteratorIterable;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.raml.v2.api.model.v08.parameters.Parameter;
@@ -34,7 +36,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.ibm.automation.excelOps.InputExcelFileVO;
 import com.ibm.automation.parasoft.domain.ConfigurationTO;
-import com.ibm.automation.parasoft.util.JsonUtils;
+import com.ibm.automation.parasoft.util.XMLJsonUtils;
 import com.ibm.automation.parasoft.util.Util;
 
 public class XMLElementBuilder {
@@ -535,10 +537,13 @@ public class XMLElementBuilder {
 		restClientToolTest.getChild("name").addContent(
 				configurationTO.getDataSourcePath() + " - "
 						+ configurationTO.getMethod());
+		
+		outputToolsSize.removeContent();
+		outputToolsSize.addContent("1");
 
 		/** Kalpana to be uncommented later*/
 		try {
-			buildRESTClientToolTest(restClientToolTest, messagingSchema, configurationTO, firstTime, increment, urlPathParametersLiteralElement);
+			buildRESTClientToolTest(restClientToolTest, messagingSchema, configurationTO, firstTime, increment, urlPathParametersLiteralElement, jsonAssertionTool);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -588,16 +593,14 @@ public class XMLElementBuilder {
 	}
 
 	private static void buildRESTClientToolTest(Element restClientToolTest, Element messagingSchema,
-			ConfigurationTO configurationTO, boolean firstTime, AtomicInteger increment, Element urlPathParametersLiteralElement) throws Exception {
+			ConfigurationTO configurationTO, boolean firstTime, AtomicInteger increment, Element urlPathParametersLiteralElement, Element jsonAssertionTool) throws Exception {
 		Element restClientToolTestParent = (Element) restClientToolTest.getParent();
 
 		AtomicInteger firstTimeRestClientToolSet = new AtomicInteger();
-		System.out.println("for END POINT URL ------->"+configurationTO.getEndPointUrl() );
+		System.out.println("for END POINT URL ------->"+configurationTO.getEndPointUrl()+"\n"+configurationTO.getResponseSchemaString());
 		if(configurationTO.getInputSampleString() != null){
-		  		Map<String,Object> map = JsonUtils.jsonString2Map(configurationTO.getInputSampleString(), null);
+		  		Map<String,Object> map = XMLJsonUtils.jsonString2MapForAssertionsWithXPath(configurationTO.getInputSampleString(), null);
 					System.out.println("Done==========\n"+map);
-					JsonUtils.displayJSONMAP(map, false);
-			//System.out.println("Done==========\n"+JsonUtils.jsonString2Map(configurationTO.getInputSampleString(), null));
 		}
 		/*		configurationTO.getDataSource().forEach(
 				(dataSheetName) -> {*/
@@ -622,13 +625,25 @@ public class XMLElementBuilder {
 				updateMessagingSchemaForEmptyRequest(messagingSchema, configurationTO.getInputSampleString());
 				updateUrlPathParametersLiteral(urlPathParametersLiteralElement, configurationTO);
 				//Map<String, Object> responseParamsMap = buildAssertionsOnResponseParams(configurationTO.getResponseSchemaString());
-				if(configurationTO.getResponseSchemaString() !=null){
-					
-					Map<String,Object> map = JsonUtils.jsonString2Map(configurationTO.getResponseSchemaString(), null);
-					System.out.println("Done==========\n"+map);
-					JsonUtils.displayJSONMAP(map, false);
-					
+				/** set Assertions - START*/
+				HashMap<String, String> responseMap = configurationTO.getResponseSchemaMap();
+				for (Entry<String, String> entry : responseMap.entrySet()) {
+				    String responseCode = entry.getKey();
+				    String reponseSchemaContent = entry.getValue();
+				    if(reponseSchemaContent!= null && (!reponseSchemaContent.equals(""))){
+				    	Element andAssertion = buildResponseConditionalAssertion(responseCode, jsonAssertionTool);
+				    	XMLJsonUtils.jsonString2MapForReponseCodeAssertions(responseCode, reponseSchemaContent, null, andAssertion);
+				    }
+				   
 				}
+/*				if(configurationTO.getResponseSchemaString() !=null){
+					
+					Map<String,Object> map1 = XMLJsonUtils.jsonString2MapForAssertionsRequiredParams(configurationTO.getResponseSchemaString(), null, andAssertion);					
+					//Map<String,Object> map = XMLJsonUtils.jsonString2MapForAssertionsRequiredParams(configurationTO.getResponseSchemaString(), null );
+					System.out.println("Done==========\n"+map1);	
+					jsonAssertionTool.addContent(andAssertion.detach());
+				}*/
+				/** set Assertions - END*/
 			} catch (Exception e) {
 				System.out.println("Error while update restclientoolToolTest XML node for first time"+e.getMessage());
 				e.printStackTrace();
@@ -642,7 +657,7 @@ public class XMLElementBuilder {
 				Element secondRestClientToolTestParent = new XMLElementBuilder().loadElementValueTemplateXML("restClientToolTestTemplateXML.xml").detachRootElement();
 				secondRestClientToolTestParent = updateRestToolTest(secondRestClientToolTestParent, increment, configurationTO);
 				IteratorIterable<Content> descendantsOfChannel = secondRestClientToolTestParent.getDescendants();
-				Element secondTimeMessaingSchema = null, outputToolsSize= null, jsonAssertionTool=null;
+				Element secondTimeMessaingSchema = null, outputToolsSize= null, jsonAssertionToolElse=null;
 				for (Content descendant : descendantsOfChannel) {
 					if (descendant.getCType().equals(Content.CType.Element)) {
 						Element child = (Element) descendant;
@@ -657,7 +672,7 @@ public class XMLElementBuilder {
 							outputToolsSize = child;
 						}
 						else if(child.getName().equalsIgnoreCase("JSONAssertionTool")){					
-							jsonAssertionTool = child;
+							jsonAssertionToolElse = child;
 						}else if(child.getName().equalsIgnoreCase("UrlPathParametersLiteral") && child.getTextTrim().equalsIgnoreCase("template")){ 
 							urlPathParametersLiteralElement = child;
 						}
@@ -690,6 +705,11 @@ public class XMLElementBuilder {
 		//});
 
 
+	}
+
+	private static void buildConditionalAssertions() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	private static void updateAllOtherValueInsideRestClientToolTestTag(Element messagingSchema, ConfigurationTO configurationTO) {
@@ -821,6 +841,7 @@ public class XMLElementBuilder {
 		int totalSize = o.size();
 
 		for (String key : o.keySet()){
+			if(!key.equalsIgnoreCase("required")){
 			//String key = (String) keyset.next();
 			Object value = o.get(key);
 			if (value instanceof LinkedHashMap) {
@@ -868,73 +889,13 @@ public class XMLElementBuilder {
 				// compositorValueSet.addContent(incomingElementValueElementForString.detach());
 				// keys.put( key, value );
 			}
-		}
-		return keys;
-	}
-
-	public static Map<String, Object> jsonString2MapForAssertions(String jsonString) throws JSONException, IOException {
-		LinkedHashMap<String, Object> keys = new LinkedHashMap<String, Object>();
-		ObjectMapper mapper = new ObjectMapper();
-		System.out.print("\n Incoming json string for reference : " + jsonString);
-		TypeReference<LinkedHashMap<String, Object>> typeRef = new TypeReference<LinkedHashMap<String,Object>>() {};
-
-		LinkedHashMap<String,?> o = mapper.readValue(jsonString, typeRef); 
-		for (String key : o.keySet()){
-			//String key = (String) keyset.next();
-			Object value = o.get(key);
-			if (value instanceof LinkedHashMap) {
-				System.out.println("Incomin value is of JSONObject : "+value);
-				ObjectMapper objectMapper = new ObjectMapper();
-				//Set pretty printing of json
-				objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
-				String mapToJson = objectMapper.writeValueAsString(value);
-				keys.put(key, jsonString2MapForAssertions(mapToJson));
-			} else if (value instanceof ArrayList) {
-				System.out.println("Incomin value is of JSONArray : "+value);
-				ObjectMapper objectMapper = new ObjectMapper();
-				objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
-				String mapToJson = objectMapper.writeValueAsString(value);
-				keys.put(key, jsonArray2ListForAssertions(mapToJson));
-			} else {
-				// compositorValueSet.addContent(incomingElementValueElementForString.detach());
-				 keys.put( key, value );
 			}
 		}
 		return keys;
 	}
 
-	public static  Map<String, Object> buildAssertionsOnResponseParams(String jsonString) throws JSONException, IOException {
-		LinkedHashMap<String, Object> keys = new LinkedHashMap<String, Object>();
-		ObjectMapper mapper = new ObjectMapper();
-		System.out.print("\n Incoming json string for reference : " + jsonString);
-		TypeReference<LinkedHashMap<String, Object>> typeRef = new TypeReference<LinkedHashMap<String,Object>>() {};
 
-		LinkedHashMap<String,?> o = mapper.readValue(jsonString, typeRef); 
-		int totalSize = o.size();
 
-		for (String key : o.keySet()){
-			//String key = (String) keyset.next();
-			Object value = o.get(key);
-			if (value instanceof LinkedHashMap) {
-				System.out.println("Incomin value is of JSONObject : "+value);
-				ObjectMapper objectMapper = new ObjectMapper();
-				objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
-				String mapToJson = objectMapper.writeValueAsString(value);				
-				keys.put(key, jsonString2MapForAssertions(mapToJson));
-			} else if (value instanceof ArrayList) {
-				System.out.println("Incomin value is of JSONArray : "+value);
-				ObjectMapper objectMapper = new ObjectMapper();
-				objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
-				String mapToJson = objectMapper.writeValueAsString(value);
-				
-				keys.put(key,	jsonArray2ListForAssertions(mapToJson));
-			} else {
-				
-				 keys.put( key, value );
-			}
-		}
-		return keys;
-	}
 	
 	public static Map<String, Object> jsonString2MapForComplexValue(
 			Element incomingElementValueElementForString, String jsonString,
@@ -951,6 +912,7 @@ public class XMLElementBuilder {
 		int totalSize = o.size();
 
 		for (String key : o.keySet()){
+			if(!key.equalsIgnoreCase("required")){
 			//String key = (String) keyset.next();
 			Object value = o.get(key);
 			if (value instanceof LinkedHashMap) {
@@ -1000,6 +962,7 @@ public class XMLElementBuilder {
 				}
 				// compositorValueSet.addContent(incomingElementValueElementForString.detach());
 				// keys.put( key, value );
+			}
 			}
 		}
 		return keys;
@@ -1380,49 +1343,6 @@ public class XMLElementBuilder {
 		return array2List;
 	}
 
-	public static List<Object> jsonArray2ListForAssertions(String arrayOFKeys) throws JSONException, IOException {
-		System.out.println("Incoming value is of JSONArray : =========");
-		ObjectMapper mapper = new ObjectMapper();
-		TypeReference<ArrayList<?>> typeRef = new TypeReference<ArrayList<?>>() {};        
-		ArrayList<?> arrayOFKeysList = mapper.readValue(arrayOFKeys, typeRef); 
-		List<Object> array2List = new ArrayList<Object>();
-		int arraySize;
-		if(arrayOFKeysList.size() ==1){
-			arraySize = arrayOFKeysList.size();
-		}else{
-			arraySize = arrayOFKeysList.size()-1;
-		}
-
-		/** always send one item from Array 
-		 * Not all items, therefore sending arraySize as 1
-		 */
-		arraySize = 1;
-		for (int i = 0; i < arraySize; i++) {
-			if (arrayOFKeysList.get(i) instanceof LinkedHashMap) {
-				System.out.println("Incomin value is of JSONObject : "+arrayOFKeysList.get(i).toString());
-				ObjectMapper objectMapper = new ObjectMapper();
-				//Set pretty printing of json
-				objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
-				String mapToJson = objectMapper.writeValueAsString(arrayOFKeysList.get(i));
-				System.out.println(mapToJson);
-				Map<String, Object> subObj2Map = jsonString2MapForAssertions(mapToJson);
-				array2List.add(subObj2Map);
-			} else if (arrayOFKeysList.get(i) instanceof ArrayList) {
-
-				System.out.println("Incomin value is of JSONObject : "+arrayOFKeysList.get(i).toString());
-				ObjectMapper objectMapper = new ObjectMapper();
-				//Set pretty printing of json
-				objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
-				String mapToJson = objectMapper.writeValueAsString(arrayOFKeysList.get(i));
-				List<Object> subarray2List = jsonArray2ListForAssertions(mapToJson);
-				array2List.add(subarray2List);
-			} else {
-				// keyNode( arrayOFKeys.opt(i) );
-				array2List.add(arrayOFKeysList.get(i));
-			}
-		}
-		return array2List;
-	}
 
 	public static List<Object> jsonArray2ListForComplexValue(String arrayOFKeys,
 			Element incomingElementValueElementForString) throws JSONException,
@@ -1504,7 +1424,7 @@ public class XMLElementBuilder {
 				} else if (child.getName().equalsIgnoreCase(
 						"HTTPClient_Endpoint")
 						&& child.getTextTrim()
-						.equals("http://ocp.api.sys.td.com/com-td-ocp-delivery-api/ftpdeliveries")) {
+						.contains("http://ocp.api.sys.td.com/com-td-ocp-delivery-api/ftpdeliveries-template")) {
 					httpClientEndPoint = child;
 
 				} else if (child.getName().equalsIgnoreCase(
@@ -1610,5 +1530,66 @@ public class XMLElementBuilder {
 			}
 		}
 	}
+
+	public static Element buildStringComparisonAssertions(JSONArray jsonArray, String actualKey, Element andAssertion) throws IOException {		
+		Element name =null, assertionsSize=null;
+		Element stringName=null, assertionXPath=null,column=null;		
+				
+		andAssertion.getChild("assertionsSize").removeContent();
+		andAssertion.getChild("assertionsSize").addContent(jsonArray.length()+"");
+		
+		 for ( int i = 0; i < jsonArray.length(); i++ )  {
+			 Element stringAssertion = new XMLElementBuilder().loadElementValueTemplateXML("stringAssertionTemplate.xml").detachRootElement();
+			 IteratorIterable<Content> descendantsOfChannel1 = stringAssertion.getDescendants();
+			 for (Content descendant : descendantsOfChannel1) {
+					if (descendant.getCType().equals(Content.CType.Element)) {
+						Element child = (Element) descendant;
+						if (child.getName().equalsIgnoreCase("name")) {
+							stringName = child;
+						} else if (child.getName().equalsIgnoreCase("Assertion_XPath")
+								) {
+							assertionXPath = child;
+
+						} else if (child.getName().equalsIgnoreCase("column")
+								) {
+							column = child;
+
+						}
+					}
+				}
+			 stringName.removeContent();
+			 stringName.addContent(jsonArray.get(i)+"");
+			 assertionXPath.removeContent();
+			 assertionXPath.addContent(actualKey+"[0];"+jsonArray.get(i));
+			 column.removeContent();
+			 column.addContent(jsonArray.get(i)+"");
+			 andAssertion.addContent(stringAssertion);
+			 //System.out.println();			
+			 
+         }	
+		 return andAssertion;
+	}
+	
+public static Element buildResponseConditionalAssertion(String responseCode, Element jsonAssertionTool) throws IOException{
+	Element conditionAssertion = new XMLElementBuilder().loadElementValueTemplateXML("conditionalAssertionTemplate.xml").detachRootElement();
+	IteratorIterable<Content> descendantsOfConditional = conditionAssertion.getDescendants();
+	Element name =null, stringComparision = null, andAssertion =null;
+	for (Content descendant : descendantsOfConditional) {
+		if (descendant.getCType().equals(Content.CType.Element)) {
+			Element child = (Element) descendant;
+			if (child.getName().equalsIgnoreCase("value")&&child.getText().equalsIgnoreCase("404")) {				
+				name = child;
+			}else if(child.getName().equalsIgnoreCase("AndAssertion")){
+				andAssertion = child;
+			}
+		}
+	}
+	
+	name.removeContent();
+	name.addContent(responseCode);	
+	jsonAssertionTool.addContent(conditionAssertion);
+	
+	return andAssertion;
+}
 
 }

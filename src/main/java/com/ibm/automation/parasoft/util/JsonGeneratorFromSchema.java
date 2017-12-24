@@ -32,6 +32,9 @@ import org.json.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
  
 public class JsonGeneratorFromSchema { 
     Schema schema1; 
@@ -112,9 +115,31 @@ public class JsonGeneratorFromSchema {
 	
 	public static JsonElement generateInputSampleString(String incomingJsonInputSchema) throws JsonException, IOException, ParseException{
 		
+		/*SchemaResourceFetcher srf = new SchemaResourceFetcher(); 
+		File myFile=new File("C:/Kalpana/TD Bank/RAML files/Doc-Delivery/jsd/AddFTPDeliveryRq.1.schema.json");
+        Schema schema = srf.fetch(myFile.toURI(), null,null); */
+       // assertEquals(schemaSimple.getJson(), schema.getJson()); 
+/*		Gson gson = new GsonBuilder().create();
+
+		Object job = gson.fromJson(incomingJsonInputSchema, Object.class);
+		
+		JSONObject resobj = new JSONObject(incomingJsonInputSchema);
+		Iterator<?> keys = resobj.keys();
+		while(keys.hasNext() ) {
+		    String key = (String)keys.next();
+		    if ( resobj.get(key) instanceof JSONObject ) {
+		        JSONObject xx = new JSONObject(resobj.get(key).toString());
+		        System.out.println("res1"+xx.getString("required"));
+		        //Log.d("res2",xx.getString("something2"));
+		    }
+		}*/
+		/*JsonElement entry=job.getJsonObject("required").getJsonObject("map").getJsonArray("entry");
+		String str = entry.toString();
+		System.out.println(str);*/
+		
 		SchemaV4 schema1 =  new SchemaV4().wrap((JsonObject) JsonElement.readFrom( incomingJsonInputSchema
 			)); 
-
+		System.out.println(schema1.getRequired());
 		return generateWithSettings(schema1);
 		
 	}  
@@ -158,11 +183,11 @@ public class JsonGeneratorFromSchema {
 	        
 	       // System.out.println("URIIIIIIIIIIIII-------->"+uri);
 	      // new JsonGenerator(schema, gConf).
-	        System.out.println(schema.getItems());
+	        System.out.println(new JsonGenerator(schema, gConf).generate());
 	       // System.out.println(schema.mergeAllRefs().getItems());
 	        JSONObject myjson = new JSONObject(new JsonGenerator(schema, gConf).generate());
 	       // parseProfilesJson(new JsonGenerator(schema, gConf).generate().toString());
-	       
+	        
 	        //loopThroughJson(myjson);
 	        return  new JsonGenerator(schema, gConf).generate(); 
 	    }
