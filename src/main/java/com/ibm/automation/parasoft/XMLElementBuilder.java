@@ -630,9 +630,10 @@ public class XMLElementBuilder {
 				for (Entry<String, String> entry : responseMap.entrySet()) {
 				    String responseCode = entry.getKey();
 				    String reponseSchemaContent = entry.getValue();
+				    int andAssertionSize = 0;
 				    if(reponseSchemaContent!= null && (!reponseSchemaContent.equals(""))){
 				    	Element andAssertion = buildResponseConditionalAssertion(responseCode, jsonAssertionTool);
-				    	XMLJsonUtils.jsonString2MapForReponseCodeAssertions(responseCode, reponseSchemaContent, null, andAssertion);
+				    	XMLJsonUtils.jsonString2MapForReponseCodeAssertions(responseCode, reponseSchemaContent, null, andAssertion, andAssertionSize);
 				    }
 				   
 				}
@@ -1534,9 +1535,7 @@ public class XMLElementBuilder {
 	public static Element buildStringComparisonAssertions(JSONArray jsonArray, String actualKey, Element andAssertion) throws IOException {		
 		Element name =null, assertionsSize=null;
 		Element stringName=null, assertionXPath=null,column=null;		
-				
-		andAssertion.getChild("assertionsSize").removeContent();
-		andAssertion.getChild("assertionsSize").addContent(jsonArray.length()+"");
+
 		
 		 for ( int i = 0; i < jsonArray.length(); i++ )  {
 			 Element stringAssertion = new XMLElementBuilder().loadElementValueTemplateXML("stringAssertionTemplate.xml").detachRootElement();
@@ -1573,7 +1572,7 @@ public class XMLElementBuilder {
 public static Element buildResponseConditionalAssertion(String responseCode, Element jsonAssertionTool) throws IOException{
 	Element conditionAssertion = new XMLElementBuilder().loadElementValueTemplateXML("conditionalAssertionTemplate.xml").detachRootElement();
 	IteratorIterable<Content> descendantsOfConditional = conditionAssertion.getDescendants();
-	Element name =null, stringComparision = null, andAssertion =null;
+	Element name =null, stringComparision = null, andAssertion =null, nameAndAssertion =null, andAssertionSize=null;
 	for (Content descendant : descendantsOfConditional) {
 		if (descendant.getCType().equals(Content.CType.Element)) {
 			Element child = (Element) descendant;
@@ -1581,12 +1580,22 @@ public static Element buildResponseConditionalAssertion(String responseCode, Ele
 				name = child;
 			}else if(child.getName().equalsIgnoreCase("AndAssertion")){
 				andAssertion = child;
+			}else if(child.getName().equalsIgnoreCase("name") && child.getText().equalsIgnoreCase("FirstResponseAND")){
+				nameAndAssertion = child;
+			}else if(child.getName().equalsIgnoreCase("assertionsSize")){
+				andAssertionSize = child;
 			}
 		}
 	}
 	
 	name.removeContent();
-	name.addContent(responseCode);	
+	name.addContent(responseCode);
+	
+/*	andAssertionSize.removeContent();
+	andAssertionSize.addContent();*/
+	
+	/*nameAndAssertion.removeContent();
+	nameAndAssertion.addContent();*/
 	jsonAssertionTool.addContent(conditionAssertion);
 	
 	return andAssertion;

@@ -251,7 +251,7 @@ public class XMLJsonUtils {
 	      }
 	
 	
-	public static Map<String, Object> jsonString2MapForReponseCodeAssertions(String responseCode, String responseSchema, String prependKey, Element andAssertion) throws JSONException, IOException {
+	public static Map<String, Object> jsonString2MapForReponseCodeAssertions(String responseCode, String responseSchema, String prependKey, Element andAssertion, int andAssertionSize) throws JSONException, IOException {
 	       Map<String, Object> keys = new HashMap<String, Object>();   
 	        org.json.JSONObject jsonObject = new org.json.JSONObject(responseSchema); // HashMap
 	        Iterator<?> keyset = jsonObject.keys(); // HM
@@ -267,11 +267,12 @@ public class XMLJsonUtils {
 		            }
 		            if ( value instanceof org.json.JSONObject ) {
 		               // System.out.println("Incomin value is of JSONObject : ");
-		            	jsonString2MapForReponseCodeAssertions(responseCode, value.toString(), actualKey, andAssertion);
+		            	jsonString2MapForReponseCodeAssertions(responseCode, value.toString(), actualKey, andAssertion, andAssertionSize);
 		               // keys.put( actualKey, );
 		            }else if ( value instanceof org.json.JSONArray) {
 		                org.json.JSONArray jsonArray = jsonObject.getJSONArray(key);
-		                jsonArray2ListForReponseCodeAssertions( jsonArray, actualKey, responseCode, andAssertion );
+		                
+		                jsonArray2ListForReponseCodeAssertions( jsonArray, actualKey, responseCode, andAssertion, andAssertionSize );
 		            } else {
 		                //keyNode( value);
 		               // keys.put( actualKey, value );
@@ -283,9 +284,18 @@ public class XMLJsonUtils {
 						actualKey=prependKey;
 		            }
 		            if ( value instanceof org.json.JSONArray) {
-		                org.json.JSONArray jsonArray = jsonObject.getJSONArray(key);
+		            	
+		                org.json.JSONArray jsonArray = jsonObject.getJSONArray(key);	               
+		               // andAssertionSize = (andAssertionSize + jsonArray.length());
 		                XMLElementBuilder.buildStringComparisonAssertions(jsonArray, actualKey, andAssertion);		               
-		                	
+						//System.out.println(jsonArray.length()+"=======assertionsSize+++++++++++++++++>"+andAssertionSize+"");
+		                int andAssertionSizeLocal = 0;
+						if(!andAssertion.getChild("assertionsSize").getContent().get(0).getValue().toString().contains("11")){
+							andAssertionSizeLocal = Integer.parseInt(andAssertion.getChild("assertionsSize").getContent().get(0).getValue().toString());
+						}
+						 System.out.println("=======before assertionsSize+++++++++++++++++>"+(andAssertionSizeLocal+jsonArray.length())+"");
+		        		andAssertion.getChild("assertionsSize").removeContent();
+		        		andAssertion.getChild("assertionsSize").addContent((andAssertionSizeLocal+jsonArray.length())+"");   	
 		            }
 	            }
 	        }
@@ -308,14 +318,14 @@ public class XMLJsonUtils {
         return array2List;  
        }
 
-	public static List<Object> jsonArray2ListForReponseCodeAssertions(JSONArray arrayOFKeys, String actualKey, String responseCode, Element jsonAssertionTool) throws JSONException, IOException {
+	public static List<Object> jsonArray2ListForReponseCodeAssertions(JSONArray arrayOFKeys, String actualKey, String responseCode, Element jsonAssertionTool, int andAssertionSize) throws JSONException, IOException {
         List<Object> array2List = new ArrayList<Object>();
         for ( int i = 0; i < arrayOFKeys.length(); i++ )  {
             if ( arrayOFKeys.opt(i) instanceof JSONObject ) {
-                Map<String, Object> subObj2Map = jsonString2MapForReponseCodeAssertions(responseCode, arrayOFKeys.opt(i).toString(), actualKey, jsonAssertionTool);
+                Map<String, Object> subObj2Map = jsonString2MapForReponseCodeAssertions(responseCode, arrayOFKeys.opt(i).toString(), actualKey, jsonAssertionTool, andAssertionSize);
                 array2List.add(subObj2Map);
             }else if ( arrayOFKeys.opt(i) instanceof JSONArray ) {
-                List<Object> subarray2List = jsonArray2ListForReponseCodeAssertions((JSONArray) arrayOFKeys.opt(i), actualKey, responseCode, jsonAssertionTool);
+                List<Object> subarray2List = jsonArray2ListForReponseCodeAssertions((JSONArray) arrayOFKeys.opt(i), actualKey, responseCode, jsonAssertionTool, andAssertionSize);
                 array2List.add(subarray2List);
             }else {
                 array2List.add( arrayOFKeys.opt(i) );
