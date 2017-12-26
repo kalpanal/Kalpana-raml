@@ -356,7 +356,7 @@ public class XMLElementBuilder {
 		Element restClientToolTest = null, messagingSchema = null, testsSize=null, profileMappingIDEle=null;
 		Element dataSourcesSize = null, fileWriterProperties = null, fileStreamWriter =null, nameValuePropertiesForQueryParams = null;
 		Element ftpDeliveriesRestClient = null, pathElementss = null, UrlPathParamsMultiValue=null, urlPathParametersLiteralElement = null;
-		Element outputToolsSize = null, jsonAssertionTool=null;
+		Element outputToolsSize = null, jsonAssertionTool=null, conditionalAssertionSize=null;
 		IteratorIterable<Content> descendantsOfChannel = current.getDescendants();
 
 		AtomicInteger profileMappingId = new AtomicInteger();
@@ -441,12 +441,18 @@ public class XMLElementBuilder {
 				}
 				else if(child.getName().equalsIgnoreCase("JSONAssertionTool")){					
 					jsonAssertionTool = child;
+				}else if(child.getName().equalsIgnoreCase("assertionsSize")&& child.getText().equalsIgnoreCase("1-template")){
+					conditionalAssertionSize = child;
 				}
 				/*else if(child.getName().equalsIgnoreCase("testRunsSize") && child.getText().equals("template")){
 					testRunsSize = child;
 				}*/
 			}}
 
+		if(conditionalAssertionSize != null){
+			conditionalAssertionSize.removeContent();
+			conditionalAssertionSize.addContent(configurationTO.getResponseSchemaMap().size()+"");
+		}
 
 		if (testID != null) {
 			testID.removeContent();
@@ -1596,7 +1602,7 @@ public static Element buildResponseConditionalAssertion(String responseCode, Ele
 	
 	/*nameAndAssertion.removeContent();
 	nameAndAssertion.addContent();*/
-	jsonAssertionTool.addContent(conditionAssertion);
+	jsonAssertionTool.addContent(4, conditionAssertion);
 	
 	return andAssertion;
 }

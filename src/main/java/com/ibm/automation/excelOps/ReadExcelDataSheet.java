@@ -88,7 +88,12 @@ public class ReadExcelDataSheet {
 				excelDataSourceImpl.addContent(sheets);
 				
 				excelDataSourceImpl.addContent(file);
+				excelDataSourceImpl.addContent(relativeLocation);
 				
+				Element sheetName = new Element("sheetName");
+				sheetName.addContent(dataSheet);
+				
+				excelDataSourceImpl.addContent(sheetName);
 				dataSource.addContent(excelDataSourceImpl);
 				dataSource.addContent(name);	
 				
