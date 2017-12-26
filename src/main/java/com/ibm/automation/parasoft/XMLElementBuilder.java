@@ -1602,7 +1602,7 @@ public static Element buildResponseConditionalAssertion(String responseCode, Ele
 	
 	/*nameAndAssertion.removeContent();
 	nameAndAssertion.addContent();*/
-	jsonAssertionTool.addContent(4, conditionAssertion);
+	jsonAssertionTool.addContent(9, conditionAssertion);
 	
 	return andAssertion;
 }
