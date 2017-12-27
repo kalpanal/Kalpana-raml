@@ -858,7 +858,7 @@ public class XMLElementBuilder {
 				objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
 				String mapToJson = objectMapper.writeValueAsString(value);
 				System.out.println(mapToJson);
-				updateWithObjectElements(incomingElementValueElementForString,	0, ((LinkedHashMap) value).size(), key);
+				updateWithObjectElements(incomingElementValueElementForString,	0, (((LinkedHashMap) value).size()-1), key);
 				keys.put(
 						key,
 						jsonString2Map(incomingElementValueElementForString,
@@ -932,7 +932,7 @@ public class XMLElementBuilder {
 				String mapToJson = objectMapper.writeValueAsString(value);
 				System.out.println(mapToJson);
 				updateWithObjectElementsForComplexValue(incomingElementValueElementForString,
-						0, ((LinkedHashMap) value).size(), key);
+						0, (((LinkedHashMap) value).size()-1), key);
 				keys.put(
 						key,
 						jsonString2MapForComplexValue(incomingElementValueElementForString,
@@ -945,7 +945,7 @@ public class XMLElementBuilder {
 				String mapToJson = objectMapper.writeValueAsString(value);
 				System.out.println(mapToJson);
 				updateWithArrayElementsForComplexValue(incomingElementValueElementForString,
-						0, ((ArrayList) value).size(), key);
+						0, (((ArrayList) value).size()-1), key);
 				// JSONArray jsonArray = new JSONArray(value.toString());
 				keys.put(
 						key,
@@ -1033,7 +1033,7 @@ public class XMLElementBuilder {
 		.loadElementValueTemplateXML("stringTypeTemplateXML.xml");
 		//innerMostParamTypeSizeElementList.stream().forEach(paramTypeSize ->{ paramTypeSize.removeContent(); paramTypeSize.addContent(objectSize);});
 		innerMostParamTypeSizeElement.removeContent();
-		innerMostParamTypeSizeElement.addContent(objectSize);
+		innerMostParamTypeSizeElement.addContent((Integer.parseInt(objectSize)-1)+"");
 		elementForString.getRootElement().getChild("localName").setText(columnName);
 		innerMostElement.addContent(
 				elementForString.getRootElement().detach());
@@ -1065,7 +1065,7 @@ public class XMLElementBuilder {
 			} 
 		}
 		Document elementForString = new XMLElementBuilder().loadElementValueTemplateXML("stringTypeValueTemplateXML.xml");
-		innerMostElementForValueSize.setText(objectSize);
+		innerMostElementForValueSize.setText((Integer.parseInt(objectSize)-1)+"");
 		elementForString.getRootElement().getChild("ComplexValue").getChild("StringValue").getChild("columnName").setText(columnName);
 		innerMostElement.addContent(elementForString.getRootElement().detach());
 		return current;
