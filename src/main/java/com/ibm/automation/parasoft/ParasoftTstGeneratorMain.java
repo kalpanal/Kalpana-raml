@@ -99,7 +99,7 @@ public class ParasoftTstGeneratorMain {
 										configurationTOSubNode.setRamlFileName(filesList.get(0));
 										configurationTOSubNode.setAppConfigPath(appConfigPath);
 										configurationTOSubNode.setInputTstFile(inputTstFile);
-										configurationTOSubNode.setQueryParameters(urlEndPointsSubNode.methods().get(methodPos).queryParameters());
+										configurationTOSubNode.setQueryParameters(urlEndPointsSubNode.methods().get(methodPosition1.get()).queryParameters());
 										methodPosition1.incrementAndGet();
 										//configurationTOSubNodeLevelDSList.add(configurationTOSubNode);
 									} catch (Exception e) {

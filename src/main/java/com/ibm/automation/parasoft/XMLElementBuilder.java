@@ -1562,7 +1562,13 @@ public class XMLElementBuilder {
 			stringName.removeContent();
 			stringName.addContent(jsonArray.get(i)+"");
 			assertionXPath.removeContent();
-			assertionXPath.addContent(actualKey+"[0];"+jsonArray.get(i));
+			if(i==0 && actualKey.equals("required")){
+				assertionXPath.addContent("this["+jsonArray.get(i)+"]");
+			}else if(i==0){
+				assertionXPath.addContent("this["+actualKey+"][0]["+jsonArray.get(i)+"]");
+			}else{
+				assertionXPath.addContent("["+actualKey+"[0]["+jsonArray.get(i)+"]");
+			}
 			column.removeContent();
 			column.addContent(jsonArray.get(i)+"");
 			andAssertion.addContent(stringAssertion);
