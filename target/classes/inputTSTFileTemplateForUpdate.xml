@@ -1,5 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<SOAtestProject xmlVersion="5" productVersion="9.9.5">
  <TestSuite className="webtool.test.TestSuite" version="43.15.2">
   <DebugAssets className="webtool.test.debug.DebugAssets" version="1">
   </DebugAssets>
@@ -1602,4 +1600,3 @@ def TokenAdd(input,context):&#xD;
 <testsSize>4-template</testsSize>
  </TestSuite>
  </TestSuite>
-</SOAtestProject>

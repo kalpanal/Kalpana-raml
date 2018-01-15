@@ -136,8 +136,8 @@ public class CreateTSTFile {
 	public static void writeFileUsingJDOM(ArrayList<ConfigurationTO> configurationTOEndPointList)
 			throws Exception {
 
-		Document document = null;
-		Element testSuite = null;
+		Document document = null, document1 = null;
+		Element testSuite = null, testSuite1=null;
 		
 			try {
 				
@@ -146,6 +146,11 @@ public class CreateTSTFile {
 					String inputTstFile = Util.loadProperties("INPUT_TST_FILE", configurationTOEndPointList.get(0).getAppConfigPath());
 					document = new XMLElementBuilder().loadIncomingTSTFile(inputTstFile);
 					testSuite = document.getRootElement();
+					
+					document1 = new XMLElementBuilder().loadElementValueTemplateXML_DOM("inputTSTFileTemplateForUpdate.xml");
+					testSuite1 = document1.getRootElement();
+					testSuite.addContent(testSuite1);
+
 				}else{
 					document = new XMLElementBuilder().loadElementValueTemplateXML_DOM("inputTSTFileTemplate.xml");
 					testSuite = document.getRootElement();
