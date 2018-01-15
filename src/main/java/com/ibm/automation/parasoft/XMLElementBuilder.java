@@ -349,14 +349,14 @@ public class XMLElementBuilder {
 	@SuppressWarnings({ "unchecked", "unused" })
 	private static Element listChildrenForTestSuite(Element current, int depth,
 			AtomicInteger increment, ConfigurationTO configurationTO, boolean firstTime)
-					throws IOException, ParserConfigurationException, SAXException {
+					throws Exception {
 
 		Element testID = null, testID1 = null, name1 = null, httpMethodTestValue = null, httpClientEndPoint = null;
 		Element docDelivery = null, ftpDeliveries = null, restClient = null, dataSourceName = null, nameValuePair = null;
 		Element restClientToolTest = null, messagingSchema = null, testsSize=null, profileMappingIDEle=null;
 		Element dataSourcesSize = null, fileWriterProperties = null, fileStreamWriter =null, nameValuePropertiesForQueryParams = null;
 		Element ftpDeliveriesRestClient = null, pathElementss = null, UrlPathParamsMultiValue=null, urlPathParametersLiteralElement = null;
-		Element outputToolsSize = null, jsonAssertionTool=null, conditionalAssertionSize=null;
+		Element outputToolsSize = null, jsonAssertionTool=null, conditionalAssertionSize=null, tokenPathURL=null;
 		IteratorIterable<Content> descendantsOfChannel = current.getDescendants();
 
 		AtomicInteger profileMappingId = new AtomicInteger();
@@ -365,7 +365,9 @@ public class XMLElementBuilder {
 				Element child = (Element) descendant;
 				if (child.getName().equalsIgnoreCase("testID")) {
 					testID = child;
-				} else if (child.getName().equalsIgnoreCase("name")
+				} else if(child.getName().equalsIgnoreCase("HTTPClient_Endpoint") && child.getText().contains("https://pingfederate.sys.td.com:9031/as/token.oauth2?client_id")){
+					tokenPathURL = child;
+				}else if (child.getName().equalsIgnoreCase("name")				
 						&& child.getTextNormalize()
 						.equals("DocDelivery.1.raml")) {
 					docDelivery = child;
@@ -473,6 +475,9 @@ public class XMLElementBuilder {
 
 		profileMappingIDEle.removeContent();
 		profileMappingIDEle.addContent(profileMappingId.getAndIncrement()+"");
+		
+		tokenPathURL.removeContent();
+		tokenPathURL.addContent(Util.loadProperties("TOKEN_URL", configurationTO.getAppConfigPath()));
 		//dataSourceName.removeContent();
 		//dataSourceName.addContent(configurationTO.getDataSource());
 		if(httpMethodTestValue != null){

@@ -141,7 +141,7 @@ public class CreateTSTFile {
 		
 			try {
 				
-				if(Util.loadProperties("UPDATE_FLAG", configurationTOEndPointList.get(0).getAppConfigPath()).equals("N")){
+				if(Util.loadProperties("UPDATE_FLAG", configurationTOEndPointList.get(0).getAppConfigPath()).equals("Y")){
 					
 					String inputTstFile = Util.loadProperties("INPUT_TST_FILE", configurationTOEndPointList.get(0).getAppConfigPath());
 					document = new XMLElementBuilder().loadIncomingTSTFile(inputTstFile);
