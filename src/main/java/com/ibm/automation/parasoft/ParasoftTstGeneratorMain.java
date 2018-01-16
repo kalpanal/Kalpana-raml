@@ -157,7 +157,8 @@ public class ParasoftTstGeneratorMain {
 				//System.out.println(response.body().get(0).schemaContent());
 				try {
 					//System.out.println(response.description().value());
-					responseSchemaMap.put(response.code().value(), JsonGeneratorFromSchema.generateInputSampleString(response.body().get(0).schemaContent()).toString());
+					responseSchemaMap.put(response.code().value(), JsonGeneratorFromSchema.generateInputSampleString(response.body().get(0).schemaContent(), 
+							Util.loadProperties("RAML_LOCATION", appConfigPath)+"\\jsd\\"+response.body().get(0).schema().value().toString()+".1.schema.json").toString());
 					//configurationTO.setResponseSchemaString(JsonGeneratorFromSchema.generateInputSampleString(response.body().get(0).schemaContent()).toString());
 				} catch (Exception e) {
 					System.out.println("Error while reading response body schema content"+e.getMessage());
@@ -189,7 +190,9 @@ public class ParasoftTstGeneratorMain {
 				
 				if(urlEndPointsSubNode.methods().get(index).body().size() >0){					
 					configurationTO.setInputSampleString(JsonGeneratorFromSchema.generateInputSampleString(urlEndPointsSubNode
-							.methods().get(index).body().get(0).schemaContent()).toString());
+							.methods().get(index).body().get(0).schemaContent(), 
+							Util.loadProperties("RAML_LOCATION", appConfigPath)+"\\jsd\\"+urlEndPointsSubNode
+							.methods().get(index).body().get(0).schema().value().toString()+".1.schema.json").toString());
 					
 				}
 				
@@ -199,7 +202,9 @@ public class ParasoftTstGeneratorMain {
 			case "GET":
 				if(urlEndPointsSubNode.methods().get(index).body().size() >0){
 					configurationTO.setInputSampleString(JsonGeneratorFromSchema.generateInputSampleString(urlEndPointsSubNode
-							.methods().get(index).body().get(0).schemaContent()).toString());
+							.methods().get(index).body().get(0).schemaContent(),  
+							Util.loadProperties("RAML_LOCATION", appConfigPath)+"\\jsd\\"+urlEndPointsSubNode
+							.methods().get(index).body().get(0).schema().value().toString()+".1.schema.json").toString());
 				}
 				
 
@@ -209,7 +214,9 @@ public class ParasoftTstGeneratorMain {
 
 				if(urlEndPointsSubNode.methods().get(index).body().size() >0){
 					configurationTO.setInputSampleString(JsonGeneratorFromSchema.generateInputSampleString(urlEndPointsSubNode
-							.methods().get(index).body().get(0).schemaContent()).toString());
+							.methods().get(index).body().get(0).schemaContent(), 
+							Util.loadProperties("RAML_LOCATION", appConfigPath)+"\\jsd\\"+urlEndPointsSubNode
+							.methods().get(index).body().get(0).schema().value().toString()+".1.schema.json").toString());
 				}
 			//	configurationTO.setResponseSchemaString(JsonGeneratorFromSchema.generateInputSampleString(urlEndPointsSubNode
 				//		.methods().get(index).responses().get(0).body().get(0).schemaContent()).toString());

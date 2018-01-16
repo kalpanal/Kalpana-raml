@@ -113,7 +113,7 @@ public class JsonGeneratorFromSchema {
     } */
     
 	
-	public static JsonElement generateInputSampleString(String incomingJsonInputSchema) throws JsonException, IOException, ParseException{
+	public static JsonElement generateInputSampleString(String incomingJsonInputSchema, String schemaFilePath) throws JsonException, IOException, ParseException{
 		
 		/*SchemaResourceFetcher srf = new SchemaResourceFetcher(); 
 		File myFile=new File("C:/Kalpana/TD Bank/RAML files/Doc-Delivery/jsd/AddFTPDeliveryRq.1.schema.json");
@@ -136,10 +136,17 @@ public class JsonGeneratorFromSchema {
 		/*JsonElement entry=job.getJsonObject("required").getJsonObject("map").getJsonArray("entry");
 		String str = entry.toString();
 		System.out.println(str);*/
-		
+		if(new File(schemaFilePath).exists()){
+			
+		}else{
+			schemaFilePath =schemaFilePath.replace("/jsd", "");	
+		}
+		System.out.println("schemaFilePath"+schemaFilePath);
+		URI url = new File(schemaFilePath).toURI();
 		SchemaV4 schema1 =  new SchemaV4().wrap((JsonObject) JsonElement.readFrom( incomingJsonInputSchema
 			)); 
-		System.out.println(schema1.getRequired());
+		schema1.setOrigSrc(url);
+		//System.out.println(schema1.getRequired());
 		return generateWithSettings(schema1);
 		
 	}  

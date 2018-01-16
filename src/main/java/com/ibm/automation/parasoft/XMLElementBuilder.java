@@ -329,16 +329,13 @@ public class XMLElementBuilder {
 	public static Element updateTemplateXMLForTestSuite(Element testSuiteMain,
 			AtomicInteger incrementerForTestID, ConfigurationTO configurationTO, boolean firstTime) {
 
-		// Element testSuite = doc1.getRootElement();
 		try {
-			try {
-				listChildrenForTestSuite(testSuiteMain, 0, incrementerForTestID,
-						configurationTO, firstTime);
-			} catch (ParserConfigurationException | SAXException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		} catch (IOException e) {
+			listChildrenForTestSuite(testSuiteMain, 0, incrementerForTestID,
+					configurationTO, firstTime);
+		} catch (ParserConfigurationException | SAXException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
