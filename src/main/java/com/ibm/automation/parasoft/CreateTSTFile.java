@@ -152,7 +152,7 @@ public class CreateTSTFile {
 					testSuite.addContent(testSuite1);
 
 				}else{
-					document = new XMLElementBuilder().loadElementValueTemplateXML_DOM("inputTSTFileTemplate.xml");
+					document = new XMLElementBuilder().loadElementValueTemplateXML("inputTSTFileTemplate.xml");
 					testSuite = document.getRootElement();
 				}
 

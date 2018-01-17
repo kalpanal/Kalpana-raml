@@ -473,8 +473,11 @@ public class XMLElementBuilder {
 		profileMappingIDEle.removeContent();
 		profileMappingIDEle.addContent(profileMappingId.getAndIncrement()+"");
 		
-		tokenPathURL.removeContent();
-		tokenPathURL.addContent(Util.loadProperties("TOKEN_URL", configurationTO.getAppConfigPath()));
+		if(tokenPathURL!= null){
+			tokenPathURL.removeContent();
+			tokenPathURL.addContent(Util.loadProperties("TOKEN_URL", configurationTO.getAppConfigPath()));
+		}
+		
 		//dataSourceName.removeContent();
 		//dataSourceName.addContent(configurationTO.getDataSource());
 		if(httpMethodTestValue != null){
