@@ -507,7 +507,7 @@ Timestamp: 2017-07-18 04:12:04</notes>
      <name>GET - Search 2</name>
      <performanceGroup>0</performanceGroup>
      <RESTClient className="webtool.soap.http.RESTClient" version="v.2.15.28.14">
-      <dataSourceNames size="1">       
+      <dataSourceNames size="0">       
       </dataSourceNames>
       <iconName>RESTClient</iconName>
       <name>GET Token</name>
@@ -1109,7 +1109,7 @@ Timestamp: 2017-07-18 04:12:04</notes>
       </MessagingOutputProvider>
       <outputToolsSize>3</outputToolsSize>
       <GenericDataBank className="webtool.databank.GenericDataBank" version="v.2.1.14">
-       <dataSourceNames size="1">        
+       <dataSourceNames size="0">        
        </dataSourceNames>
        <iconName>XMLDataBank</iconName>
        <name>JSON Data Bank</name>
@@ -1156,7 +1156,7 @@ Timestamp: 2017-07-18 04:12:04</notes>
        <OutputProviderImpl className="com.parasoft.tool.OutputProviderImpl" version="1.1">
         <outputToolsSize>1</outputToolsSize>
         <XMLtoDataSource className="webtool.xml.XMLtoDataSource" version="v.2.8.14.14">
-         <dataSourceNames size="1">          
+         <dataSourceNames size="0">          
          </dataSourceNames>
          <allowToolbar>false</allowToolbar>
          <iconName>XMLDataBank</iconName>
