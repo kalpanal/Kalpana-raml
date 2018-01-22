@@ -262,167 +262,7 @@ Timestamp: 2017-07-18 04:12:04</notes>
     <PropertyOwnerImpl className="com.parasoft.property.PropertyOwnerImpl" version="1.1">
     </PropertyOwnerImpl>
     <nextIdentifier>1</nextIdentifier>
-    <dataSourcesSize>2</dataSourcesSize>
-    <DataSource className="com.parasoft.data.DataSource" version="1.20">
-     <id>ds_674270746_1504197620912_1257309760</id>
-     <ExcelDataSourceImpl className="com.parasoft.data.ExcelDataSourceImpl" version="1.5.5">
-      <sheets size="10">
-       <sheetName index="0">AddDocument</sheetName>
-       <data index="0">true</data>
-       <columnNames size="13" index="0">
-        <columnName index="0">TestcaseName</columnName>
-        <columnName index="1">OathToken</columnName>
-        <columnName index="2">MessageID</columnName>
-        <columnName index="3">TraceabilityId</columnName>
-        <columnName index="4">fileName</columnName>
-        <columnName index="5">File Metadata</columnName>
-        <columnName index="6">file Content</columnName>
-        <columnName index="7">BussinessKey</columnName>
-        <columnName index="8">Query</columnName>
-        <columnName index="9">REPOSITORY ID</columnName>
-        <columnName index="10">documentclassCd</columnName>
-        <columnName index="11">OathToken_Filenet</columnName>
-        <columnName index="12">HTTPCode</columnName>
-       </columnNames>
-       <sheetName index="1">GetDocument_RID</sheetName>
-       <data index="1">true</data>
-       <columnNames size="18" index="1">
-        <columnName index="0">Sno</columnName>
-        <columnName index="1">TestcaseName</columnName>
-        <columnName index="2">OathToken</columnName>
-        <columnName index="3">MessageID</columnName>
-        <columnName index="4">TraceabilityId</columnName>
-        <columnName index="5">businessId</columnName>
-        <columnName index="6">FileName</columnName>
-        <columnName index="7">Filemetadat</columnName>
-        <columnName index="8">Query</columnName>
-        <columnName index="9">HTTPCode</columnName>
-        <columnName index="10">documentClassCd</columnName>
-        <columnName index="11">documentId</columnName>
-        <columnName index="12">DocumentTitle</columnName>
-        <columnName index="13">Confidentiality</columnName>
-        <columnName index="14">Delete</columnName>
-        <columnName index="15">DocumentType</columnName>
-        <columnName index="16">DocumentSubType</columnName>
-        <columnName index="17">UploadedBy</columnName>
-       </columnNames>
-       <sheetName index="2">GetAllDocument</sheetName>
-       <data index="2">true</data>
-       <columnNames size="8" index="2">
-        <columnName index="0">Sno</columnName>
-        <columnName index="1">TestcaseName</columnName>
-        <columnName index="2">Test Steps</columnName>
-        <columnName index="3">Expected Results</columnName>
-        <columnName index="4">OathToken</columnName>
-        <columnName index="5">MessageID</columnName>
-        <columnName index="6">TraceabilityId</columnName>
-        <columnName index="7">HTTPCode</columnName>
-       </columnNames>
-       <sheetName index="3">GetAuthencticate</sheetName>
-       <data index="3">true</data>
-       <columnNames size="8" index="3">
-        <columnName index="0">SNO</columnName>
-        <columnName index="1">TestcaseName</columnName>
-        <columnName index="2">Test Steps</columnName>
-        <columnName index="3">Expected Result</columnName>
-        <columnName index="4">OathToken</columnName>
-        <columnName index="5">MessageID</columnName>
-        <columnName index="6">TraceabilityId</columnName>
-        <columnName index="7">HTTPCode</columnName>
-       </columnNames>
-       <sheetName index="4">GetJWTToken</sheetName>
-       <data index="4">true</data>
-       <columnNames size="8" index="4">
-        <columnName index="0">SNO</columnName>
-        <columnName index="1">TestcaseName</columnName>
-        <columnName index="2">Test Steps</columnName>
-        <columnName index="3">Expected Result</columnName>
-        <columnName index="4">OathToken</columnName>
-        <columnName index="5">MessageID</columnName>
-        <columnName index="6">TraceabilityId</columnName>
-        <columnName index="7">HTTPCode</columnName>
-       </columnNames>
-       <sheetName index="5">GetDocument_PID</sheetName>
-       <data index="5">true</data>
-       <columnNames size="9" index="5">
-        <columnName index="0">Sno</columnName>
-        <columnName index="1">SNO</columnName>
-        <columnName index="2">TestcaseName</columnName>
-        <columnName index="3">OathToken</columnName>
-        <columnName index="4">MessageID</columnName>
-        <columnName index="5">TraceabilityId</columnName>
-        <columnName index="6">ProcessID</columnName>
-        <columnName index="7">Query</columnName>
-        <columnName index="8">HTTPCode</columnName>
-       </columnNames>
-       <sheetName index="6">GETDocumentbyBID&amp;PID</sheetName>
-       <data index="6">true</data>
-       <columnNames size="9" index="6">
-        <columnName index="0">SNO</columnName>
-        <columnName index="1">TestcaseName</columnName>
-        <columnName index="2">OathToken</columnName>
-        <columnName index="3">MessageID</columnName>
-        <columnName index="4">TraceabilityId</columnName>
-        <columnName index="5">businessId</columnName>
-        <columnName index="6">ProcessId</columnName>
-        <columnName index="7">Query</columnName>
-        <columnName index="8">HTTPCode</columnName>
-       </columnNames>
-       <sheetName index="7">SmokeTest-FileNet</sheetName>
-       <data index="7">true</data>
-       <columnNames size="17" index="7">
-        <columnName index="0">Sno</columnName>
-        <columnName index="1">TestcaseName</columnName>
-        <columnName index="2">OathToken</columnName>
-        <columnName index="3">MessageID</columnName>
-        <columnName index="4">TraceabilityId</columnName>
-        <columnName index="5">fileName</columnName>
-        <columnName index="6">File Metadata</columnName>
-        <columnName index="7">file Content</columnName>
-        <columnName index="8">BussinessKey</columnName>
-        <columnName index="9">Query</columnName>
-        <columnName index="10">REPOSITORY ID</columnName>
-        <columnName index="11">documentclassCd</columnName>
-        <columnName index="12">OathToken_Filenet</columnName>
-        <columnName index="13">property</columnName>
-        <columnName index="14">option</columnName>
-        <columnName index="15">filter</columnName>
-        <columnName index="16">HTTPCode</columnName>
-       </columnNames>
-       <sheetName index="8">ViewDocument</sheetName>
-       <data index="8">true</data>
-       <columnNames size="7" index="8">
-        <columnName index="0">SNO</columnName>
-        <columnName index="1">TestcaseName</columnName>
-        <columnName index="2">DocumentID</columnName>
-        <columnName index="3">OathToken</columnName>
-        <columnName index="4">MessageID</columnName>
-        <columnName index="5">TraceabilityId</columnName>
-        <columnName index="6">HTTPCODE</columnName>
-       </columnNames>
-       <sheetName index="9">DeleteDocument</sheetName>
-       <data index="9">true</data>
-       <columnNames size="10" index="9">
-        <columnName index="0">TestcaseName</columnName>
-        <columnName index="1">DocumentID</columnName>
-        <columnName index="2">OathToken</columnName>
-        <columnName index="3">MessageID</columnName>
-        <columnName index="4">TraceabilityId</columnName>
-        <columnName index="5">HTTPCODE</columnName>
-        <columnName index="6">Delete</columnName>
-        <columnName index="7">RefernceID</columnName>
-        <columnName index="8">Filename</columnName>
-        <columnName index="9">filemetadat</columnName>
-       </columnNames>
-      </sheets>
-      <file>true</file>
-      <RelativeLocation className="com.parasoft.util.RelativeLocation" version="1.4">
-       <path>C:\SOAtest\data\BPMsharedServices\Datasheet.xlsx</path>
-      </RelativeLocation>
-      <sheetName>AddDocument</sheetName>
-     </ExcelDataSourceImpl>
-     <name>AddDocument</name>
-    </DataSource>
+    <dataSourcesSize>1</dataSourcesSize>
     <DataSource className="com.parasoft.data.DataSource" version="1.20">
      <id>ds_674270746_1505208344252_234082132</id>
      <WritableDataSourceImpl className="com.parasoft.data.WritableDataSourceImpl" version="1.3.3.5">
@@ -665,8 +505,7 @@ Timestamp: 2017-07-18 04:12:04</notes>
      <name>GET - Search 2</name>
      <performanceGroup>0</performanceGroup>
      <RESTClient className="webtool.soap.http.RESTClient" version="v.2.15.28.14">
-      <dataSourceNames size="1">
-       <dataSourceName index="0">AddDocument</dataSourceName>
+      <dataSourceNames size="1">       
       </dataSourceNames>
       <iconName>RESTClient</iconName>
       <name>GET Token</name>
@@ -1268,14 +1107,12 @@ Timestamp: 2017-07-18 04:12:04</notes>
       </MessagingOutputProvider>
       <outputToolsSize>3</outputToolsSize>
       <GenericDataBank className="webtool.databank.GenericDataBank" version="v.2.1.14">
-       <dataSourceNames size="1">
-        <dataSourceName index="0">AddDocument</dataSourceName>
+       <dataSourceNames size="1">        
        </dataSourceNames>
        <iconName>XMLDataBank</iconName>
        <name>JSON Data Bank</name>
        <XMLtoDataSource className="webtool.xml.XMLtoDataSource" version="v.2.8.14.14">
-        <dataSourceNames size="1">
-         <dataSourceName index="0">AddDocument</dataSourceName>
+        <dataSourceNames size="1">         
         </dataSourceNames>
         <iconName>XMLDataBank</iconName>
         <name>XML Data Bank</name>
@@ -1318,8 +1155,7 @@ Timestamp: 2017-07-18 04:12:04</notes>
        <OutputProviderImpl className="com.parasoft.tool.OutputProviderImpl" version="1.1">
         <outputToolsSize>1</outputToolsSize>
         <XMLtoDataSource className="webtool.xml.XMLtoDataSource" version="v.2.8.14.14">
-         <dataSourceNames size="1">
-          <dataSourceName index="0">AddDocument</dataSourceName>
+         <dataSourceNames size="1">          
          </dataSourceNames>
          <allowToolbar>false</allowToolbar>
          <iconName>XMLDataBank</iconName>

@@ -122,15 +122,15 @@ public class ReadExcelDataSheet {
 		
 		XSSFWorkbook workbook = new XSSFWorkbook(spreadsheet);
 		Element sheets = new Element("sheets");
-		sheets.setAttribute("size", (workbook.getNumberOfSheets()-1)+"");
+		sheets.setAttribute("size", (workbook.getNumberOfSheets())+"");
 		int indexNum = 0;
-		for (int i = 0; i< workbook.getNumberOfSheets() - 1; i++) {
+		for (int i = 0; i< workbook.getNumberOfSheets(); i++) {
             XSSFSheet individualSheet = workbook.getSheetAt(i);
             InputExcelFileVO inputExcelFileVO = parse(fileNameWithPath+":"+individualSheet.getSheetName());
             inputExcelFileVO.getHeaders();
             Element sheetName = new Element("sheetName");
             sheetName.setAttribute("index", indexNum+"");
-            sheetName.addContent(individualSheet.getSheetName());
+            sheetName.addContent(individualSheet.getSheetName().replaceAll(".xlsx", ""));
             
             Element data  = new Element("data"); 
             data.setAttribute("index", indexNum+"");

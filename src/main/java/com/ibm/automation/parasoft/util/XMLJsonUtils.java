@@ -8,8 +8,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import org.jdom2.Element;
 
+import org.apache.commons.lang3.StringUtils;
+import org.jdom2.Element;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -334,5 +335,18 @@ public class XMLJsonUtils {
         return array2List;  
        }	
 	
+	public static String replaceDotWithQuotesForAssertion_Xpath(String incomingXpath){
+		String replacementStr= "\"][\"";
+		incomingXpath = StringUtils.replace(incomingXpath, ".", replacementStr);
+		return incomingXpath;
+		
+	}
+	
+	public static String replaceDotWithUnderscore(String incomingXpath){
+		String replacementStr= "_";
+		incomingXpath = StringUtils.replace(incomingXpath, ".", replacementStr);
+		return incomingXpath;
+		
+	}
 
 }

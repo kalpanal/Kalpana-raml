@@ -794,7 +794,7 @@ public class XMLElementBuilder {
 				.getChild("CompositorValueSet").removeChild("valuesSize");
 			}else {
 				Map<String, Object> results = jsonString2MapForComplexValue(elementToAddElementValueXML,
-						inputSampleString, true);				
+						inputSampleString, true, null);				
 
 			}
 		} catch (IOException e) {
@@ -830,7 +830,7 @@ public class XMLElementBuilder {
 				.loadElementValueTemplateXML(
 						"rootElementTemplateXML.xml").getRootElement();
 				Map<String, Object> results = jsonString2Map(child,
-						inputSampleStringJson, true);
+						inputSampleStringJson, true, null);
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -840,7 +840,7 @@ public class XMLElementBuilder {
 	}
 
 	public static Map<String, Object> jsonString2Map(Element incomingElementValueElementForString, String jsonString,
-			boolean firstTime) throws JSONException, IOException {
+			boolean firstTime, String prependKey) throws JSONException, IOException {
 		LinkedHashMap<String, Object> keys = new LinkedHashMap<String, Object>();
 		ObjectMapper mapper = new ObjectMapper();
 		System.out.print("\n Incoming json string for reference : " + jsonString);
@@ -850,6 +850,10 @@ public class XMLElementBuilder {
 		int totalSize = o.size();
 
 		for (String key : o.keySet()){
+			String actualKey=key;
+			if(null!= prependKey){
+				actualKey=prependKey+"_"+key;
+			}
 			if(!key.equalsIgnoreCase("required")){
 				//String key = (String) keyset.next();
 				Object value = o.get(key);
@@ -860,11 +864,11 @@ public class XMLElementBuilder {
 					objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
 					String mapToJson = objectMapper.writeValueAsString(value);
 					System.out.println(mapToJson);
-					updateWithObjectElements(incomingElementValueElementForString,	0, (((LinkedHashMap) value).size()-1), key);
+					updateWithObjectElements(incomingElementValueElementForString,	0, (((LinkedHashMap) value).size()-1), actualKey);
 					keys.put(
 							key,
 							jsonString2Map(incomingElementValueElementForString,
-									mapToJson, false));
+									mapToJson, false, actualKey));
 				} else if (value instanceof ArrayList) {
 					System.out.println("Incomin value is of JSONArray : "+value);
 					ObjectMapper objectMapper = new ObjectMapper();
@@ -873,12 +877,12 @@ public class XMLElementBuilder {
 					String mapToJson = objectMapper.writeValueAsString(value);
 					System.out.println(mapToJson);
 					updateWithArrayElements(incomingElementValueElementForString,
-							0, 1, key);
+							0, 1, actualKey);
 					// JSONArray jsonArray = new JSONArray(value.toString());
 					keys.put(
 							key,
 							jsonArray2List(mapToJson,
-									incomingElementValueElementForString));
+									incomingElementValueElementForString, actualKey));
 				} else {
 					// keyNode( value);
 					// listChildrenForElementValue(incomingElementValueElementForString,
@@ -908,7 +912,7 @@ public class XMLElementBuilder {
 
 	public static Map<String, Object> jsonString2MapForComplexValue(
 			Element incomingElementValueElementForString, String jsonString,
-			boolean firstTime) throws JSONException, IOException {
+			boolean firstTime, String prependKey) throws JSONException, IOException {
 		LinkedHashMap<String, Object> keys = new LinkedHashMap<String, Object>();
 		JSONObject json = new JSONObject();
 		ObjectMapper mapper = new ObjectMapper();
@@ -921,6 +925,10 @@ public class XMLElementBuilder {
 		int totalSize = o.size();
 
 		for (String key : o.keySet()){
+			String actualKey=key;
+			if(null!= prependKey){
+				actualKey=prependKey+"_"+key;
+			}
 			if(!key.equalsIgnoreCase("required")){
 				//String key = (String) keyset.next();
 				Object value = o.get(key);
@@ -934,11 +942,11 @@ public class XMLElementBuilder {
 					String mapToJson = objectMapper.writeValueAsString(value);
 					System.out.println(mapToJson);
 					updateWithObjectElementsForComplexValue(incomingElementValueElementForString,
-							0, (((LinkedHashMap) value).size()-1), key);
+							0, (((LinkedHashMap) value).size()-1), actualKey);
 					keys.put(
 							key,
 							jsonString2MapForComplexValue(incomingElementValueElementForString,
-									mapToJson, false));
+									mapToJson, false, actualKey));
 				} else if (value instanceof ArrayList) {
 					System.out.println("Incomin value is of JSONArray : "+value);
 					ObjectMapper objectMapper = new ObjectMapper();
@@ -947,12 +955,12 @@ public class XMLElementBuilder {
 					String mapToJson = objectMapper.writeValueAsString(value);
 					System.out.println(mapToJson);
 					updateWithArrayElementsForComplexValue(incomingElementValueElementForString,
-							0, (((ArrayList) value).size()-1), key);
+							0, (((ArrayList) value).size()-1), actualKey);
 					// JSONArray jsonArray = new JSONArray(value.toString());
 					keys.put(
 							key,
 							jsonArray2ListForComplexValue(mapToJson,
-									incomingElementValueElementForString));
+									incomingElementValueElementForString, actualKey));
 				} else {
 					// keyNode( value);
 					// listChildrenForElementValue(incomingElementValueElementForString,
@@ -1291,7 +1299,7 @@ public class XMLElementBuilder {
 	}
 
 	public static List<Object> jsonArray2List(String arrayOFKeys,
-			Element incomingElementValueElementForString) throws JSONException,
+			Element incomingElementValueElementForString, String actualKey) throws JSONException,
 			IOException {
 		System.out.println("Incoming value is of JSONArray : =========");
 		// Element elementValueElement = new
@@ -1329,7 +1337,7 @@ public class XMLElementBuilder {
 						.get(i));
 				System.out.println(mapToJson);
 				Map<String, Object> subObj2Map = jsonString2Map(
-						incomingElementValueElementForString, mapToJson, false);
+						incomingElementValueElementForString, mapToJson, false, actualKey);
 				array2List.add(subObj2Map);
 			} else if (arrayOFKeysList.get(i) instanceof ArrayList) {
 
@@ -1342,7 +1350,7 @@ public class XMLElementBuilder {
 				System.out.println(mapToJson);
 
 				List<Object> subarray2List = jsonArray2List(mapToJson,
-						incomingElementValueElementForString);
+						incomingElementValueElementForString, actualKey);
 				array2List.add(subarray2List);
 			} else {
 				// keyNode( arrayOFKeys.opt(i) );
@@ -1354,7 +1362,7 @@ public class XMLElementBuilder {
 
 
 	public static List<Object> jsonArray2ListForComplexValue(String arrayOFKeys,
-			Element incomingElementValueElementForString) throws JSONException,
+			Element incomingElementValueElementForString, String actualKey) throws JSONException,
 			IOException {
 		System.out.println("Incoming value is of JSONArray : =========");
 		ObjectMapper mapper = new ObjectMapper();
@@ -1381,7 +1389,7 @@ public class XMLElementBuilder {
 						.get(i));
 				System.out.println(mapToJson);
 				Map<String, Object> subObj2Map = jsonString2MapForComplexValue(
-						incomingElementValueElementForString, mapToJson, false);
+						incomingElementValueElementForString, mapToJson, false, actualKey);
 				array2List.add(subObj2Map);
 			} else if (arrayOFKeysList.get(i) instanceof ArrayList) {
 
@@ -1393,7 +1401,7 @@ public class XMLElementBuilder {
 				System.out.println(mapToJson);
 
 				List<Object> subarray2List = jsonArray2ListForComplexValue(mapToJson,
-						incomingElementValueElementForString);
+						incomingElementValueElementForString, actualKey);
 				array2List.add(subarray2List);
 			} else {
 				// keyNode( arrayOFKeys.opt(i) );
@@ -1542,7 +1550,7 @@ public class XMLElementBuilder {
 
 	public static Element buildStringComparisonAssertions(JSONArray jsonArray, String actualKey, Element andAssertion) throws IOException {		
 		Element name =null, assertionsSize=null;
-		Element stringName=null, assertionXPath=null,column=null;		
+		Element stringName=null, assertionXPath=null,column=null, stringName1=null;		
 
 
 		for ( int i = 0; i < jsonArray.length(); i++ )  {
@@ -1552,8 +1560,12 @@ public class XMLElementBuilder {
 				if (descendant.getCType().equals(Content.CType.Element)) {
 					Element child = (Element) descendant;
 					if (child.getName().equalsIgnoreCase("name")) {
-						stringName = child;
-					} else if (child.getName().equalsIgnoreCase("Assertion_XPath")
+						if(child.getText().equalsIgnoreCase("Key1")){
+							stringName1 = child;
+						}else{
+							stringName = child;
+						}
+					}else if (child.getName().equalsIgnoreCase("Assertion_XPath")
 							) {
 						assertionXPath = child;
 
@@ -1566,16 +1578,23 @@ public class XMLElementBuilder {
 			}
 			stringName.removeContent();
 			stringName.addContent(jsonArray.get(i)+"");
+			if(stringName1!=null){
+			stringName1.removeContent();
+			stringName1.addContent(jsonArray.get(i)+"");
+			}
 			assertionXPath.removeContent();
+			
+		
 			if(i==0 && actualKey.equals("required")){
-				assertionXPath.addContent("this["+jsonArray.get(i)+"]");
+				assertionXPath.addContent("this[\""+jsonArray.get(i)+"\"]");
 			}else if(i==0){
-				assertionXPath.addContent("this["+actualKey+"][0]["+jsonArray.get(i)+"]");
+				assertionXPath.addContent("this[\""+XMLJsonUtils.replaceDotWithQuotesForAssertion_Xpath(actualKey)+"\"][0][\""+jsonArray.get(i)+"\"]");
 			}else{
-				assertionXPath.addContent("["+actualKey+"[0]["+jsonArray.get(i)+"]");
+				assertionXPath.addContent("this[\""+XMLJsonUtils.replaceDotWithQuotesForAssertion_Xpath(actualKey)+"\"][0][\""+jsonArray.get(i)+"\"]");
 			}
 			column.removeContent();
-			column.addContent(jsonArray.get(i)+"");
+			//column.addContent(jsonArray.get(i)+"");
+			column.addContent(XMLJsonUtils.replaceDotWithUnderscore(actualKey)+"_"+jsonArray.get(i));
 			andAssertion.addContent(stringAssertion);
 			//System.out.println();			
 

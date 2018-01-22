@@ -138,7 +138,7 @@ public class ParasoftTstGeneratorMain {
 	public static ConfigurationTO copyRAMLDataToDTO(Resource urlEndPointsSubNode, int index) throws Exception {
 		// System.out.println("EndPoints are ==>"+urlEndPointsNode.displayName()+urlEndPointsSubNode.displayName());
 		System.out.println("Method type is GET/PUT/POST/DELETE ==>"	+ urlEndPointsSubNode.methods().get(index).method());
-		System.out.println("endpoint URL is  ==>"	+ urlEndPointsSubNode.resourcePath());
+		
 		System.out.println("securedBy ==>"	+ urlEndPointsSubNode.methods().get(index).securedBy().get(0).name());
 		//System.out.println("responses schema content ==>"	+ urlEndPointsSubNode.methods().get(index).responses().get(0).body().get(0));
 
@@ -150,20 +150,23 @@ public class ParasoftTstGeneratorMain {
 		HashMap<String, String> responseSchemaMap = new HashMap<String, String>();
 		
 		List<Response> res1 = urlEndPointsSubNode.methods().get(index).responses();
-		for(int k=0; k<2; k++){
+		for(int k=0; k<res1.size(); k++){
 			//response.get(i);
 			Response response = res1.get(k);
 			if(response.body() != null && (!response.body().isEmpty())){
+				if( (response.body().get(0).schemaContent() != null)){
 				//System.out.println(response.body().get(0).schemaContent());
 				try {
 					//System.out.println(response.description().value());
-					responseSchemaMap.put(response.code().value(), JsonGeneratorFromSchema.generateInputSampleString(response.body().get(0).schemaContent(), 
+					System.out.println("endpoint URL is  ==>"	+ urlEndPointsSubNode.resourcePath());
+					responseSchemaMap.put(response.code().value(), JsonGeneratorFromSchema.generateInputSampleString(response.body().get(0).schemaContent().toString(), 
 							Util.loadProperties("RAML_LOCATION", appConfigPath)+"\\jsd\\"+response.body().get(0).schema().value().toString()+".1.schema.json").toString());
 					//configurationTO.setResponseSchemaString(JsonGeneratorFromSchema.generateInputSampleString(response.body().get(0).schemaContent()).toString());
 				} catch (Exception e) {
 					System.out.println("Error while reading response body schema content"+e.getMessage());
 					e.printStackTrace();
 				}
+			}
 			}else{
 				System.out.println(response.description().value());
 				responseSchemaMap.put(response.code().value(), "");
