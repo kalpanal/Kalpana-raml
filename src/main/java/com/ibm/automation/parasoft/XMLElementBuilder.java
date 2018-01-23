@@ -920,9 +920,9 @@ public class XMLElementBuilder {
 				} else {
 					if (firstTime) {
 						firstTime = false;
-						 listChildrenForElementValue(parentElement, 0, actualKey,	value.toString(), totalSize + "");
+						 listChildrenForElementValue(parentElement, 0, key,	value.toString(), totalSize + "");
 					} else {
-						 listChildrenForElementValue( parentElement, 0, actualKey,	value.toString(), totalSize + "");
+						 listChildrenForElementValue( parentElement, 0, key, value.toString(), totalSize + "");
 					}
 				}
 				depth++;
@@ -1033,45 +1033,35 @@ public class XMLElementBuilder {
 					}
 				}*/
 
+		Document elementForStringOrInteger = null;
+		if(Util.checkNumberOnly(columnValue)){
+			elementForStringOrInteger = new XMLElementBuilder().loadElementValueTemplateXML("integerTypeTemplateXML.xml");
+		}else{
+			elementForStringOrInteger = new XMLElementBuilder().loadElementValueTemplateXML("stringTypeTemplateXML.xml");
+		}
 			
-		Document elementForString = new XMLElementBuilder().loadElementValueTemplateXML("stringTypeTemplateXML.xml");
 		//innerMostParamTypeSizeElementList.stream().forEach(paramTypeSize ->{ paramTypeSize.removeContent(); paramTypeSize.addContent(objectSize);});
 		/*parentElement.getChild("paramTypesSize").removeContent();
 		parentElement.getChild("paramTypesSize").addContent((Integer.parseInt(objectSize)-1)+"");*/
-		elementForString.getRootElement().getChild("localName").setText(columnName);
+		elementForStringOrInteger.getRootElement().getChild("localName").setText(columnName);
 		parentElement.addContent(
-				elementForString.getRootElement().detach());
+				elementForStringOrInteger.getRootElement().detach());
 
 		return parentElement;
 	}
 	private static Element listChildrenForComplexValue(Element parentElement,
 			int depth, String columnName, String columnValue, String objectSize) throws IOException {
 
-/*		List<Element> children = current.getChildren();
-		Iterator<Element> iteratorTemplateXML = children.iterator();
-		Element innerMostElement = null;
-		Element innerMostElementForValueSize = null;
-		while (iteratorTemplateXML.hasNext()) {
-			Element child = (Element) iteratorTemplateXML.next();
-			if (child.getName().equalsIgnoreCase("ComplexValue")) {
-				IteratorIterable<Content> descendantsOfChannel = child.getDescendants();
-				for (Content descendant : descendantsOfChannel) {
-					if (descendant.getCType().equals(Content.CType.Element)) {
-						Element element = (Element) descendant;
-						if (element.getName().equals("valuesSize")) {
-							System.out.println("\n valuesSize--------------->"+ element.getText());
-							innerMostElement = (Element) element.getParent();
-							innerMostElementForValueSize = element;
-						}
-					}
-				}
-
-			} 
-		}*/
-		Document elementForString = new XMLElementBuilder().loadElementValueTemplateXML("stringTypeValueTemplateXML.xml");
+		Document elementForStringorInteger = null;
+		
+		if(Util.checkNumberOnly(columnValue)){
+			elementForStringorInteger = new XMLElementBuilder().loadElementValueTemplateXML("integerTypeValueTemplateXML.xml");
+		}else{
+			elementForStringorInteger = new XMLElementBuilder().loadElementValueTemplateXML("stringTypeValueTemplateXML.xml");
+		}
 		//innerMostElementForValueSize.setText((Integer.parseInt(objectSize)-1)+"");
-		elementForString.getRootElement().getChild("ComplexValue").getChild("StringValue").getChild("columnName").setText(columnName);
-		parentElement.addContent(elementForString.getRootElement().detach());
+		elementForStringorInteger.getRootElement().getChild("ComplexValue").getChild("StringValue").getChild("columnName").setText(columnName);
+		parentElement.addContent(elementForStringorInteger.getRootElement().detach());
 		return parentElement;
 	}
 

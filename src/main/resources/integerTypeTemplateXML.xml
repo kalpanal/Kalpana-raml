@@ -1,0 +1,27 @@
+                  <ElementType className="webtool.soap.ElementType" version="2.12.3">
+                   <hash>23</hash>
+                   <defaultValue>0</defaultValue>
+                   <minOccurs>0</minOccurs>
+                   <nillable>true</nillable>
+                   <localName>printCopyCnt</localName>
+                   <ComplexType className="webtool.soap.ComplexType" version="2.10.3">
+                    <hash>24</hash>
+                    <isAbstract>true</isAbstract>
+                    <attributesSize>1</attributesSize>
+                    <AttributeType className="webtool.soap.AttributeType" version="2.3.3">
+                     <hash>25</hash>
+                     <name>type</name>
+                     <fixed>number</fixed>
+                     <StringType className="webtool.soap.StringType" version="2.5.3">
+                      <hash>26</hash>
+                     </StringType>
+                     <required>true</required>
+                    </AttributeType>
+                    <content>true</content>
+                    <StringType className="webtool.soap.StringType" version="2">
+                     <hash>4</hash>
+                    </StringType>
+                    <namespace>urn:parasoft:json</namespace>
+                    <name>Number</name>
+                   </ComplexType>
+                  </ElementType>

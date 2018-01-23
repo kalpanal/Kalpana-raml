@@ -170,4 +170,8 @@ public class Util {
         }
         return array2List;      
     }
+	
+	public static boolean checkNumberOnly(String incomingStr){
+		return incomingStr.matches("[0-9]+");
+	}
 }
