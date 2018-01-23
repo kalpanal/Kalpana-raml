@@ -784,16 +784,27 @@ public class XMLElementBuilder {
 	private static void buildComplexValueUnderMessagingSchema(Element messagingSchema, String inputSampleString) {
 
 		try {
-			Element rootElementObjectType = new XMLElementBuilder()
-			.loadElementValueTemplateXML("rootElementValueTemplateXML.xml").getRootElement();
+			Element rootElementObjectType = new XMLElementBuilder()	.loadElementValueTemplateXML("rootElementValueTemplateXML.xml").getRootElement();
 			messagingSchema.getChild("ElementValue").addContent(rootElementObjectType.detach());
-			Element elementToAddElementValueXML = messagingSchema.getChild("ElementValue");
+			
+			IteratorIterable<Content> descendantsOfChannel = messagingSchema.getDescendants();
+			Element parentElement = null;
+			for (Content descendant : descendantsOfChannel) {
+				if (descendant.getCType().equals(Content.CType.Element)) {
+					Element child = (Element) descendant;
+					if (child.getName().equalsIgnoreCase("CompositorValueSet")) { 
+							parentElement	= child;
+
+						 }
+				}
+			}
+			//Element parentElement = messagingSchema.getChild("ElementValue");
 			if(inputSampleString == null){
 
 				rootElementObjectType.getChild("CompositorValue").getChild("CompositorValueSetCollectionSet")
 				.getChild("CompositorValueSet").removeChild("valuesSize");
 			}else {
-				Map<String, Object> results = jsonString2MapForComplexValue(elementToAddElementValueXML,
+				Map<String, Object> results = jsonString2MapForComplexValue(parentElement,
 						inputSampleString, true, null);				
 
 			}
@@ -826,10 +837,34 @@ public class XMLElementBuilder {
 		// Element compositorValueSet = new Element("CompositorValueSet");
 		try {
 			if (inputSampleStringJson != null) {
-				Element rootElementObjectType = new XMLElementBuilder()
+				/*Element rootElementObjectType = new XMLElementBuilder()
 				.loadElementValueTemplateXML(
-						"rootElementTemplateXML.xml").getRootElement();
-				Map<String, Object> results = jsonString2Map(child,
+						"rootElementTemplateXML.xml").getRootElement();*/
+				
+				IteratorIterable<Content> descendantsOfChannel = child
+						.getDescendants();
+				Element parentElement = null;
+				for (Content descendant : descendantsOfChannel) {
+					if (descendant.getCType().equals(Content.CType.Element)) {
+						Element child1 = (Element) descendant;
+						if (child1.getName().equalsIgnoreCase("ElementValue")) {
+							//Do nothing
+							IteratorIterable<Content> descendantsOfChannel1 = child1.getDescendants();
+							for (Content descendant1 : descendantsOfChannel1) {
+								if (descendant1.getCType().equals(Content.CType.Element)) {
+									Element element = (Element) descendant1;
+									if (element.getName().equals("paramTypesSize") ) {
+										System.out
+										.println("\n paramtypesize--------------->"	+ element.getText());
+										parentElement = (Element) element.getParent();
+									}
+								}
+							}
+
+						}
+					}
+				}
+				Map<String, Object> results = jsonString2Map(parentElement,
 						inputSampleStringJson, true, null);
 			}
 		} catch (IOException e) {
@@ -839,7 +874,7 @@ public class XMLElementBuilder {
 		return child;
 	}
 
-	public static Map<String, Object> jsonString2Map(Element incomingElementValueElementForString, String jsonString,
+	public static Map<String, Object> jsonString2Map(Element parentElement, String jsonString,
 			boolean firstTime, String prependKey) throws JSONException, IOException {
 		LinkedHashMap<String, Object> keys = new LinkedHashMap<String, Object>();
 		ObjectMapper mapper = new ObjectMapper();
@@ -848,14 +883,15 @@ public class XMLElementBuilder {
 
 		LinkedHashMap<String,?> o = mapper.readValue(jsonString, typeRef); 
 		int totalSize = o.size();
-
+		parentElement.getChild("paramTypesSize").removeContent();
+		parentElement.getChild("paramTypesSize").addContent((totalSize-1)+"");
+		int depth=0;
 		for (String key : o.keySet()){
 			String actualKey=key;
 			if(null!= prependKey){
 				actualKey=prependKey+"_"+key;
 			}
-			if(!key.equalsIgnoreCase("required")){
-				//String key = (String) keyset.next();
+			if(!key.equalsIgnoreCase("required")){				
 				Object value = o.get(key);
 				if (value instanceof LinkedHashMap) {
 					System.out.println("Incomin value is of JSONObject : "+value);
@@ -864,10 +900,9 @@ public class XMLElementBuilder {
 					objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
 					String mapToJson = objectMapper.writeValueAsString(value);
 					System.out.println(mapToJson);
-					updateWithObjectElements(incomingElementValueElementForString,	0, (((LinkedHashMap) value).size()-1), actualKey);
-					keys.put(
-							key,
-							jsonString2Map(incomingElementValueElementForString,
+					//parentElement = updateWithObjectElements(parentElement,	depth, (((LinkedHashMap) value).size()-1), actualKey);
+					keys.put( 
+							key, jsonString2Map(updateWithObjectElements(parentElement, depth, totalSize, actualKey),
 									mapToJson, false, actualKey));
 				} else if (value instanceof ArrayList) {
 					System.out.println("Incomin value is of JSONArray : "+value);
@@ -876,33 +911,23 @@ public class XMLElementBuilder {
 					objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
 					String mapToJson = objectMapper.writeValueAsString(value);
 					System.out.println(mapToJson);
-					updateWithArrayElements(incomingElementValueElementForString,
-							0, 1, actualKey);
+					//parentElement= updateWithArrayElements(parentElement, depth, 1, actualKey);
 					// JSONArray jsonArray = new JSONArray(value.toString());
 					keys.put(
 							key,
 							jsonArray2List(mapToJson,
-									incomingElementValueElementForString, actualKey));
+									updateWithArrayElements(parentElement, depth, 1, actualKey), actualKey));
 				} else {
-					// keyNode( value);
-					// listChildrenForElementValue(incomingElementValueElementForString,
-					// 0, key, value.toString());
 					if (firstTime) {
-						// incomingElementValueElementForString = new
-						// XMLElementBuilder().loadElementValueTemplateXML("elementValueForObject.xml").getRootElement();
 						firstTime = false;
-						incomingElementValueElementForString = listChildrenForElementValue(
-								incomingElementValueElementForString, 0, key,
-								value.toString(), totalSize + "");
+						 listChildrenForElementValue(parentElement, 0, actualKey,	value.toString(), totalSize + "");
 					} else {
-						incomingElementValueElementForString = listChildrenForElementValue(
-								incomingElementValueElementForString, 0, key,
-								value.toString(), totalSize + "");
+						 listChildrenForElementValue( parentElement, 0, actualKey,	value.toString(), totalSize + "");
 					}
-					// compositorValueSet.addContent(incomingElementValueElementForString.detach());
-					// keys.put( key, value );
 				}
+				depth++;
 			}
+			
 		}
 		return keys;
 	}
@@ -910,20 +935,17 @@ public class XMLElementBuilder {
 
 
 
-	public static Map<String, Object> jsonString2MapForComplexValue(
-			Element incomingElementValueElementForString, String jsonString,
+	public static Map<String, Object> jsonString2MapForComplexValue(Element parentElement, String jsonString,
 			boolean firstTime, String prependKey) throws JSONException, IOException {
 		LinkedHashMap<String, Object> keys = new LinkedHashMap<String, Object>();
-		JSONObject json = new JSONObject();
 		ObjectMapper mapper = new ObjectMapper();
 		System.out.print("\n Incoming json string for reference : " + jsonString);
-		TypeReference<LinkedHashMap<String, Object>> typeRef 
-		= new TypeReference<LinkedHashMap<String,Object>>() {};
+		TypeReference<LinkedHashMap<String, Object>> typeRef = new TypeReference<LinkedHashMap<String,Object>>() {};
 
 		LinkedHashMap<String,?> o = mapper.readValue(jsonString, typeRef); 
-		List<String> sortKey = new ArrayList<String>();
 		int totalSize = o.size();
-
+		parentElement.getChild("valuesSize").removeContent();
+		parentElement.getChild("valuesSize").addContent((totalSize-1) + "");
 		for (String key : o.keySet()){
 			String actualKey=key;
 			if(null!= prependKey){
@@ -933,52 +955,36 @@ public class XMLElementBuilder {
 				//String key = (String) keyset.next();
 				Object value = o.get(key);
 				if (value instanceof LinkedHashMap) {
-					// incomingElementValueElementForString =
-					// loadElementValueTemplateXMLForObject();
 					System.out.println("Incomin value is of JSONObject : "+value);
 					ObjectMapper objectMapper = new ObjectMapper();
 					//Set pretty printing of json
 					objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
 					String mapToJson = objectMapper.writeValueAsString(value);
 					System.out.println(mapToJson);
-					updateWithObjectElementsForComplexValue(incomingElementValueElementForString,
-							0, (((LinkedHashMap) value).size()-1), actualKey);
-					keys.put(
-							key,
-							jsonString2MapForComplexValue(incomingElementValueElementForString,
-									mapToJson, false, actualKey));
+					//updateWithObjectElementsForComplexValue(parentElement,	0, (((LinkedHashMap) value).size()-1), actualKey);
+					keys.put(key,	jsonString2MapForComplexValue(updateWithObjectElementsForComplexValue(parentElement, 
+							0, (((LinkedHashMap) value).size()-1), actualKey), 
+							mapToJson, false, actualKey));
 				} else if (value instanceof ArrayList) {
 					System.out.println("Incomin value is of JSONArray : "+value);
 					ObjectMapper objectMapper = new ObjectMapper();
-					//Set pretty printing of json
 					objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
 					String mapToJson = objectMapper.writeValueAsString(value);
 					System.out.println(mapToJson);
-					updateWithArrayElementsForComplexValue(incomingElementValueElementForString,
-							0, (((ArrayList) value).size()-1), actualKey);
+					/*updateWithArrayElementsForComplexValue(parentElement,
+							0, (((ArrayList) value).size()-1), actualKey);*/
 					// JSONArray jsonArray = new JSONArray(value.toString());
 					keys.put(
 							key,
-							jsonArray2ListForComplexValue(mapToJson,
-									incomingElementValueElementForString, actualKey));
+							jsonArray2ListForComplexValue(mapToJson, updateWithArrayElementsForComplexValue(parentElement,
+											0, (((ArrayList) value).size()-1), actualKey), actualKey));
 				} else {
-					// keyNode( value);
-					// listChildrenForElementValue(incomingElementValueElementForString,
-					// 0, key, value.toString());
 					if (firstTime) {
-						// incomingElementValueElementForString = new
-						// XMLElementBuilder().loadElementValueTemplateXML("elementValueForObject.xml").getRootElement();
 						firstTime = false;
-						incomingElementValueElementForString = listChildrenForComplexValue(
-								incomingElementValueElementForString, 0, key,
-								value.toString(), totalSize + "");
+						listChildrenForComplexValue(parentElement, 0, actualKey, value.toString(), totalSize + "");
 					} else {
-						incomingElementValueElementForString = listChildrenForComplexValue(
-								incomingElementValueElementForString, 0, key,
-								value.toString(), totalSize + "");
+						listChildrenForComplexValue(parentElement, 0, actualKey, value.toString(), totalSize + "");
 					}
-					// compositorValueSet.addContent(incomingElementValueElementForString.detach());
-					// keys.put( key, value );
 				}
 			}
 		}
@@ -999,24 +1005,18 @@ public class XMLElementBuilder {
 
 	}
 
-	private static Element listChildrenForElementValue(Element current,
+	private static Element listChildrenForElementValue(Element parentElement,
 			int depth, String columnName, String columnValue, String objectSize)
 					throws IOException {
 		// printSpaces(depth);
 
-		List<Element> children = current.getChildren();
+		/*List<Element> children = current.getChildren();
 		Iterator<Element> iteratorTemplateXML = children.iterator();
 		Element innerMostElement = null;
 		Element innerMostParamTypeSizeElement = null;
 		ArrayList<Element> innerMostParamTypeSizeElementList = new ArrayList<Element>();
-		while (iteratorTemplateXML.hasNext()) {
-			Element child = (Element) iteratorTemplateXML.next();
-			if (child.getName().equalsIgnoreCase("ElementValue")) {
-				// innerMostElement =
-				// child.getChild("ElementType").getChild("ComplexType").getChild("AllCompositor").getChild("paramTypesSize");
-
-				IteratorIterable<Content> descendantsOfChannel = child
-						.getDescendants();
+		
+				IteratorIterable<Content> descendantsOfChannel = current.getDescendants();
 				for (Content descendant : descendantsOfChannel) {
 					if (descendant.getCType().equals(Content.CType.Element)) {
 						Element element = (Element) descendant;
@@ -1031,29 +1031,23 @@ public class XMLElementBuilder {
 							// 'media' namespace
 						}
 					}
-				}
+				}*/
 
-			} else if (child.getChildren().size() != 0) {
-
-				listChildrenForElementValue(child, depth + 1, columnName,
-						columnValue, objectSize);
-			}
-		}
-		Document elementForString = new XMLElementBuilder()
-		.loadElementValueTemplateXML("stringTypeTemplateXML.xml");
+			
+		Document elementForString = new XMLElementBuilder().loadElementValueTemplateXML("stringTypeTemplateXML.xml");
 		//innerMostParamTypeSizeElementList.stream().forEach(paramTypeSize ->{ paramTypeSize.removeContent(); paramTypeSize.addContent(objectSize);});
-		innerMostParamTypeSizeElement.removeContent();
-		innerMostParamTypeSizeElement.addContent((Integer.parseInt(objectSize)-1)+"");
+		/*parentElement.getChild("paramTypesSize").removeContent();
+		parentElement.getChild("paramTypesSize").addContent((Integer.parseInt(objectSize)-1)+"");*/
 		elementForString.getRootElement().getChild("localName").setText(columnName);
-		innerMostElement.addContent(
+		parentElement.addContent(
 				elementForString.getRootElement().detach());
 
-		return current;
+		return parentElement;
 	}
-	private static Element listChildrenForComplexValue(Element current,
+	private static Element listChildrenForComplexValue(Element parentElement,
 			int depth, String columnName, String columnValue, String objectSize) throws IOException {
 
-		List<Element> children = current.getChildren();
+/*		List<Element> children = current.getChildren();
 		Iterator<Element> iteratorTemplateXML = children.iterator();
 		Element innerMostElement = null;
 		Element innerMostElementForValueSize = null;
@@ -1073,19 +1067,19 @@ public class XMLElementBuilder {
 				}
 
 			} 
-		}
+		}*/
 		Document elementForString = new XMLElementBuilder().loadElementValueTemplateXML("stringTypeValueTemplateXML.xml");
-		innerMostElementForValueSize.setText((Integer.parseInt(objectSize)-1)+"");
+		//innerMostElementForValueSize.setText((Integer.parseInt(objectSize)-1)+"");
 		elementForString.getRootElement().getChild("ComplexValue").getChild("StringValue").getChild("columnName").setText(columnName);
-		innerMostElement.addContent(elementForString.getRootElement().detach());
-		return current;
+		parentElement.addContent(elementForString.getRootElement().detach());
+		return parentElement;
 	}
 
-	private static Element updateWithArrayElements(Element current, int depth,
+	private static Element updateWithArrayElements(Element parentElement, int depth,
 			int valueSize, String columnName) throws IOException {
 		// printSpaces(depth);
 		Element innerMostChildForComplexType = null;
-		IteratorIterable<Content> descendantsOfChannel = current
+/*		IteratorIterable<Content> descendantsOfChannel = current
 				.getDescendants();
 		for (Content descendant : descendantsOfChannel) {
 			if (descendant.getCType().equals(Content.CType.Element)) {
@@ -1109,7 +1103,7 @@ public class XMLElementBuilder {
 
 				}
 			}
-		}
+		}*/
 
 		Document elementForArray = new XMLElementBuilder()
 		.loadElementValueTemplateXML("arrayTypeTemplateXML.xml");
@@ -1118,49 +1112,25 @@ public class XMLElementBuilder {
 		elementForArray.getRootElement().getChild("ComplexType").getChild("SequenceCompositor").getChild("paramTypesSize").addContent(valueSize + "");
 		elementForArray.getRootElement().getChild("localName").removeContent();
 		elementForArray.getRootElement().getChild("localName").addContent(columnName);
-		innerMostChildForComplexType.addContent(elementForArray.getRootElement().detach());
-		/*
-		List children = current.getChildren();
-		Iterator iteratorTemplateXML = children.iterator();
-		Element innerMostElement = null;*/
-		/*	while (iteratorTemplateXML.hasNext()) {
-			Element child = (Element) iteratorTemplateXML.next();
-
-			if (child.getName().equalsIgnoreCase("ElementValue")) {
-
-				IteratorIterable<Content> descendantsOfChannel = child
-						.getDescendants();
-				for (Content descendant : descendantsOfChannel) {
-					if (descendant.getCType().equals(Content.CType.Element)) {
-						Element element = (Element) descendant;
-						if (element.getName().equals("paramTypesSize")) {
-							System.out.println("paramtypesize--------------->"
-									+ element.getText()); //
-							innerMostElement = element;
-							// prints all urls of all thumbnails within the
-							// 'media' namespace
-						}
-					}
+		Element parentElementToReturn = null;
+		IteratorIterable<Content> descendantsOfChannel = elementForArray.getDescendants();
+		for (Content descendant : descendantsOfChannel) {
+			if (descendant.getCType().equals(Content.CType.Element)) {
+				Element element = (Element) descendant;
+				if (element.getName().equals("AllCompositor")) {					
+					parentElementToReturn = element;
 				}
-
-			} else if (child.getChildren().size() != 0) {
-				updateWithArrayElements(child, depth + 1, valueSize, columnName);
 			}
+		}
+		parentElement.addContent(elementForArray.getRootElement().detach());
 
-		}*/
-		// lastChildForCompositorValueSet.addContent(elementForString.detachRootElement());
-		/**
-		 * All elementvalue for string to inner most CompositorValueSet tag END
-		 * //child.addContent(increment.getAndIncrement()+"");
-		 */
-
-		return current;
+		return parentElementToReturn;
 	}
 
-	private static Element updateWithArrayElementsForComplexValue(Element current, int depth,
+	private static Element updateWithArrayElementsForComplexValue(Element parentElement, int depth,
 			int valueSize, String columnName) throws IOException {
 		// printSpaces(depth);
-		Element innerMostChildForComplexType = null;
+/*		Element innerMostChildForComplexType = null;
 		IteratorIterable<Content> descendantsOfChannel = current
 				.getDescendants();
 		for (Content descendant : descendantsOfChannel) {
@@ -1185,20 +1155,31 @@ public class XMLElementBuilder {
 
 				}
 			}
+		}*/
+		Document elementForArray = new XMLElementBuilder().loadElementValueTemplateXML("arrayTypeValueTemplateXML.xml");
+		Element parentElementToReturn = null, valueSizeEle=null;
+		IteratorIterable<Content> descendantsOfChannel = elementForArray.getDescendants();
+		for (Content descendant : descendantsOfChannel) {
+			if (descendant.getCType().equals(Content.CType.Element)) {
+				Element element = (Element) descendant;
+				if (element.getName().equals("CompositorValueSet")) {					
+					parentElementToReturn = element;
+				}else if (element.getName().equals("valuesSize") && element.getText().equalsIgnoreCase("template")) {					
+					valueSizeEle = element;
+				}
+			}
 		}
-		Document elementForArray = new XMLElementBuilder()
-		.loadElementValueTemplateXML("arrayTypeValueTemplateXML.xml");
+		valueSizeEle.removeContent();
+		valueSizeEle.addContent(valueSize + "");
+		parentElement.addContent(elementForArray.getRootElement().detach());
 
-		innerMostChildForComplexType.addContent(
-				elementForArray.getRootElement().detach());
-
-		return current;
+		return parentElementToReturn;
 	}
 
-	private static Element updateWithObjectElementsForComplexValue(Element current, int depth,
+	private static Element updateWithObjectElementsForComplexValue(Element parentElement, int depth,
 			int valueSize, String columnName) throws IOException {
 
-		Element innerMostChildForComplexType = null;		
+/*		Element innerMostChildForComplexType = null;		
 
 		IteratorIterable<Content> descendantsOfChannel = current
 				.getDescendants();
@@ -1224,82 +1205,61 @@ public class XMLElementBuilder {
 
 				}
 			}
-		}
+		}*/
 
 		// lastChildForCompositorValueSet.addContent(elementForString.detachRootElement());
-		Document elementForObject = new XMLElementBuilder()
-		.loadElementValueTemplateXML("objectTypeValueTemplateXML.xml");
+		Document elementForObject = new XMLElementBuilder().loadElementValueTemplateXML("objectTypeValueTemplateXML.xml");
 		//elementForObject.getRootElement().getChild("localName").setText(columnName);
 		//System.out.println(innerMostChildForComplexType);
-		if(innerMostChildForComplexType.getChild("valuesSize").getText().equals("template")){
-			innerMostChildForComplexType.getChild("valuesSize").removeContent();
-			innerMostChildForComplexType.getChild("valuesSize").addContent("1");
-		}else{
-			innerMostChildForComplexType.getChild("valuesSize").removeContent();
-			innerMostChildForComplexType.getChild("valuesSize").addContent(valueSize + "");
-		}
-
-		innerMostChildForComplexType.addContent(
+/*		if(parentElement.getChild("valuesSize").getText().equals("template")){
+			parentElement.getChild("valuesSize").removeContent();
+			parentElement.getChild("valuesSize").addContent("1");
+		}else{*/
+			parentElement.getChild("valuesSize").removeContent();
+			parentElement.getChild("valuesSize").addContent(valueSize + "");
+		//}
+		Element elementToReturn = elementForObject.getRootElement().getChild("ComplexValue").getChild("CompositorValue").getChild("CompositorValueSetCollectionSet").getChild("CompositorValueSet");
+		parentElement.addContent(
 				elementForObject.detachRootElement());
-		return current;
+		return elementToReturn;
 	}
 
 
-	private static Element updateWithObjectElements(Element current, int depth, int valueSize,
+	private static Element updateWithObjectElements(Element parentElement, int depth, int valueSize,
 			String columnName) throws IOException {
 		// printSpaces(depth);
 
-		List children = current.getChildren();
-		Iterator iteratorTemplateXML = children.iterator();
-		Element innerMostChildForComplexType = null;		
-
-		IteratorIterable<Content> descendantsOfChannel = current
-				.getDescendants();
-		for (Content descendant : descendantsOfChannel) {
-			if (descendant.getCType().equals(Content.CType.Element)) {
-				Element child = (Element) descendant;
-				if (child.getName().equalsIgnoreCase("ElementValue")) {
-					//Do nothing
-					IteratorIterable<Content> descendantsOfChannel1 = child.getDescendants();
-					for (Content descendant1 : descendantsOfChannel1) {
-						if (descendant1.getCType().equals(Content.CType.Element)) {
-							Element element = (Element) descendant1;
-							if (element.getName().equals("paramTypesSize") ) {
-								System.out
-								.println("\n paramtypesize--------------->"	+ element.getText());
-								innerMostChildForComplexType = (Element) element.getParent();
-							}
-						}
-					}
-
-				}
-			}
-		}
-
+		//List children = current.getChildren();
+		//Iterator iteratorTemplateXML = children.iterator();
+		//Element innerMostChildForComplexType = null;		
+//if(depth ==0){
 		// lastChildForCompositorValueSet.addContent(elementForString.detachRootElement());
-		Document elementForObject = new XMLElementBuilder()
-		.loadElementValueTemplateXML("objectTypeTemplateXML.xml");
+		Document elementForObject = new XMLElementBuilder()	.loadElementValueTemplateXML("objectTypeTemplateXML.xml");
 		//elementForObject.getRootElement().getChild("localName").setText(columnName);
 		//elementForObject.getRootElement().getChild("ComplexType").getChild("AllCompositor").getChild("paramTypesSize").removeContent();
 		//elementForObject.getRootElement().getChild("ComplexType").getChild("AllCompositor").getChild("paramTypesSize").addContent(valueSize + "");
 		elementForObject.getRootElement().getChild("localName").removeContent();
 		elementForObject.getRootElement().getChild("localName").addContent(columnName);
+		
+		Element elementToReturn = elementForObject.getRootElement().getChild("ComplexType").getChild("AllCompositor");
 		//elementForObject.getRootElement().getChild("localName").setText(columnName);
-		System.out.println(innerMostChildForComplexType);
-		if(innerMostChildForComplexType.getChild("paramTypesSize").getText().equals("template")){
-			innerMostChildForComplexType.getChild("paramTypesSize").removeContent();
-			innerMostChildForComplexType.getChild("paramTypesSize").addContent("1");
-		}else{
-			innerMostChildForComplexType.getChild("paramTypesSize").removeContent();
-			innerMostChildForComplexType.getChild("paramTypesSize").addContent(valueSize + "");
-		}
-		innerMostChildForComplexType.addContent(
+		//System.out.println(innerMostChildForComplexType);
+		/*if(parentElement.getChild("paramTypesSize").getText().equals("template")){
+			parentElement.getChild("paramTypesSize").removeContent();
+			parentElement.getChild("paramTypesSize").addContent("1");
+		}else{*/
+			parentElement.getChild("paramTypesSize").removeContent();
+			parentElement.getChild("paramTypesSize").addContent((valueSize-1) + "");
+		//}
+		/*innerMostChildForComplexType.addContent(
+				elementForObject.detachRootElement());*/
+		parentElement.addContent(
 				elementForObject.detachRootElement());
-		return current;
+		return elementToReturn;
 	}
 
 	public static List<Object> jsonArray2List(String arrayOFKeys,
-			Element incomingElementValueElementForString, String actualKey) throws JSONException,
+			Element parentElement, String actualKey) throws JSONException,
 			IOException {
 		System.out.println("Incoming value is of JSONArray : =========");
 		// Element elementValueElement = new
@@ -1337,7 +1297,7 @@ public class XMLElementBuilder {
 						.get(i));
 				System.out.println(mapToJson);
 				Map<String, Object> subObj2Map = jsonString2Map(
-						incomingElementValueElementForString, mapToJson, false, actualKey);
+						parentElement, mapToJson, false, actualKey);
 				array2List.add(subObj2Map);
 			} else if (arrayOFKeysList.get(i) instanceof ArrayList) {
 
@@ -1350,7 +1310,7 @@ public class XMLElementBuilder {
 				System.out.println(mapToJson);
 
 				List<Object> subarray2List = jsonArray2List(mapToJson,
-						incomingElementValueElementForString, actualKey);
+						parentElement, actualKey);
 				array2List.add(subarray2List);
 			} else {
 				// keyNode( arrayOFKeys.opt(i) );
