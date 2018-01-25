@@ -21,6 +21,6 @@
 					  <AndAssertion className="webtool.assertion.compound.AndAssertion" version="1.2">
 						<timestamp>1435587868312</timestamp>
 						<name>AdditionalResponse</name>
-						<assertionsSize>11</assertionsSize>
+						<assertionsSize>11-template</assertionsSize>
 					</AndAssertion>
                    </ConditionalAssertion>
