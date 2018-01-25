@@ -281,17 +281,23 @@ public class XMLJsonUtils {
 	            }else{//build assertions for required params	            	
 	            	Object value = jsonObject.get(key);
 		            String actualKey=key;
+		            
+		            
 		            if(null!= prependKey){
 						actualKey=prependKey;
 		            }
 		            if ( value instanceof org.json.JSONArray) {
 		            	
-		                org.json.JSONArray jsonArray = jsonObject.getJSONArray(key);	               
+		                org.json.JSONArray jsonArray = jsonObject.getJSONArray(key);
+		                /** check if the required attribute is not an JSON Object, 
+			            if it is a Object, we cannot create assertions for that attribute
+			            */
+		                jsonArray = compareRequiredAttribitesAgainstValueList(jsonObject, jsonArray);
 		               // andAssertionSize = (andAssertionSize + jsonArray.length());
 		                XMLElementBuilder.buildStringComparisonAssertions(jsonArray, actualKey, andAssertion);		               
 						//System.out.println(jsonArray.length()+"=======assertionsSize+++++++++++++++++>"+andAssertionSize+"");
 		                int andAssertionSizeLocal = 0;
-						if(!andAssertion.getChild("assertionsSize").getContent().get(0).getValue().toString().contains("11")){
+						if(!andAssertion.getChild("assertionsSize").getContent().get(0).getValue().toString().contains("11-template")){
 							andAssertionSizeLocal = Integer.parseInt(andAssertion.getChild("assertionsSize").getContent().get(0).getValue().toString());
 						}
 						 System.out.println("=======before assertionsSize+++++++++++++++++>"+(andAssertionSizeLocal+jsonArray.length())+"");
@@ -302,6 +308,16 @@ public class XMLJsonUtils {
 	        }
 	        return keys;
 	      }
+
+	private static org.json.JSONArray compareRequiredAttribitesAgainstValueList(org.json.JSONObject jsonObject, org.json.JSONArray jsonArray) {
+				
+		for(int i=0; i<jsonArray.length(); i++){
+			if(jsonObject.get(jsonArray.getString(i)) instanceof org.json.JSONObject || jsonObject.get(jsonArray.getString(i)) instanceof org.json.JSONArray) {				
+				jsonArray.remove(i);
+			}
+		}
+		return jsonArray;
+	}
 
 	public static List<Object> jsonArray2ListForAssertionsRequiredParams(JSONArray arrayOFKeys, String actualKey, Element andAssertion) throws JSONException, IOException {
         List<Object> array2List = new ArrayList<Object>();
@@ -335,8 +351,9 @@ public class XMLJsonUtils {
         return array2List;  
        }	
 	
-	public static String replaceDotWithQuotesForAssertion_Xpath(String incomingXpath){
-		String replacementStr= "\"][\"";
+	public static String replaceDotWithSlashForAssertion_Xpath(String incomingXpath){
+		//String replacementStr= "\"][\"";
+		String replacementStr= "/";
 		incomingXpath = StringUtils.replace(incomingXpath, ".", replacementStr);
 		return incomingXpath;
 		

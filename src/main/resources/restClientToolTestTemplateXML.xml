@@ -240,10 +240,10 @@
              <name>Authorization</name>
              <MultiValue className="webtool.data.MultiValue" version="1.4">
               <StringTestValue className="webtool.data.StringTestValue" version="4.1">
-               <value>${TOKEN_PRINT/MAILING}</value>
+               <value>oikki</value>
               </StringTestValue>
               <ParameterizedTestValue className="webtool.data.ParameterizedTestValue" version="3.1">
-               <column>OathToken</column>
+               <column>Authorization_OAuth_Token</column>
               </ParameterizedTestValue>
               <selectedIndex>-2</selectedIndex>
               <valuesSize>1</valuesSize>
@@ -273,7 +273,7 @@
                <value>FTP_POS_MSGId_21Sep_001</value>
               </StringTestValue>
               <ParameterizedTestValue className="webtool.data.ParameterizedTestValue" version="3.1">
-               <column>MessageId</column>
+               <column>MessageID</column>
               </ParameterizedTestValue>
               <selectedIndex>-2</selectedIndex>
               <valuesSize>1</valuesSize>
@@ -300,10 +300,10 @@
              <name>TraceabilityId</name>
              <MultiValue className="webtool.data.MultiValue" version="1.4">
               <StringTestValue className="webtool.data.StringTestValue" version="4.1">
-               <value>FTP_POS_TraceId_21Sep_001</value>
+               <value>${TRACEABILITYID}</value>
               </StringTestValue>
               <ParameterizedTestValue className="webtool.data.ParameterizedTestValue" version="3.1">
-               <column>Tracebility ID</column>
+               <column>TraceabilityId</column>
               </ParameterizedTestValue>
               <selectedIndex>-2</selectedIndex>
               <valuesSize>1</valuesSize>
@@ -470,10 +470,10 @@
              <name>Authorization</name>
              <MultiValue className="webtool.data.MultiValue" version="1.4">
               <StringTestValue className="webtool.data.StringTestValue" version="4.1">
-               <value>${TOKEN_PRINT/MAILING}</value>
+               <value>Okki</value>
               </StringTestValue>
               <ParameterizedTestValue className="webtool.data.ParameterizedTestValue" version="3.1">
-               <column>OathToken</column>
+               <column>Authorization_OAuth_Token</column>
               </ParameterizedTestValue>
               <selectedIndex>-2</selectedIndex>
               <valuesSize>1</valuesSize>
@@ -503,7 +503,7 @@
                <value>FTP_POS_MSGId_21Sep_001</value>
               </StringTestValue>
               <ParameterizedTestValue className="webtool.data.ParameterizedTestValue" version="3.1">
-               <column>MessageId</column>
+               <column>MessageID</column>
               </ParameterizedTestValue>
               <selectedIndex>-2</selectedIndex>
               <valuesSize>1</valuesSize>
@@ -530,10 +530,10 @@
              <name>TraceabilityId</name>
              <MultiValue className="webtool.data.MultiValue" version="1.4">
               <StringTestValue className="webtool.data.StringTestValue" version="4.1">
-               <value>FTP_POS_TraceId_21Sep_001</value>
+               <value>${TRACEABILITYID}</value>
               </StringTestValue>
               <ParameterizedTestValue className="webtool.data.ParameterizedTestValue" version="3.1">
-               <column>Tracebility ID</column>
+               <column>TraceabilityId</column>
               </ParameterizedTestValue>
               <selectedIndex>-2</selectedIndex>
               <valuesSize>1</valuesSize>
@@ -624,7 +624,7 @@
           <FileWriterProperties className="webtool.stream.FileWriterProperties" version="5">
            <targetDirectory>true</targetDirectory>
            <RelativeLocation className="com.parasoft.util.RelativeLocation" version="1.4">
-            <path>${OUTPUT}\ftpdeliveries\Positive</path>
+            <path>..\output</path>
            </RelativeLocation>
            <createDirectories>true</createDirectories>
            <targetPattern>%b_%t_%d.txt</targetPattern>
@@ -1324,17 +1324,34 @@ Content-Type: text/plain; charset=UTF-8</httpHeader>
         </ObjectOutputProvider>
        </MessagingOutputProvider>
 	   <outputToolsSize>1-assertiontemplate</outputToolsSize>
-		<JSONAssertionTool className="webtool.ecmascript.json.assertion.JSONAssertionTool" version="v.2.1.1.14">
+	<GenericAssertionTool className="webtool.assertor.GenericAssertionTool" version="v.2.1.14">
+       <dataSourceNames size="1">
+        <dataSourceName index="0">printdeliveries.xlsx</dataSourceName>
+       </dataSourceNames>
+       <enabled>false</enabled>
+       <iconName>XMLAssertor</iconName>
+       <name>JSON Assertor_For_NegativeScenarios</name>	   
+		 <XMLAssertionTool className="webtool.xml.assertion.XMLAssertionTool" version="v.2.2.1.14">
 			<dataSourceNames size="1">
-			  <dataSourceName index="0">O2O_Relationships</dataSourceName>
+			  <dataSourceName index="0">printdeliveries.xlsx</dataSourceName>
 			</dataSourceNames>
-			<iconName>JSONAssertor</iconName>
-			<name>JSON Assertor</name>
+			<iconName>XMLAssertor</iconName>
+			<name>XML Assertor</name>
 			<assertionsSize>1-template</assertionsSize>
-			<ExpectedJSONMessage className="webtool.ecmascript.json.messaging.ExpectedJSONMessage" version="1.1.1">
-			  <message>true</message>
-			</ExpectedJSONMessage>
-		  </JSONAssertionTool>        
+			<ExpectedXMLMessage className="webtool.xml.ExpectedXMLMessage" version="1.2.1">
+				<message>true</message>
+			</ExpectedXMLMessage>
+		  </XMLAssertionTool>   
+		 <TextXmlConversionStrategySerializer className="webtool.textxmlconvert.TextXmlConversionStrategySerializer" version="3">
+        <dataFormatName>JSON</dataFormatName>
+        <conversionStrategyId>JSON</conversionStrategyId>
+        <conversionStrategyClassName>com.parasoft.xml.convert.json.JsonConversionStrategy</conversionStrategyClassName>
+       </TextXmlConversionStrategySerializer>
+       <ConversionOptionSetSerializer className="webtool.textxmlconvert.ConversionOptionSetSerializer" version="2">
+       </ConversionOptionSetSerializer>
+       <TextXmlModelTypeSerializer className="webtool.textxmlconvert.TextXmlModelTypeSerializer" version="2">
+       </TextXmlModelTypeSerializer>
+      </GenericAssertionTool>
        <UserMethod className="com.parasoft.scripting.UserMethod" version="2.2">
         <code>true</code>
         <ScriptCode className="com.parasoft.scripting.jsr223.ScriptCode" version="2.1.1.1">

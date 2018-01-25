@@ -360,11 +360,10 @@ public class XMLElementBuilder {
 		for (Content descendant : descendantsOfChannel) {
 			if (descendant.getCType().equals(Content.CType.Element)) {
 				Element child = (Element) descendant;
+				//System.out.println(child.getName());
 				if (child.getName().equalsIgnoreCase("testID")) {
 					testID = child;
-				} else if(child.getName().equalsIgnoreCase("HTTPClient_Endpoint") && child.getText().contains("https://pingfederate.sys.td.com:9031/as/token.oauth2?client_id")){
-					tokenPathURL = child;
-				}else if (child.getName().equalsIgnoreCase("name")				
+				} else if (child.getName().equalsIgnoreCase("name")				
 						&& child.getTextNormalize()
 						.equals("DocDelivery.1.raml")) {
 					docDelivery = child;
@@ -438,8 +437,8 @@ public class XMLElementBuilder {
 
 					outputToolsSize = child;
 				}
-				else if(child.getName().equalsIgnoreCase("JSONAssertionTool")){					
-					jsonAssertionTool = child;
+				else if(child.getName().equalsIgnoreCase("GenericAssertionTool")){					
+					jsonAssertionTool = child.getChild("XMLAssertionTool");
 				}else if(child.getName().equalsIgnoreCase("assertionsSize")&& child.getText().equalsIgnoreCase("1-template")){
 					conditionalAssertionSize = child;
 				}
@@ -472,12 +471,7 @@ public class XMLElementBuilder {
 
 		profileMappingIDEle.removeContent();
 		profileMappingIDEle.addContent(profileMappingId.getAndIncrement()+"");
-		
-		if(tokenPathURL!= null){
-			tokenPathURL.removeContent();
-			tokenPathURL.addContent(Util.loadProperties("TOKEN_URL", configurationTO.getAppConfigPath()));
-		}
-		
+
 		//dataSourceName.removeContent();
 		//dataSourceName.addContent(configurationTO.getDataSource());
 		if(httpMethodTestValue != null){
@@ -618,10 +612,13 @@ public class XMLElementBuilder {
 			String responseCode = entry.getKey();
 			String reponseSchemaContent = entry.getValue();
 			int andAssertionSize = 0;
-			if(reponseSchemaContent!= null && (!reponseSchemaContent.equals(""))){
-				conditionAssertionSizeInt++;
-				Element andAssertion = buildResponseConditionalAssertion(responseCode, jsonAssertionTool);
-				XMLJsonUtils.jsonString2MapForReponseCodeAssertions(responseCode, reponseSchemaContent, null, andAssertion, andAssertionSize);
+			//Just run assertions tag creation just once not as many as response code in responseMap
+			if(reponseSchemaContent!= null && (!reponseSchemaContent.equals("")) ){
+				if(conditionAssertionSizeInt == 0){
+					conditionAssertionSizeInt++;
+					Element andAssertion = buildResponseConditionalAssertion(responseCode, jsonAssertionTool);
+					XMLJsonUtils.jsonString2MapForReponseCodeAssertions(responseCode, reponseSchemaContent, null, andAssertion, andAssertionSize);
+				}
 			}
 
 		}
@@ -684,7 +681,7 @@ public class XMLElementBuilder {
 						}else if(child.getName().equalsIgnoreCase("outputToolsSize") && child.getText().equalsIgnoreCase("1-assertiontemplate")){
 							outputToolsSize = child;
 						}
-						else if(child.getName().equalsIgnoreCase("JSONAssertionTool")){					
+						else if(child.getName().equalsIgnoreCase("XMLAssertionTool")){					
 							jsonAssertionToolElse = child;
 						}else if(child.getName().equalsIgnoreCase("UrlPathParametersLiteral") && child.getTextTrim().equalsIgnoreCase("template")){ 
 							urlPathParametersLiteralElement = child;
@@ -786,16 +783,16 @@ public class XMLElementBuilder {
 		try {
 			Element rootElementObjectType = new XMLElementBuilder()	.loadElementValueTemplateXML("rootElementValueTemplateXML.xml").getRootElement();
 			messagingSchema.getChild("ElementValue").addContent(rootElementObjectType.detach());
-			
+
 			IteratorIterable<Content> descendantsOfChannel = messagingSchema.getDescendants();
 			Element parentElement = null;
 			for (Content descendant : descendantsOfChannel) {
 				if (descendant.getCType().equals(Content.CType.Element)) {
 					Element child = (Element) descendant;
 					if (child.getName().equalsIgnoreCase("CompositorValueSet")) { 
-							parentElement	= child;
+						parentElement	= child;
 
-						 }
+					}
 				}
 			}
 			//Element parentElement = messagingSchema.getChild("ElementValue");
@@ -840,7 +837,7 @@ public class XMLElementBuilder {
 				/*Element rootElementObjectType = new XMLElementBuilder()
 				.loadElementValueTemplateXML(
 						"rootElementTemplateXML.xml").getRootElement();*/
-				
+
 				IteratorIterable<Content> descendantsOfChannel = child
 						.getDescendants();
 				Element parentElement = null;
@@ -920,14 +917,14 @@ public class XMLElementBuilder {
 				} else {
 					if (firstTime) {
 						firstTime = false;
-						 listChildrenForElementValue(parentElement, 0, key,	value.toString(), totalSize + "");
+						listChildrenForElementValue(parentElement, 0, key,	value.toString(), totalSize + "");
 					} else {
-						 listChildrenForElementValue( parentElement, 0, key, value.toString(), totalSize + "");
+						listChildrenForElementValue( parentElement, 0, key, value.toString(), totalSize + "");
 					}
 				}
 				depth++;
 			}
-			
+
 		}
 		return keys;
 	}
@@ -977,7 +974,7 @@ public class XMLElementBuilder {
 					keys.put(
 							key,
 							jsonArray2ListForComplexValue(mapToJson, updateWithArrayElementsForComplexValue(parentElement,
-											0, (((ArrayList) value).size()-1), actualKey), actualKey));
+									0, (((ArrayList) value).size()-1), actualKey), actualKey));
 				} else {
 					if (firstTime) {
 						firstTime = false;
@@ -1015,7 +1012,7 @@ public class XMLElementBuilder {
 		Element innerMostElement = null;
 		Element innerMostParamTypeSizeElement = null;
 		ArrayList<Element> innerMostParamTypeSizeElementList = new ArrayList<Element>();
-		
+
 				IteratorIterable<Content> descendantsOfChannel = current.getDescendants();
 				for (Content descendant : descendantsOfChannel) {
 					if (descendant.getCType().equals(Content.CType.Element)) {
@@ -1039,7 +1036,7 @@ public class XMLElementBuilder {
 		}else{
 			elementForStringOrInteger = new XMLElementBuilder().loadElementValueTemplateXML("stringTypeTemplateXML.xml");
 		}
-			
+
 		//innerMostParamTypeSizeElementList.stream().forEach(paramTypeSize ->{ paramTypeSize.removeContent(); paramTypeSize.addContent(objectSize);});
 		/*parentElement.getChild("paramTypesSize").removeContent();
 		parentElement.getChild("paramTypesSize").addContent((Integer.parseInt(objectSize)-1)+"");*/
@@ -1053,7 +1050,7 @@ public class XMLElementBuilder {
 			int depth, String columnName, String columnValue, String objectSize) throws IOException {
 
 		Document elementForStringorInteger = null;
-		
+
 		if(Util.checkNumberOnly(columnValue)){
 			elementForStringorInteger = new XMLElementBuilder().loadElementValueTemplateXML("integerTypeValueTemplateXML.xml");
 		}else{
@@ -1069,7 +1066,7 @@ public class XMLElementBuilder {
 			int valueSize, String columnName) throws IOException {
 		// printSpaces(depth);
 		Element innerMostChildForComplexType = null;
-/*		IteratorIterable<Content> descendantsOfChannel = current
+		/*		IteratorIterable<Content> descendantsOfChannel = current
 				.getDescendants();
 		for (Content descendant : descendantsOfChannel) {
 			if (descendant.getCType().equals(Content.CType.Element)) {
@@ -1120,7 +1117,7 @@ public class XMLElementBuilder {
 	private static Element updateWithArrayElementsForComplexValue(Element parentElement, int depth,
 			int valueSize, String columnName) throws IOException {
 		// printSpaces(depth);
-/*		Element innerMostChildForComplexType = null;
+		/*		Element innerMostChildForComplexType = null;
 		IteratorIterable<Content> descendantsOfChannel = current
 				.getDescendants();
 		for (Content descendant : descendantsOfChannel) {
@@ -1169,45 +1166,9 @@ public class XMLElementBuilder {
 	private static Element updateWithObjectElementsForComplexValue(Element parentElement, int depth,
 			int valueSize, String columnName) throws IOException {
 
-/*		Element innerMostChildForComplexType = null;		
-
-		IteratorIterable<Content> descendantsOfChannel = current
-				.getDescendants();
-		for (Content descendant : descendantsOfChannel) {
-			if (descendant.getCType().equals(Content.CType.Element)) {
-				Element child = (Element) descendant;
-				if (child.getName().equalsIgnoreCase("ComplexValue")) {
-					//Do nothing
-					IteratorIterable<Content> descendantsOfChannel1 = child.getDescendants();
-					for (Content descendant1 : descendantsOfChannel1) {
-						if (descendant1.getCType().equals(Content.CType.Element)) {
-							Element element = (Element) descendant1;
-							if (element.getName().equals("valuesSize") ) {
-								System.out
-								.println("\n valuesSize--------------->"
-										+ element.getText()); //
-								innerMostChildForComplexType = (Element) element.getParent();
-								// prints all urls of all thumbnails within the
-								// 'media' namespace
-							}
-						}
-					}
-
-				}
-			}
-		}*/
-
-		// lastChildForCompositorValueSet.addContent(elementForString.detachRootElement());
 		Document elementForObject = new XMLElementBuilder().loadElementValueTemplateXML("objectTypeValueTemplateXML.xml");
-		//elementForObject.getRootElement().getChild("localName").setText(columnName);
-		//System.out.println(innerMostChildForComplexType);
-/*		if(parentElement.getChild("valuesSize").getText().equals("template")){
-			parentElement.getChild("valuesSize").removeContent();
-			parentElement.getChild("valuesSize").addContent("1");
-		}else{*/
-			parentElement.getChild("valuesSize").removeContent();
-			parentElement.getChild("valuesSize").addContent(valueSize + "");
-		//}
+		parentElement.getChild("valuesSize").removeContent();
+		parentElement.getChild("valuesSize").addContent(valueSize + "");
 		Element elementToReturn = elementForObject.getRootElement().getChild("ComplexValue").getChild("CompositorValue").getChild("CompositorValueSetCollectionSet").getChild("CompositorValueSet");
 		parentElement.addContent(
 				elementForObject.detachRootElement());
@@ -1217,32 +1178,13 @@ public class XMLElementBuilder {
 
 	private static Element updateWithObjectElements(Element parentElement, int depth, int valueSize,
 			String columnName) throws IOException {
-		// printSpaces(depth);
-
-		//List children = current.getChildren();
-		//Iterator iteratorTemplateXML = children.iterator();
-		//Element innerMostChildForComplexType = null;		
-//if(depth ==0){
-		// lastChildForCompositorValueSet.addContent(elementForString.detachRootElement());
 		Document elementForObject = new XMLElementBuilder()	.loadElementValueTemplateXML("objectTypeTemplateXML.xml");
-		//elementForObject.getRootElement().getChild("localName").setText(columnName);
-		//elementForObject.getRootElement().getChild("ComplexType").getChild("AllCompositor").getChild("paramTypesSize").removeContent();
-		//elementForObject.getRootElement().getChild("ComplexType").getChild("AllCompositor").getChild("paramTypesSize").addContent(valueSize + "");
 		elementForObject.getRootElement().getChild("localName").removeContent();
 		elementForObject.getRootElement().getChild("localName").addContent(columnName);
-		
+
 		Element elementToReturn = elementForObject.getRootElement().getChild("ComplexType").getChild("AllCompositor");
-		//elementForObject.getRootElement().getChild("localName").setText(columnName);
-		//System.out.println(innerMostChildForComplexType);
-		/*if(parentElement.getChild("paramTypesSize").getText().equals("template")){
-			parentElement.getChild("paramTypesSize").removeContent();
-			parentElement.getChild("paramTypesSize").addContent("1");
-		}else{*/
-			parentElement.getChild("paramTypesSize").removeContent();
-			parentElement.getChild("paramTypesSize").addContent((valueSize-1) + "");
-		//}
-		/*innerMostChildForComplexType.addContent(
-				elementForObject.detachRootElement());*/
+		parentElement.getChild("paramTypesSize").removeContent();
+		parentElement.getChild("paramTypesSize").addContent((valueSize-1) + "");
 		parentElement.addContent(
 				elementForObject.detachRootElement());
 		return elementToReturn;
@@ -1512,8 +1454,6 @@ public class XMLElementBuilder {
 					if (child.getName().equalsIgnoreCase("name")) {
 						if(child.getText().equalsIgnoreCase("Key1")){
 							stringName1 = child;
-						}else{
-							stringName = child;
 						}
 					}else if (child.getName().equalsIgnoreCase("Assertion_XPath")
 							) {
@@ -1526,21 +1466,20 @@ public class XMLElementBuilder {
 					}
 				}
 			}
-			stringName.removeContent();
-			stringName.addContent(jsonArray.get(i)+"");
+
 			if(stringName1!=null){
-			stringName1.removeContent();
-			stringName1.addContent(jsonArray.get(i)+"");
+				stringName1.removeContent();
+				stringName1.addContent(jsonArray.get(i)+"");
 			}
 			assertionXPath.removeContent();
-			
-		
+
+
 			if(i==0 && actualKey.equals("required")){
-				assertionXPath.addContent("this[\""+jsonArray.get(i)+"\"]");
+				assertionXPath.addContent("/root/"+jsonArray.get(i)+"");
 			}else if(i==0){
-				assertionXPath.addContent("this[\""+XMLJsonUtils.replaceDotWithQuotesForAssertion_Xpath(actualKey)+"\"][0][\""+jsonArray.get(i)+"\"]");
+				assertionXPath.addContent("/root/"+XMLJsonUtils.replaceDotWithSlashForAssertion_Xpath(actualKey)+"/item/"+jsonArray.get(i));
 			}else{
-				assertionXPath.addContent("this[\""+XMLJsonUtils.replaceDotWithQuotesForAssertion_Xpath(actualKey)+"\"][0][\""+jsonArray.get(i)+"\"]");
+				assertionXPath.addContent("/root/"+XMLJsonUtils.replaceDotWithSlashForAssertion_Xpath(actualKey)+"/item/"+jsonArray.get(i));
 			}
 			column.removeContent();
 			//column.addContent(jsonArray.get(i)+"");
@@ -1555,24 +1494,20 @@ public class XMLElementBuilder {
 	public static Element buildResponseConditionalAssertion(String responseCode, Element jsonAssertionTool) throws IOException{
 		Element conditionAssertion = new XMLElementBuilder().loadElementValueTemplateXML("conditionalAssertionTemplate.xml").detachRootElement();
 		IteratorIterable<Content> descendantsOfConditional = conditionAssertion.getDescendants();
-		Element name =null, stringComparision = null, andAssertion =null, nameAndAssertion =null, andAssertionSize=null;
+		Element name =null, stringComparision = null, andAssertion =null, andAssertionSize=null;
 		for (Content descendant : descendantsOfConditional) {
 			if (descendant.getCType().equals(Content.CType.Element)) {
 				Element child = (Element) descendant;
-				if (child.getName().equalsIgnoreCase("value")&&child.getText().equalsIgnoreCase("404")) {				
-					name = child;
-				}else if(child.getName().equalsIgnoreCase("AndAssertion")){
+				if(child.getName().equalsIgnoreCase("AndAssertion")){
 					andAssertion = child;
-				}else if(child.getName().equalsIgnoreCase("name") && child.getText().equalsIgnoreCase("FirstResponseAND")){
-					nameAndAssertion = child;
 				}else if(child.getName().equalsIgnoreCase("assertionsSize")){
 					andAssertionSize = child;
 				}
 			}
 		}
 
-		name.removeContent();
-		name.addContent(responseCode);
+		/*name.removeContent();
+		name.addContent(responseCode);*/
 
 		/*	andAssertionSize.removeContent();
 	andAssertionSize.addContent();*/

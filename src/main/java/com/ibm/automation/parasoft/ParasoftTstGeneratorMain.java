@@ -226,6 +226,7 @@ public class ParasoftTstGeneratorMain {
 
 
 			}
+			System.out.println(configurationTO.getInputSampleString());
 
 		} catch (Exception e) {
 			System.out.println("Error inside swtich case of method type in method copyRAMLDataToDTO()"+e.getMessage());

@@ -33,134 +33,36 @@ public class CreateTSTFile {
 
 
 	public static void createTstFile() {
-
-		boolean foundUPC = false;
-		//try {
-			/*String FILE_NAME = "C:/Kalpana/TD Bank/datasheets/DocDelivery.xlsx";
-			FileInputStream spreadsheet = new FileInputStream(new File(
-					FILE_NAME));
-			// Create workbook instance to hold file reference to .xlsxfile
-			XSSFWorkbook workbook = new XSSFWorkbook(spreadsheet);
-
-			// Get first/desire sheed from the workbook
-			XSSFSheet sheet = workbook.getSheetAt(0);
-
-			// Iterate through each row one by one
-			Iterator<Row> rowIterator = sheet.iterator();
-
-			List<String> headers = new ArrayList<>();
-			Map<String, Integer> headersMap = new HashMap<>();
-			if (rowIterator.hasNext()) {
-				Row row = rowIterator.next();
-				for (Cell cell : row) {
-					headers.add(cell.getStringCellValue());
-					headersMap.put(cell.getStringCellValue(),
-							cell.getColumnIndex());
-				}
-			}
-
-			List<DataRow> contents = new ArrayList<>();
-			HashMap<String, List<Object>> assertionsMap = new HashMap<String, List<Object>>();
-			String[] assertionColumns = { "dataSourceName",
-					"Assertor String Name", "Assertion_Xpath", "timestamp",
-					"Parameterized columnName" };
-			while (rowIterator.hasNext()) {
-				Row row = rowIterator.next();
-				String assertionDetailsInput = row.getCell(
-						headersMap.get("Input needed from user"))
-						.getStringCellValue();
-				String assertionType = row.getCell(
-						headersMap.get("Assertion Type")).getStringCellValue();
-				String assertionLines[] = assertionDetailsInput
-						.split("\\r?\\n");
-
-				switch (assertionType) {
-				case "String Comparison Assertion": {
-					// assertionsMap.get("String Comparison Assertion");
-					StringComparisonAsssertionDetails stringComparisonAsssertionDetails = new StringComparisonAsssertionDetails();
-					int i;
-					for (String s : assertionLines) {
-						int assertionTypePos = contains(assertionColumns, s);
-						switch (assertionTypePos) {
-						case 0:
-							// it is datasource
-							stringComparisonAsssertionDetails
-									.setDataSourceName(s.substring(s
-											.indexOf("=")));
-							break;
-						case 1:
-							// It is Assertor String Name
-							stringComparisonAsssertionDetails
-									.setAssertorStringName(s.substring(s
-											.indexOf("=")));
-							break;
-						case 2:
-							// It is Assertion_Xpath
-							stringComparisonAsssertionDetails
-									.setAssertion_Xpath(s.substring(s
-											.indexOf("=")));
-							break;
-						case 3:
-							// It is timestamp
-							stringComparisonAsssertionDetails.setTimestamp(s
-									.substring(s.indexOf("=")));
-							break;
-						case 4:
-							// It is Parameterized column Name
-							stringComparisonAsssertionDetails
-									.setParameterizedColumnName(s.substring(s
-											.indexOf("=")));
-							break;
-
-						}
-
-					}
-					addAssertionsToMap("String Comparison Assertion",
-							assertionsMap, stringComparisonAsssertionDetails);
-					break;
-				}
-				}
-			}
-
-			//writeFileUsingJDOM(assertionsMap);
-
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		System.out.println("Done");
-*/	}
+	}
 
 	public static void writeFileUsingJDOM(ArrayList<ConfigurationTO> configurationTOEndPointList)
 			throws Exception {
 
 		Document document = null, document1 = null;
 		Element testSuite = null, testSuite1=null;
-		
-			try {
-				
-				if(Util.loadProperties("UPDATE_FLAG", configurationTOEndPointList.get(0).getAppConfigPath()).equals("Y")){
-					
-					String inputTstFile = Util.loadProperties("INPUT_TST_FILE", configurationTOEndPointList.get(0).getAppConfigPath());
-					document = new XMLElementBuilder().loadIncomingTSTFile(inputTstFile);
-					testSuite = document.getRootElement();
-					
-					document1 = new XMLElementBuilder().loadElementValueTemplateXML_DOM("inputTSTFileTemplateForUpdate.xml");
-					testSuite1 = document1.getRootElement();
-					testSuite.addContent(testSuite1);
 
-				}else{
-					document = new XMLElementBuilder().loadElementValueTemplateXML("inputTSTFileTemplate.xml");
-					testSuite = document.getRootElement();
-				}
+		try {
 
-				buildTestPathXML(configurationTOEndPointList, testSuite);	
+			if(Util.loadProperties("UPDATE_FLAG", configurationTOEndPointList.get(0).getAppConfigPath()).equals("Y")){
+
+				String inputTstFile = Util.loadProperties("INPUT_TST_FILE", configurationTOEndPointList.get(0).getAppConfigPath());
+				document = new XMLElementBuilder().loadIncomingTSTFile(inputTstFile);
+				testSuite = document.getRootElement();
+
+				document1 = new XMLElementBuilder().loadElementValueTemplateXML_DOM("inputTSTFileTemplateForUpdate.xml");
+				testSuite1 = document1.getRootElement();
+				testSuite.addContent(testSuite1);
+
+			}else{
+				document = new XMLElementBuilder().loadElementValueTemplateXML("inputTSTFileTemplate.xml");
+				testSuite = document.getRootElement();
 			}
-			catch (IOException e) {
-				System.out.println(e);
-			}
+
+			buildTestPathXML(configurationTOEndPointList, testSuite);	
+		}
+		catch (IOException e) {
+			System.out.println(e);
+		}
 
 		try {
 			String outputDir = Util.loadProperties("OUTPUT_DIRECTORY", configurationTOEndPointList.get(0).getAppConfigPath());
@@ -176,97 +78,66 @@ public class CreateTSTFile {
 	}
 
 	public static Element listChildren(Element current,
-			int depth, ArrayList<ConfigurationTO> configurationTOEndPointList) throws IOException {
-
-		//printSpaces(depth);
-		//System.out.println(current.getName());
-		List children = current.getChildren();
-		Element testSuiteMain = null;
-		IteratorIterable<Content> descendantsOfChannel = current
-				.getDescendants();
+			int depth, ArrayList<ConfigurationTO> configurationTOEndPointList) throws Exception {
+		Element testSuiteMain = null, tokenPathURL = null;
+		IteratorIterable<Content> descendantsOfChannel = current.getDescendants();
 		for (Content descendant : descendantsOfChannel) {
 			if (descendant.getCType().equals(Content.CType.Element)) {
 				Element child = (Element) descendant;
-				//System.out.println("element" + child.getName() + child);
-				/*
-				 * if (element.getName().equals("MessagingSchemaElement")) {
-				 * System
-				 * .out.println("\n paramtypesize--------------->"+element.
-				 * getText()); // // innerMostElement = element; // prints all
-				 * urls of all thumbnails within the // 'media' namespace }
-				 */
-				// while (iteratorTemplateXML.hasNext()) {
-				// Element child = (Element) iteratorTemplateXML.next();
 				if (child.getName().equalsIgnoreCase("testsSize") && child.getTextTrim().contains("4")) {	
-					testSuiteMain = child;
-					
-					
+					testSuiteMain = child;					
+
+				}else if(child.getName().equalsIgnoreCase("HTTPClient_Endpoint") ){
+					if(child.getText().contains("https://pingfederate.sys.td.com:9031/as/token.oauth2?client_id")){
+						tokenPathURL = child;
+					}
 				}
 			}
 		}
+		if(tokenPathURL!= null){
+			tokenPathURL.removeContent();
+			tokenPathURL.addContent(Util.loadProperties("TOKEN_URL", configurationTOEndPointList.get(0).getAppConfigPath()));
+		}
 		Element testSuiteXML = new XMLElementBuilder().loadTestSuiteTemplateXML();
 		testSuiteMain.getParent().addContent(testSuiteXML.detach());
-	/*	while (iteratorTemplateXML.hasNext()) {
-			Element child = (Element) iteratorTemplateXML.next();
-			if (child.getName().equalsIgnoreCase("testsSize") && child.getTextTrim().contains("4")) {	
-					Element testSuiteXML = new XMLElementBuilder().loadTestSuiteTemplateXML();
-					child.getParent().addContent(testSuiteXML.detach());
-					//break;
 
-			} else {
-				listChildren(child,  depth + 1, configurationTOEndPointList);
-				
-			}
-
-		}*/		
-		
 		return testSuiteMain.getParentElement();
 	}
 
-	private static void printSpaces(int n) {
-
-		for (int i = 0; i < n; i++) {
-			System.out.print(' ');
-		}
-
-	}
-	
-	
-
 	@SuppressWarnings({ })
-private static Element buildTestPathXML(
+	private static Element buildTestPathXML(
 			ArrayList<ConfigurationTO> configurationTOEndPointList, Element testSuiteMain) throws IOException {
-		  AtomicReference<Element> updateTestSuiteXML  = new AtomicReference<Element>();
+		AtomicReference<Element> updateTestSuiteXML  = new AtomicReference<Element>();
 		AtomicInteger incrementerForTestID = new AtomicInteger(0);
 		AtomicInteger incrementerFirstTime = new AtomicInteger(0);
 		configurationTOEndPointList.stream().forEach(configurationTO ->{
-				incrementerForTestID.getAndIncrement();
-				Element testSuiteXML;
-				try {
-					incrementerFirstTime.getAndIncrement();
-					if(incrementerFirstTime.get() == 1){
-						testSuiteXML = new XMLElementBuilder().loadTestSuiteTemplateXML();					
-						Element testSuiteMain1 = listChildren(testSuiteMain, 0, configurationTOEndPointList);
-						XMLElementBuilder.updateTemplateXMLForTestSuite(testSuiteMain1, incrementerForTestID, configurationTO, true);
-					} else{
-						testSuiteXML = new XMLElementBuilder().loadTestSuiteTemplateXML();					
-						Element testSuiteMain1 = listChildren(testSuiteMain, 0, configurationTOEndPointList);
-						XMLElementBuilder.updateTemplateXMLForTestSuite(testSuiteMain1, incrementerForTestID, configurationTO, false);
-						
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				}				
-		
-			});
-		
+			incrementerForTestID.getAndIncrement();
+			Element testSuiteXML;
+			try {
+				incrementerFirstTime.getAndIncrement();
+				if(incrementerFirstTime.get() == 1){
+					testSuiteXML = new XMLElementBuilder().loadTestSuiteTemplateXML();					
+					Element testSuiteMain1 = listChildren(testSuiteMain, 0, configurationTOEndPointList);
+					XMLElementBuilder.updateTemplateXMLForTestSuite(testSuiteMain1, incrementerForTestID, configurationTO, true);
+				} else{
+					testSuiteXML = new XMLElementBuilder().loadTestSuiteTemplateXML();					
+					Element testSuiteMain1 = listChildren(testSuiteMain, 0, configurationTOEndPointList);
+					XMLElementBuilder.updateTemplateXMLForTestSuite(testSuiteMain1, incrementerForTestID, configurationTO, false);
+
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}				
+
+		});
+
 		try {
 			ReadExcelDataSheet.buildDataSources(testSuiteMain, configurationTOEndPointList.get(0).getAppConfigPath(), configurationTOEndPointList.size());
 		} catch (Exception e) {
 			System.out.println("Error building Data source XML nodes"+e.getMessage());
 			e.printStackTrace();
 		}
-		
+
 		return testSuiteMain;
 
 	}
