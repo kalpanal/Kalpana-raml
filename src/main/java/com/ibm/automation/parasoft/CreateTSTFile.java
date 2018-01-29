@@ -49,9 +49,9 @@ public class CreateTSTFile {
 				document = new XMLElementBuilder().loadIncomingTSTFile(inputTstFile);
 				testSuite = document.getRootElement();
 
-				document1 = new XMLElementBuilder().loadElementValueTemplateXML_DOM("inputTSTFileTemplateForUpdate.xml");
+				document1 = new XMLElementBuilder().loadElementValueTemplateXML("inputTSTFileTemplateForUpdate.xml");
 				testSuite1 = document1.getRootElement();
-				testSuite.addContent(testSuite1);
+				testSuite.addContent(testSuite1.detach());
 
 			}else{
 				document = new XMLElementBuilder().loadElementValueTemplateXML("inputTSTFileTemplate.xml");

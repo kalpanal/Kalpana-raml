@@ -1005,31 +1005,6 @@ public class XMLElementBuilder {
 	private static Element listChildrenForElementValue(Element parentElement,
 			int depth, String columnName, String columnValue, String objectSize)
 					throws IOException {
-		// printSpaces(depth);
-
-		/*List<Element> children = current.getChildren();
-		Iterator<Element> iteratorTemplateXML = children.iterator();
-		Element innerMostElement = null;
-		Element innerMostParamTypeSizeElement = null;
-		ArrayList<Element> innerMostParamTypeSizeElementList = new ArrayList<Element>();
-
-				IteratorIterable<Content> descendantsOfChannel = current.getDescendants();
-				for (Content descendant : descendantsOfChannel) {
-					if (descendant.getCType().equals(Content.CType.Element)) {
-						Element element = (Element) descendant;
-						if (element.getName().equals("paramTypesSize")) {
-							System.out
-							.println("\n paramtypesize--------------->"
-									+ element.getText()); //
-							innerMostElement = (Element) element.getParent();
-							innerMostParamTypeSizeElement = element;
-							innerMostParamTypeSizeElementList.add(element);
-							// prints all urls of all thumbnails within the
-							// 'media' namespace
-						}
-					}
-				}*/
-
 		Document elementForStringOrInteger = null;
 		if(Util.checkNumberOnly(columnValue)){
 			elementForStringOrInteger = new XMLElementBuilder().loadElementValueTemplateXML("integerTypeTemplateXML.xml");

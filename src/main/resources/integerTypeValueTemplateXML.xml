@@ -7,10 +7,13 @@
                           <StringValue className="webtool.soap.StringValue" version="1.7.1.12">
                            <value>number</value>
                           </StringValue>
+						  <useValue>true</useValue>
                          </AttributeValue>
                          <contentValue>true</contentValue>
                          <StringValue className="webtool.soap.StringValue" version="1.7.1.12">
+						 <mode>3</mode>
                           <columnName>printCopy Cnt</columnName>
+						  <value>3</value>
                          </StringValue>
                         </ComplexValue>
                        </ElementValue>
