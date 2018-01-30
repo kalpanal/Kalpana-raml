@@ -594,6 +594,48 @@ public class XMLElementBuilder {
 
 	}
 
+	@SuppressWarnings("unused")
+	public static void buildNameValuePropertiesForTokenURL(Element nameValuePropertiesForQueryParams,
+			Map<String, Object> queryParamsMap) throws IOException {
+		Element propertiesSize = new Element("propertiesSize");
+		propertiesSize.addContent(queryParamsMap.size()+"");
+
+		nameValuePropertiesForQueryParams.addContent(propertiesSize);
+		
+		queryParamsMap.forEach((k,v) -> {
+			
+			System.out.println("key: " + k + ", value: " + v.toString());
+			Element nameValuePairElement = null;
+			try {
+				nameValuePairElement = new XMLElementBuilder().loadElementValueTemplateXML("nameValuePair.xml").detachRootElement();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			IteratorIterable<Content> descendantsOfNameValuePair = nameValuePairElement.getDescendants();
+			Element name = null, column = null;
+			for (Content descendant : descendantsOfNameValuePair) {
+				if (descendant.getCType().equals(Content.CType.Element)) {
+					Element child = (Element) descendant;
+					if (child.getName().equalsIgnoreCase("name")) {
+						name = child;
+
+					}else if(child.getName().equalsIgnoreCase("column")){
+						column = child;
+
+					}
+				}
+			}
+			name.removeContent();
+			name.addContent(k.toString());
+			column.removeContent();
+			column.addContent(v.toString());
+			nameValuePropertiesForQueryParams.addContent(nameValuePairElement);
+
+			});
+
+	}	
 	private static void buildRESTClientToolTest(Element restClientToolTest, Element messagingSchema,
 			ConfigurationTO configurationTO, boolean firstTime, AtomicInteger increment, Element urlPathParametersLiteralElement, Element jsonAssertionTool, Element conditionalAssertionSize) throws Exception {
 		Element restClientToolTestParent = (Element) restClientToolTest.getParent();

@@ -4,18 +4,34 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.net.URLDecoder;
+import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Scanner;
+import java.util.Set;
+import java.util.stream.Collectors;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.client.utils.URLEncodedUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.google.common.base.Strings;
 import com.ibm.automation.common.StringUtilsCustom;
 import com.ibm.automation.parasoft.domain.AppConfigurationPropertiesForDataSheet;
 
@@ -174,4 +190,43 @@ public class Util {
 	public static boolean checkNumberOnly(String incomingStr){
 		return incomingStr.matches("[0-9]+");
 	}
+	
+	
+	private static final String DEFAULT_ENCODING_SCHEME = "UTF-8";
+	
+	public static Map<String, Object> convertQueryStringToMap(String url) throws UnsupportedEncodingException, URISyntaxException, MalformedURLException {
+
+		URL urlConverted = new URL(url);
+		String path = urlConverted.getPath();
+		if (path != null)
+		  path = URLDecoder.decode(path, "UTF-8");
+		String query = urlConverted.getQuery();
+		if (query != null)
+		  query = URLDecoder.decode(query, "UTF-8");
+		String fragment = urlConverted.getRef();
+		if (fragment != null)
+		  fragment = URLDecoder.decode(fragment, "UTF-8");
+		
+	    List<NameValuePair> params = URLEncodedUtils.parse(new URI(urlConverted.getProtocol(), urlConverted.getAuthority(), path, query, fragment), DEFAULT_ENCODING_SCHEME);
+	    Map<String, Object> queryStringMap = new HashMap<>();
+	    for(NameValuePair param : params){
+	        queryStringMap.put(param.getName(), handleMultiValuedQueryParam(queryStringMap, param.getName(), param.getValue()));
+	    }
+	    return queryStringMap;
+	}
+	
+	private static Object handleMultiValuedQueryParam(Map responseMap, String key, String value) {
+	    if (!responseMap.containsKey(key)) {
+	        return value.contains(",") ? new HashSet<String>(Arrays.asList(value.split(","))) : value;
+	    } else {
+	        Set<String> queryValueSet = responseMap.get(key) instanceof Set ? (Set<String>) responseMap.get(key) : new HashSet<String>();
+	        if (value.contains(",")) {
+	            queryValueSet.addAll(Arrays.asList(value.split(",")));
+	        } else {
+	            queryValueSet.add(value);
+	        }
+	        return queryValueSet;
+	    }
+	}
+	
 }

@@ -58,6 +58,12 @@
 <version>1.0.4</version>
 </dependency>
 
+<!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
+<dependency>
+    <groupId>org.apache.httpcomponents</groupId>
+    <artifactId>httpclient</artifactId>
+    <version>4.1.1</version>
+</dependency>
 <!-- https://mvnrepository.com/artifact/io.apptik.json/model-generator -->
 <dependency>
     <groupId>io.apptik.json</groupId>
