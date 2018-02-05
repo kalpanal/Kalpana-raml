@@ -597,10 +597,10 @@ public class XMLElementBuilder {
 	@SuppressWarnings("unused")
 	public static void buildNameValuePropertiesForTokenURL(Element nameValuePropertiesForQueryParams,
 			Map<String, Object> queryParamsMap) throws IOException {
-		Element propertiesSize = new Element("propertiesSize");
-		propertiesSize.addContent(queryParamsMap.size()+"");
-
-		nameValuePropertiesForQueryParams.addContent(propertiesSize);
+		//nameValuePropertiesForQueryParams.removeChild("propertiesSize");
+		/*Element propertiesSize = new Element("propertiesSize");
+		propertiesSize.addContent(queryParamsMap.size()+"");*/
+		
 		
 		queryParamsMap.forEach((k,v) -> {
 			

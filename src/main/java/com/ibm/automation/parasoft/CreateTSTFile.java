@@ -79,7 +79,7 @@ public class CreateTSTFile {
 
 	public static Element listChildren(Element current,
 			int depth, ArrayList<ConfigurationTO> configurationTOEndPointList) throws Exception {
-		Element testSuiteMain = null, tokenPathURL = null, nameValuePropertiesForToken=null;
+		Element testSuiteMain = null, tokenPathURL = null, nameValuePropertiesForToken=null, nameValuePropertiesSizeForToken =null;
 		IteratorIterable<Content> descendantsOfChannel = current.getDescendants();
 		for (Content descendant : descendantsOfChannel) {
 			if (descendant.getCType().equals(Content.CType.Element)) {
@@ -91,9 +91,13 @@ public class CreateTSTFile {
 					if(child.getText().contains("https://pingfederate.sys.td.com:9031/as/token.oauth2?client_id")){
 						tokenPathURL = child;
 					}
-				}else if(child.getName().equalsIgnoreCase("NameValueProperties") && child.getChild("propertiesSize").getText().equalsIgnoreCase("1-tokenURL")){
+				}else if(child.getName().equalsIgnoreCase("propertiesSize") && child.getText().contains("1-tokenURL")){
+					//System.out.println(child.getChild("propertiesSize").getText());
+					//if(child.getChild("propertiesSize").getText().contains("1-tokenURL")){
 					
-					nameValuePropertiesForToken = child;
+						nameValuePropertiesForToken = child.getParentElement();
+						nameValuePropertiesSizeForToken = child;
+					//}
 				}
 			}
 		}
@@ -104,7 +108,13 @@ public class CreateTSTFile {
 		tokenURLFromPropertiesFile = tokenURLFromPropertiesFile.replaceAll("&amp;","&");
 		
 		Map<String, Object> queryParamsMap = Util.convertQueryStringToMap(tokenURLFromPropertiesFile);
-		XMLElementBuilder.buildNameValuePropertiesForTokenURL(nameValuePropertiesForToken,queryParamsMap);
+		if(nameValuePropertiesSizeForToken != null){
+			nameValuePropertiesSizeForToken.removeContent();
+			nameValuePropertiesSizeForToken.addContent(queryParamsMap.size()+"");
+			XMLElementBuilder.buildNameValuePropertiesForTokenURL(nameValuePropertiesForToken,queryParamsMap);
+		}
+		
+		
 		
 		if(tokenPathURL!= null){
 			tokenPathURL.removeContent();
