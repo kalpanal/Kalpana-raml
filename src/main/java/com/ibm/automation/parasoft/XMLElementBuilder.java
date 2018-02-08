@@ -1189,11 +1189,10 @@ public class XMLElementBuilder {
 			int valueSize, String columnName) throws IOException {
 
 		Document elementForObject = new XMLElementBuilder().loadElementValueTemplateXML("objectTypeValueTemplateXML.xml");
-		parentElement.getChild("valuesSize").removeContent();
-		parentElement.getChild("valuesSize").addContent(valueSize + "");
+		//parentElement.getChild("valuesSize").removeContent();
+		//parentElement.getChild("valuesSize").addContent(valueSize + "");
 		Element elementToReturn = elementForObject.getRootElement().getChild("ComplexValue").getChild("CompositorValue").getChild("CompositorValueSetCollectionSet").getChild("CompositorValueSet");
-		parentElement.addContent(
-				elementForObject.detachRootElement());
+		parentElement.addContent(elementForObject.detachRootElement());
 		return elementToReturn;
 	}
 
