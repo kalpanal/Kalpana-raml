@@ -487,14 +487,14 @@ public class XMLElementBuilder {
 		.addContent("${TOKEN}");
 		if(httpClientEndPoint != null){
 			httpClientEndPoint.removeContent();
-			String paramStr = null;
+			String paramStr = "";
 			if(configurationTO.getQueryParameters() != null){
 				for(int i=0; i<  configurationTO.getQueryParameters().size(); i++){
 					Parameter parameter = configurationTO.getQueryParameters().get(i);
 					if(i == (configurationTO.getQueryParameters().size()-1)){
-						paramStr = paramStr+parameter.toString()+"=${"+parameter.toString()+"}";
+						paramStr = paramStr+parameter.displayName().toString()+"=${"+parameter.displayName().toString()+"}";
 					}else{
-						paramStr = paramStr+parameter.toString()+"=${"+parameter.toString()+"}&amp;";
+						paramStr = paramStr+parameter.displayName().toString()+"=${"+parameter.displayName().toString()+"}&";
 					}
 				}
 				httpClientEndPoint.addContent(configurationTO.getEndPointUrl()+"?"+paramStr);
@@ -614,7 +614,7 @@ public class XMLElementBuilder {
 			}
 
 			IteratorIterable<Content> descendantsOfNameValuePair = nameValuePairElement.getDescendants();
-			Element name = null, column = null;
+			Element name = null, column = null, value=null;
 			for (Content descendant : descendantsOfNameValuePair) {
 				if (descendant.getCType().equals(Content.CType.Element)) {
 					Element child = (Element) descendant;
@@ -624,13 +624,17 @@ public class XMLElementBuilder {
 					}else if(child.getName().equalsIgnoreCase("column")){
 						column = child;
 
+					}else if(child.getName().equalsIgnoreCase("value")){
+						value = child;
 					}
 				}
 			}
 			name.removeContent();
 			name.addContent(k.toString());
 			column.removeContent();
-			column.addContent(v.toString());
+			column.addContent("");
+			value.removeContent();
+			value.addContent(v.toString());
 			nameValuePropertiesForQueryParams.addContent(nameValuePairElement);
 
 			});
@@ -777,17 +781,18 @@ public class XMLElementBuilder {
 
 		if(httpClientEndPoint != null){
 			httpClientEndPoint.removeContent();
-			String paramStr = null;
+			String paramStr = "";
 			if(configurationTO.getQueryParameters() != null){
 				for(int i=0; i<  configurationTO.getQueryParameters().size(); i++){
 					Parameter parameter = configurationTO.getQueryParameters().get(i);
 					if(i == (configurationTO.getQueryParameters().size()-1)){
-						paramStr = paramStr+parameter.toString()+"=${"+parameter.toString()+"}";
+						paramStr = paramStr+parameter.displayName().toString()+"=${"+parameter.displayName().toString()+"}";
 					}else{
-						paramStr = paramStr+parameter.toString()+"=${"+parameter.toString()+"}&amp;";
+						paramStr = paramStr+parameter.displayName().toString()+"=${"+parameter.displayName().toString()+"}&amp;";
 					}
 				}
 				httpClientEndPoint.addContent(configurationTO.getEndPointUrl()+"?"+paramStr);
+				System.out.println("paramStr============>"+paramStr);
 			}else{
 				httpClientEndPoint.addContent(configurationTO.getEndPointUrl());
 			}
