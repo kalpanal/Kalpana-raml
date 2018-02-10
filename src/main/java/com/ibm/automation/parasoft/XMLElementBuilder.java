@@ -353,7 +353,7 @@ public class XMLElementBuilder {
 		Element restClientToolTest = null, messagingSchema = null, testsSize=null, profileMappingIDEle=null;
 		Element dataSourcesSize = null, fileWriterProperties = null, fileStreamWriter =null, nameValuePropertiesForQueryParams = null;
 		Element ftpDeliveriesRestClient = null, pathElementss = null, UrlPathParamsMultiValue=null, urlPathParametersLiteralElement = null;
-		Element outputToolsSize = null, jsonAssertionTool=null, conditionalAssertionSize=null, tokenPathURL=null;
+		Element outputToolsSize = null, jsonAssertionTool=null, conditionalAssertionSize=null, tokenPathURL=null, httpMethod=null;
 		IteratorIterable<Content> descendantsOfChannel = current.getDescendants();
 
 		AtomicInteger profileMappingId = new AtomicInteger();
@@ -441,13 +441,19 @@ public class XMLElementBuilder {
 					jsonAssertionTool = child.getChild("XMLAssertionTool");
 				}else if(child.getName().equalsIgnoreCase("assertionsSize")&& child.getText().equalsIgnoreCase("1-template")){
 					conditionalAssertionSize = child;
+				}else if(child.getName().equalsIgnoreCase("RESTResourceMethod")){
+					httpMethod = child.getChild("httpMethod");
+					
 				}
 				/*else if(child.getName().equalsIgnoreCase("testRunsSize") && child.getText().equals("template")){
 					testRunsSize = child;
 				}*/
 			}}
 
-
+		if(httpMethod != null){
+			httpMethod.removeContent();
+			httpMethod.addContent(configurationTO.getMethod());
+		}
 
 		if (testID != null) {
 			testID.removeContent();
@@ -1328,7 +1334,7 @@ public class XMLElementBuilder {
 	@SuppressWarnings("unused")
 	public static Element updateRestToolTest(Element current, AtomicInteger increment, ConfigurationTO configurationTO) throws ParserConfigurationException, SAXException, IOException{
 
-		Element testID = null, testID1 = null, name1 = null, httpMethodTestValue = null, httpClientEndPoint = null;
+		Element testID = null, testID1 = null, name1 = null, httpMethodTestValue = null, httpClientEndPoint = null, httpMethod=null;
 		Element docDelivery = null, ftpDeliveries = null, restClient = null, dataSourceName = null, nameValuePair = null;
 		Element restClientToolTest = null, messagingSchema = null, pathElementss = null, UrlPathParamsMultiValue=null;
 		Element urlPathParametersLiteralElement = null;
@@ -1371,6 +1377,9 @@ public class XMLElementBuilder {
 				} else if (child.getName().equalsIgnoreCase(
 						"RESTClientToolTest")) {
 					restClientToolTest = child;
+				}else if(child.getName().equalsIgnoreCase("RESTResourceMethod")){
+					httpMethod = child.getChild("httpMethod");
+					
 				}
 				else if(child.getName().equalsIgnoreCase("UrlPathParametersLiteral") && child.getText().equalsIgnoreCase("template")){ 
 					urlPathParametersLiteralElement = child;
@@ -1378,7 +1387,10 @@ public class XMLElementBuilder {
 
 			}
 		}
-
+		if(httpMethod != null){
+			httpMethod.removeContent();
+			httpMethod.addContent(configurationTO.getMethod());
+		}
 		if (testID != null) {
 			testID.removeContent();
 			testID.addContent(increment.getAndIncrement() + "");
