@@ -354,6 +354,7 @@ public class XMLElementBuilder {
 		Element dataSourcesSize = null, fileWriterProperties = null, fileStreamWriter =null, nameValuePropertiesForQueryParams = null;
 		Element ftpDeliveriesRestClient = null, pathElementss = null, UrlPathParamsMultiValue=null, urlPathParametersLiteralElement = null;
 		Element outputToolsSize = null, jsonAssertionTool=null, conditionalAssertionSize=null, tokenPathURL=null, httpMethod=null;
+		List<Element> commonHttpProperties = new ArrayList<Element>();
 		IteratorIterable<Content> descendantsOfChannel = current.getDescendants();
 
 		AtomicInteger profileMappingId = new AtomicInteger();
@@ -395,11 +396,7 @@ public class XMLElementBuilder {
 						System.out.println("else if (child.getName().equalsIgnoreCase"+child.getText());
 						httpClientEndPoint = child;
 					}
-				} else if (child.getName().equalsIgnoreCase(
-						"HTTPMethodTestValue")) {
-					httpMethodTestValue = child;
-
-				} else if (child.getName().equalsIgnoreCase("NameValuePair")
+				}  else if (child.getName().equalsIgnoreCase("NameValuePair")
 						&& child.getChild("name").getTextTrim()
 						.equals("Authorization")) {
 					nameValuePair = child;
@@ -444,6 +441,10 @@ public class XMLElementBuilder {
 				}else if(child.getName().equalsIgnoreCase("RESTResourceMethod")){
 					httpMethod = child.getChild("httpMethod");
 					
+				}else if(child.getName().equalsIgnoreCase("HTTPMethodTestValue")){
+					System.out.println(child.getChild("method"));
+					commonHttpProperties.add(child.getChild("method"));
+					
 				}
 				/*else if(child.getName().equalsIgnoreCase("testRunsSize") && child.getText().equals("template")){
 					testRunsSize = child;
@@ -455,6 +456,11 @@ public class XMLElementBuilder {
 			httpMethod.addContent(configurationTO.getMethod());
 		}
 
+		commonHttpProperties.forEach(commonProperty -> {
+			commonProperty.removeContent();
+			commonProperty.addContent(configurationTO.getMethod());
+		});
+		
 		if (testID != null) {
 			testID.removeContent();
 			testID.addContent(increment.getAndIncrement() + "");
@@ -464,7 +470,7 @@ public class XMLElementBuilder {
 			docDelivery.addContent(configurationTO.getRamlFileName());
 		}
 		ftpDeliveries.removeContent();
-		ftpDeliveries.addContent(configurationTO.getEndPointUrl());
+		ftpDeliveries.addContent(configurationTO.getEndPointUrl()+" - "+configurationTO.getMethod());
 		ftpDeliveriesRestClient.removeContent();
 		ftpDeliveriesRestClient.addContent(configurationTO.getEndPointUrl());
 		if(testID1 != null){
@@ -478,13 +484,6 @@ public class XMLElementBuilder {
 		profileMappingIDEle.removeContent();
 		profileMappingIDEle.addContent(profileMappingId.getAndIncrement()+"");
 
-		//dataSourceName.removeContent();
-		//dataSourceName.addContent(configurationTO.getDataSource());
-		if(httpMethodTestValue != null){
-			httpMethodTestValue.getChild("method").removeContent();
-			httpMethodTestValue.getChild("method").addContent(
-					configurationTO.getMethod());
-		}
 
 		nameValuePair.getChild("MultiValue").getChild("StringTestValue")
 		.getChild("value").removeContent();
@@ -1337,7 +1336,7 @@ public class XMLElementBuilder {
 		Element testID = null, testID1 = null, name1 = null, httpMethodTestValue = null, httpClientEndPoint = null, httpMethod=null;
 		Element docDelivery = null, ftpDeliveries = null, restClient = null, dataSourceName = null, nameValuePair = null;
 		Element restClientToolTest = null, messagingSchema = null, pathElementss = null, UrlPathParamsMultiValue=null;
-		Element urlPathParametersLiteralElement = null;
+		Element urlPathParametersLiteralElement = null, commonHttpProperties=null;
 
 		IteratorIterable<Content> descendantsOfChannel = current
 				.getDescendants();
@@ -1384,12 +1383,20 @@ public class XMLElementBuilder {
 				else if(child.getName().equalsIgnoreCase("UrlPathParametersLiteral") && child.getText().equalsIgnoreCase("template")){ 
 					urlPathParametersLiteralElement = child;
 				}
+				else if(child.getName().equalsIgnoreCase("CommonHTTPProperties")){
+					commonHttpProperties = child.getChild("MultiValue").getChild("HTTPMethodTestValue").getChild("method");
+					
+				}
 
 			}
 		}
 		if(httpMethod != null){
 			httpMethod.removeContent();
 			httpMethod.addContent(configurationTO.getMethod());
+		}
+		if(commonHttpProperties != null){
+			commonHttpProperties.removeContent();
+			commonHttpProperties.addContent(configurationTO.getMethod());
 		}
 		if (testID != null) {
 			testID.removeContent();
@@ -1401,7 +1408,7 @@ public class XMLElementBuilder {
 		}
 		if(ftpDeliveries != null){
 			ftpDeliveries.removeContent();
-			ftpDeliveries.addContent(configurationTO.getEndPointUrl());
+			ftpDeliveries.addContent(configurationTO.getEndPointUrl()+" - "+configurationTO.getMethod());
 		}
 		if(testID1 != null){
 			testID1.removeContent();
