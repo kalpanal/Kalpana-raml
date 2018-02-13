@@ -458,7 +458,7 @@ public class XMLElementBuilder {
 
 		commonHttpProperties.forEach(commonProperty -> {
 			commonProperty.removeContent();
-			commonProperty.addContent(configurationTO.getMethod());
+			commonProperty.addContent(configurationTO.getMethod().toUpperCase());
 		});
 		
 		if (testID != null) {

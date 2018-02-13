@@ -178,7 +178,7 @@ public class ParasoftTstGeneratorMain {
 		}
  		configurationTO.setResponseSchemaMap(responseSchemaMap);
 		String inputMethodType = urlEndPointsSubNode.methods().get(index).method();
-		configurationTO.setMethod(inputMethodType);
+		configurationTO.setMethod(inputMethodType.toUpperCase());
 		configurationTO.setDataSourcePath(Util.loadProperties("DATA_SOURCE_PATH", appConfigPath));
 		configurationTO.setEndPointUrl(Util.loadProperties("BASE_URL", appConfigPath)
 				+ urlEndPointsSubNode.resourcePath());
