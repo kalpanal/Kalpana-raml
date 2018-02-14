@@ -120,7 +120,7 @@ public class JsonGeneratorFromSchema {
 		File f1 = new File(schemaFilePath);
 		
 		if(f1.exists()){
-			schemaFilePath = "C:/Kalpana/TD Bank/RAML files/EPC_RAML_NEW/jsd/AddLocatorStreetAddressRq.1.schema.json";
+			//schemaFilePath = "C:/Kalpana/TD Bank/RAML files/EPC_RAML_NEW/jsd/AddLocatorStreetAddressRq.1.schema.json";
 			System.out.println("schemaFilePath inside if -------->"+schemaFilePath);
 			URI url = new File(schemaFilePath).toURI();
 			schema1.setOrigSrc(url);
