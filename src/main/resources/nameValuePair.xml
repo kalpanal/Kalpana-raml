@@ -1,8 +1,7 @@
 <NameValuePair className="webtool.data.NameValuePair" version="3.3">
         <name>workstationTerminalNum</name>
         <MultiValue className="webtool.data.MultiValue" version="1.4">
-         <StringTestValue className="webtool.data.StringTestValue" version="4.1">
-			<value></value>
+         <StringTestValue className="webtool.data.StringTestValue" version="4.1">			
          </StringTestValue>
          <ParameterizedTestValue className="webtool.data.ParameterizedTestValue" version="3.1">
 		 <column>workstationTerminalNum</column>
