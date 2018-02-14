@@ -237,7 +237,7 @@
           <CommonHTTPProperties className="webtool.messaging.CommonHTTPProperties" version="4">
            <MultiValue className="webtool.data.MultiValue" version="1.4">
             <HTTPMethodTestValue className="webtool.messaging.HTTPMethodTestValue" version="1.1">
-             <method>POST</method>
+             <method>POST-template</method>
             </HTTPMethodTestValue>
             <ParameterizedTestValue className="webtool.data.ParameterizedTestValue" version="3.1">
             </ParameterizedTestValue>
@@ -466,7 +466,7 @@
           <CommonHTTPProperties className="webtool.messaging.CommonHTTPProperties" version="4">
            <MultiValue className="webtool.data.MultiValue" version="1.4">
             <HTTPMethodTestValue className="webtool.messaging.HTTPMethodTestValue" version="1.1">
-             <method>POST</method>
+             <method>POST-template</method>
             </HTTPMethodTestValue>
             <ParameterizedTestValue className="webtool.data.ParameterizedTestValue" version="3.1">
             </ParameterizedTestValue>

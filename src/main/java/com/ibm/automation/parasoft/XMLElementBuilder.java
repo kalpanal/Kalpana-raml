@@ -441,11 +441,13 @@ public class XMLElementBuilder {
 				}else if(child.getName().equalsIgnoreCase("RESTResourceMethod")){
 					httpMethod = child.getChild("httpMethod");
 					
-				}else if(child.getName().equalsIgnoreCase("HTTPMethodTestValue")){
-					System.out.println(child.getChild("method"));
-					commonHttpProperties.add(child.getChild("method"));
+				}
+				else if(child.getName().equalsIgnoreCase("method") && child.getText().contains("POST-template")){
+					//System.out.println(child.getChild("method"));
+					commonHttpProperties.add(child);
 					
 				}
+				
 				/*else if(child.getName().equalsIgnoreCase("testRunsSize") && child.getText().equals("template")){
 					testRunsSize = child;
 				}*/
@@ -1336,7 +1338,9 @@ public class XMLElementBuilder {
 		Element testID = null, testID1 = null, name1 = null, httpMethodTestValue = null, httpClientEndPoint = null, httpMethod=null;
 		Element docDelivery = null, ftpDeliveries = null, restClient = null, dataSourceName = null, nameValuePair = null;
 		Element restClientToolTest = null, messagingSchema = null, pathElementss = null, UrlPathParamsMultiValue=null;
-		Element urlPathParametersLiteralElement = null, commonHttpProperties=null;
+		Element urlPathParametersLiteralElement = null;
+		List<Element> commonHttpProperties = new ArrayList<Element>();
+		
 
 		IteratorIterable<Content> descendantsOfChannel = current
 				.getDescendants();
@@ -1383,10 +1387,15 @@ public class XMLElementBuilder {
 				else if(child.getName().equalsIgnoreCase("UrlPathParametersLiteral") && child.getText().equalsIgnoreCase("template")){ 
 					urlPathParametersLiteralElement = child;
 				}
-				else if(child.getName().equalsIgnoreCase("CommonHTTPProperties")){
-					commonHttpProperties = child.getChild("MultiValue").getChild("HTTPMethodTestValue").getChild("method");
+				else if(child.getName().equalsIgnoreCase("method") && child.getText().contains("POST-template")){
+					//System.out.println(child.getChild("method"));
+					commonHttpProperties.add(child);
 					
 				}
+				/*else if(child.getName().equalsIgnoreCase("CommonHTTPProperties")){
+					commonHttpProperties = child.getChild("MultiValue").getChild("HTTPMethodTestValue").getChild("method");
+					
+				}*/
 
 			}
 		}
@@ -1394,10 +1403,10 @@ public class XMLElementBuilder {
 			httpMethod.removeContent();
 			httpMethod.addContent(configurationTO.getMethod());
 		}
-		if(commonHttpProperties != null){
-			commonHttpProperties.removeContent();
-			commonHttpProperties.addContent(configurationTO.getMethod());
-		}
+		commonHttpProperties.forEach(commonProperty -> {
+			commonProperty.removeContent();
+			commonProperty.addContent(configurationTO.getMethod().toUpperCase());
+		});
 		if (testID != null) {
 			testID.removeContent();
 			testID.addContent(increment.getAndIncrement() + "");
