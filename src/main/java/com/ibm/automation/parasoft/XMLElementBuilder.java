@@ -354,6 +354,7 @@ public class XMLElementBuilder {
 		Element dataSourcesSize = null, fileWriterProperties = null, fileStreamWriter =null, nameValuePropertiesForQueryParams = null;
 		Element ftpDeliveriesRestClient = null, pathElementss = null, UrlPathParamsMultiValue=null, urlPathParametersLiteralElement = null;
 		Element outputToolsSize = null, jsonAssertionTool=null, conditionalAssertionSize=null, tokenPathURL=null, httpMethod=null;
+		Element messagingSchemaForElementValue = null;
 		List<Element> commonHttpProperties = new ArrayList<Element>();
 		IteratorIterable<Content> descendantsOfChannel = current.getDescendants();
 
@@ -425,7 +426,13 @@ public class XMLElementBuilder {
 
 							//getChild("elementTypeName").getTextTrim().equalsIgnoreCase("template")){
 							messagingSchema = child;
-						}}
+						}
+						if(child.getChildren().get(0).getName().equals("ElementValue")){
+
+							//getChild("elementTypeName").getTextTrim().equalsIgnoreCase("template")){
+							messagingSchemaForElementValue = child;
+						}
+						}
 
 				}else if(child.getName().equalsIgnoreCase("testsSize")){
 					testsSize = child;
@@ -496,6 +503,7 @@ public class XMLElementBuilder {
 			httpClientEndPoint.removeContent();
 			String paramStr = "";
 			if(configurationTO.getQueryParameters() != null){
+				
 				for(int i=0; i<  configurationTO.getQueryParameters().size(); i++){
 					Parameter parameter = configurationTO.getQueryParameters().get(i);
 					if(i == (configurationTO.getQueryParameters().size()-1)){
@@ -650,6 +658,7 @@ public class XMLElementBuilder {
 	private static void buildRESTClientToolTest(Element restClientToolTest, Element messagingSchema,
 			ConfigurationTO configurationTO, boolean firstTime, AtomicInteger increment, Element urlPathParametersLiteralElement, Element jsonAssertionTool, Element conditionalAssertionSize) throws Exception {
 		Element restClientToolTestParent = (Element) restClientToolTest.getParent();
+		
 
 		AtomicInteger firstTimeRestClientToolSet = new AtomicInteger();
 		System.out.println("for END POINT URL ------->"+configurationTO.getEndPointUrl()+"\n"+configurationTO.getResponseSchemaString());
@@ -693,6 +702,8 @@ public class XMLElementBuilder {
 			try {
 				messagingSchema.addContent(0, new XMLElementBuilder().loadElementValueTemplateXML("rootElementTemplateXML.xml")
 						.getRootElement().detach());
+				
+				//removeElementTypeIfQueryParamIsPresent();
 
 				buildCompositorValueSet(messagingSchema, configurationTO.getInputSampleString());
 				updatedHashTagValues(messagingSchema);
@@ -720,7 +731,7 @@ public class XMLElementBuilder {
 				Element secondRestClientToolTestParent = new XMLElementBuilder().loadElementValueTemplateXML("restClientToolTestTemplateXML.xml").detachRootElement();
 				secondRestClientToolTestParent = updateRestToolTest(secondRestClientToolTestParent, increment, configurationTO);
 				IteratorIterable<Content> descendantsOfChannel = secondRestClientToolTestParent.getDescendants();
-				Element secondTimeMessaingSchema = null, outputToolsSize= null, jsonAssertionToolElse=null;
+				Element secondTimeMessaingSchema = null, outputToolsSize= null, jsonAssertionToolElse=null, secondTimeMessaingSchemaForElementVal=null;
 				for (Content descendant : descendantsOfChannel) {
 					if (descendant.getCType().equals(Content.CType.Element)) {
 						Element child = (Element) descendant;
@@ -729,6 +740,10 @@ public class XMLElementBuilder {
 								if(child.getChildren().get(0).getName().equals("elementTypeName")){
 									//getChild("elementTypeName").getTextTrim().equalsIgnoreCase("template")){
 									secondTimeMessaingSchema = child;
+								}
+								if(child.getChildren().get(0).getName().equals("ElementValue")){
+									//getChild("elementTypeName").getTextTrim().equalsIgnoreCase("template")){
+									secondTimeMessaingSchemaForElementVal = child;
 								}}
 
 						}else if(child.getName().equalsIgnoreCase("outputToolsSize") && child.getText().equalsIgnoreCase("1-assertiontemplate")){
@@ -748,7 +763,7 @@ public class XMLElementBuilder {
 				buildCompositorValueSet(secondTimeMessaingSchema, configurationTO.getInputSampleString());
 				restClientToolTestParent.addContent(secondRestClientToolTestParent.detach());
 				updatedHashTagValues(secondTimeMessaingSchema);
-				buildComplexValueUnderMessagingSchema(secondTimeMessaingSchema,	configurationTO.getInputSampleString());
+				buildComplexValueUnderMessagingSchema(secondTimeMessaingSchemaForElementVal,	configurationTO.getInputSampleString());
 
 				/** update messagingSchemaElement with empty <ElementType> and emtpy <ElementValue>
 				 * nodes if incoming request json is empty
@@ -764,6 +779,18 @@ public class XMLElementBuilder {
 		}
 
 
+	}
+
+	private static void removeElementTypeIfQueryParamIsPresent(Element messagingSchema, ConfigurationTO configurationTO) {
+		/**remove the elementTYpe xml tag under messaging schema*/
+		if(configurationTO.getQueryParameters() != null){
+			if(messagingSchema.getChildren().get(0).getName().equalsIgnoreCase("ElementType")){
+				messagingSchema.getChild("ElementValue").removeChild("ElementType");
+				messagingSchema.getChild("ElementValue").addContent(new Element("hasReference").addContent("true"));
+				messagingSchema.getChild("ElementValue").addContent(new Element("qnameAsString").addContent(":root"));
+			}
+		}
+		
 	}
 
 	private static void buildConditionalAssertions() {
@@ -790,6 +817,12 @@ public class XMLElementBuilder {
 			httpClientEndPoint.removeContent();
 			String paramStr = "";
 			if(configurationTO.getQueryParameters() != null){
+				/**remove the elementTYpe xml tag under messaging schema*/
+				if(messagingSchema.getChildren().get(0).getName().equalsIgnoreCase("ElementType")){
+					messagingSchema.getChild("ElementValue").removeChild("ElementType");
+					messagingSchema.getChild("ElementValue").addContent(new Element("hasReference").addContent("true"));
+					messagingSchema.getChild("ElementValue").addContent(new Element("qnameAsString").addContent(":root"));
+				}
 				for(int i=0; i<  configurationTO.getQueryParameters().size(); i++){
 					Parameter parameter = configurationTO.getQueryParameters().get(i);
 					if(i == (configurationTO.getQueryParameters().size()-1)){
