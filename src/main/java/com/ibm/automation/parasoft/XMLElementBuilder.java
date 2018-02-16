@@ -581,7 +581,7 @@ public class XMLElementBuilder {
 		for(int i=0; i<  queryParametersList.size(); i++){
 			Parameter parameter = queryParametersList.get(i);
 
-			Element nameValuePairElement = new XMLElementBuilder().loadElementValueTemplateXML("nameValuePair.xml").detachRootElement();
+			Element nameValuePairElement = new XMLElementBuilder().loadElementValueTemplateXML("nameValuePairWithSelectedIndex.xml").detachRootElement();
 
 			IteratorIterable<Content> descendantsOfNameValuePair = nameValuePairElement.getDescendants();
 			Element name = null, column = null;

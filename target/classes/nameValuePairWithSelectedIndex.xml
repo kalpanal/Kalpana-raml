@@ -6,7 +6,8 @@
          </StringTestValue>
          <ParameterizedTestValue className="webtool.data.ParameterizedTestValue" version="3.1">
 		 <column>workstationTerminalNum</column>
-         </ParameterizedTestValue>		 
+         </ParameterizedTestValue>
+		 <selectedIndex>-2</selectedIndex>
          <valuesSize>1</valuesSize>
          <ScriptedValue className="webtool.data.ScriptedValue" version="1.1">
           <UserMethod className="com.parasoft.scripting.UserMethod" version="2.2">
