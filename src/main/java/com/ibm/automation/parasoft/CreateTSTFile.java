@@ -51,14 +51,16 @@ public class CreateTSTFile {
 
 				document1 = new XMLElementBuilder().loadElementValueTemplateXML("inputTSTFileTemplateForUpdate.xml");
 				testSuite1 = document1.getRootElement();
+				buildTestPathXML(configurationTOEndPointList, testSuite1);
 				testSuite.addContent(testSuite1.detach());
 
 			}else{
 				document = new XMLElementBuilder().loadElementValueTemplateXML("inputTSTFileTemplate.xml");
 				testSuite = document.getRootElement();
+				buildTestPathXML(configurationTOEndPointList, testSuite);
 			}
 
-			buildTestPathXML(configurationTOEndPointList, testSuite);	
+				
 		}
 		catch (IOException e) {
 			System.out.println(e);
