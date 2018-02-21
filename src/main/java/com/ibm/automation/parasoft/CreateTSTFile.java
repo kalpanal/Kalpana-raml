@@ -48,11 +48,29 @@ public class CreateTSTFile {
 				String inputTstFile = Util.loadProperties("INPUT_TST_FILE", configurationTOEndPointList.get(0).getAppConfigPath());
 				document = new XMLElementBuilder().loadIncomingTSTFile(inputTstFile);
 				testSuite = document.getRootElement();
+				IteratorIterable<Content> descendantsOfMainTestSuite = testSuite.getDescendants();
+				Element firstTestsSize = null;
+				
+				for (Content descendant : descendantsOfMainTestSuite) {
+					if (descendant.getCType().equals(Content.CType.Element)) {
+						Element child = (Element) descendant;
+						if(child.getName().equalsIgnoreCase("testsSize")){
+							firstTestsSize = child;
+							break;
+						}
+					}
+				}
 
+				
+				int firstTestsSizeInt = Integer.parseInt(firstTestsSize.getContent().get(0).getValue().toString());
+				firstTestsSize.removeContent();
+				firstTestsSize.addContent((firstTestsSizeInt+1)+"");
+				
+				
 				document1 = new XMLElementBuilder().loadElementValueTemplateXML("inputTSTFileTemplateForUpdate.xml");
 				testSuite1 = document1.getRootElement();
 				buildTestPathXML(configurationTOEndPointList, testSuite1);
-				testSuite.addContent(testSuite1.detach());
+				firstTestsSize.getParent().addContent(testSuite1.detach());
 
 			}else{
 				document = new XMLElementBuilder().loadElementValueTemplateXML("inputTSTFileTemplate.xml");

@@ -22,295 +22,298 @@ import com.ibm.automation.parasoft.XMLElementBuilder;
 
 public class XMLJsonUtils {
 
-    public static Map<String, Object> jsonToMap(JSONObject json) {
-        Map<String, Object> retMap = new HashMap<String, Object>();
+	public static Map<String, Object> jsonToMap(JSONObject json) {
+		Map<String, Object> retMap = new HashMap<String, Object>();
 
-        if(json != null) {
-            retMap = toMap(json);
-        }
-        return retMap;
-    }
+		if(json != null) {
+			retMap = toMap(json);
+		}
+		return retMap;
+	}
 
-    public static Map<String, Object> toMap(JSONObject object) {
-        Map<String, Object> map = new HashMap<String, Object>();
+	public static Map<String, Object> toMap(JSONObject object) {
+		Map<String, Object> map = new HashMap<String, Object>();
 
-        Iterator<String> keysItr = object.keySet().iterator();
-        while(keysItr.hasNext()) {
-            String key = keysItr.next();
-            Object value = object.get(key);
+		Iterator<String> keysItr = object.keySet().iterator();
+		while(keysItr.hasNext()) {
+			String key = keysItr.next();
+			Object value = object.get(key);
 
-            if(value instanceof JSONArray) {
-                value = toList((JSONArray) value);
-            }
+			if(value instanceof JSONArray) {
+				value = toList((JSONArray) value);
+			}
 
-            else if(value instanceof JSONObject) {
-                value = toMap((JSONObject) value);
-            }
-            map.put(key, value);
-        }
-        return map;
-    }
+			else if(value instanceof JSONObject) {
+				value = toMap((JSONObject) value);
+			}
+			map.put(key, value);
+		}
+		return map;
+	}
 
-    public static List<Object> toList(JSONArray array) {
-        List<Object> list = new ArrayList<Object>();
-        for(int i = 0; i < ((Map<String, Object>) array).size(); i++) {
-            Object value = array.get(i);
-            if(value instanceof JSONArray) {
-                value = toList((JSONArray) value);
-            }
+	public static List<Object> toList(JSONArray array) {
+		List<Object> list = new ArrayList<Object>();
+		for(int i = 0; i < ((Map<String, Object>) array).size(); i++) {
+			Object value = array.get(i);
+			if(value instanceof JSONArray) {
+				value = toList((JSONArray) value);
+			}
 
-            else if(value instanceof JSONObject) {
-                value = toMap((JSONObject) value);
-            }
-            list.add(value);
-        }
-        return list;
-    }
-    
-    
-    public static Map<String, Object> jsonString2MapForAssertionsWithXPath( String jsonString, String prependKey ) throws JSONException{
-        Map<String, Object> keys = new HashMap<String, Object>();         
+			else if(value instanceof JSONObject) {
+				value = toMap((JSONObject) value);
+			}
+			list.add(value);
+		}
+		return list;
+	}
 
-        org.json.JSONObject jsonObject = new org.json.JSONObject( jsonString ); // HashMap
-        Iterator<?> keyset = jsonObject.keys(); // HM
 
-        while (keyset.hasNext()) {
-            String key =  (String) keyset.next();
-            if(!key.equalsIgnoreCase("required")){
-	            Object value = jsonObject.get(key);
-	            //System.out.print("\n Key : "+key);
-	            String actualKey=key;
-	            if(null!= prependKey){
+	public static Map<String, Object> jsonString2MapForAssertionsWithXPath( String jsonString, String prependKey ) throws JSONException{
+		Map<String, Object> keys = new HashMap<String, Object>();         
+
+		org.json.JSONObject jsonObject = new org.json.JSONObject( jsonString ); // HashMap
+		Iterator<?> keyset = jsonObject.keys(); // HM
+
+		while (keyset.hasNext()) {
+			String key =  (String) keyset.next();
+			if(!key.equalsIgnoreCase("required")){
+				Object value = jsonObject.get(key);
+				//System.out.print("\n Key : "+key);
+				String actualKey=key;
+				if(null!= prependKey){
 					actualKey=prependKey+"."+key;
-	            }
-	            if ( value instanceof org.json.JSONObject ) {
-	               // System.out.println("Incomin value is of JSONObject : ");
-	                keys.put( actualKey, jsonString2MapForAssertionsWithXPath( value.toString(), actualKey));
-	            }else if ( value instanceof org.json.JSONArray) {
-	                org.json.JSONArray jsonArray = jsonObject.getJSONArray(key);
-	                //JSONArray jsonArray = new JSONArray(value.toString());
-	                actualKey = actualKey+"[0]";
-	                keys.put( actualKey, jsonArray2ListForAssertionsWithXpath( jsonArray, actualKey ));
-	            } else {
-	                //keyNode( value);
-	                keys.put( actualKey, value );
-	            }
-            }
-        }
-        return keys;
-    }
-    
-    public static List<Object> jsonArray2ListForAssertionsWithXpath( JSONArray arrayOFKeys, String actualKey ) throws JSONException{
-        //System.out.println("Incoming value is of JSONArray : =========");
-        List<Object> array2List = new ArrayList<Object>();
-        for ( int i = 0; i < arrayOFKeys.length(); i++ )  {
-            if ( arrayOFKeys.opt(i) instanceof JSONObject ) {
-                Map<String, Object> subObj2Map = jsonString2MapForAssertionsWithXPath(arrayOFKeys.opt(i).toString(), actualKey);
-                array2List.add(subObj2Map);
-            }else if ( arrayOFKeys.opt(i) instanceof JSONArray ) {
-                List<Object> subarray2List = jsonArray2ListForAssertionsWithXpath((JSONArray) arrayOFKeys.opt(i), actualKey);
-                array2List.add(subarray2List);
-            }else {
-               // keyNode( arrayOFKeys.opt(i) );
-                array2List.add( arrayOFKeys.opt(i) );
-            }
-        }
-        return array2List;      
-    }
-    
+				}
+				if ( value instanceof org.json.JSONObject ) {
+					// System.out.println("Incomin value is of JSONObject : ");
+					keys.put( actualKey, jsonString2MapForAssertionsWithXPath( value.toString(), actualKey));
+				}else if ( value instanceof org.json.JSONArray) {
+					org.json.JSONArray jsonArray = jsonObject.getJSONArray(key);
+					//JSONArray jsonArray = new JSONArray(value.toString());
+					actualKey = actualKey+"[0]";
+					keys.put( actualKey, jsonArray2ListForAssertionsWithXpath( jsonArray, actualKey ));
+				} else {
+					//keyNode( value);
+					keys.put( actualKey, value );
+				}
+			}
+		}
+		return keys;
+	}
+
+	public static List<Object> jsonArray2ListForAssertionsWithXpath( JSONArray arrayOFKeys, String actualKey ) throws JSONException{
+		//System.out.println("Incoming value is of JSONArray : =========");
+		List<Object> array2List = new ArrayList<Object>();
+		for ( int i = 0; i < arrayOFKeys.length(); i++ )  {
+			if ( arrayOFKeys.opt(i) instanceof JSONObject ) {
+				Map<String, Object> subObj2Map = jsonString2MapForAssertionsWithXPath(arrayOFKeys.opt(i).toString(), actualKey);
+				array2List.add(subObj2Map);
+			}else if ( arrayOFKeys.opt(i) instanceof JSONArray ) {
+				List<Object> subarray2List = jsonArray2ListForAssertionsWithXpath((JSONArray) arrayOFKeys.opt(i), actualKey);
+				array2List.add(subarray2List);
+			}else {
+				// keyNode( arrayOFKeys.opt(i) );
+				array2List.add( arrayOFKeys.opt(i) );
+			}
+		}
+		return array2List;      
+	}
+
 	//Convert JSON to HashMap, so as to put everything into parameters
 	public static Map<String, Object> jsonString2Map1( JSONObject jsonObject ) throws JSONException{
-        Map<String, Object> keys = new HashMap<String, Object>(); 
+		Map<String, Object> keys = new HashMap<String, Object>(); 
 
-        
-        Iterator<?> keyset = jsonObject.keys(); // HM
 
-        while (keyset.hasNext()) {
-            String key =  (String) keyset.next();
-            Object value = jsonObject.get(key);
-            if ( value instanceof JSONObject ) {
-                keys.put( key, jsonString2Map1( (JSONObject)value ));
-            }else if ( value instanceof JSONArray) {
-                JSONArray jsonArray = jsonObject.getJSONArray(key);
-                keys.put( key, jsonArray2List1( jsonArray ));
-            } else {
-                keys.put( key, value!=null?value.toString():"" );
-            }
-        }
-        return keys;
-}
+		Iterator<?> keyset = jsonObject.keys(); // HM
+
+		while (keyset.hasNext()) {
+			String key =  (String) keyset.next();
+			Object value = jsonObject.get(key);
+			if ( value instanceof JSONObject ) {
+				keys.put( key, jsonString2Map1( (JSONObject)value ));
+			}else if ( value instanceof JSONArray) {
+				JSONArray jsonArray = jsonObject.getJSONArray(key);
+				keys.put( key, jsonArray2List1( jsonArray ));
+			} else {
+				keys.put( key, value!=null?value.toString():"" );
+			}
+		}
+		return keys;
+	}
 	public static List<Object> jsonArray2List1( JSONArray arrayOFKeys ) throws JSONException{
-        System.out.println("Incoming value is of JSONArray : =========");
-        List<Object> array2List = new ArrayList<Object>();
-        for ( int i = 0; i < arrayOFKeys.length(); i++ )  {
-            if ( arrayOFKeys.opt(i) instanceof JSONObject ) {
-                Map<String, Object> subObj2Map = jsonString2Map1(arrayOFKeys.opt(i).toString());
-                array2List.add(subObj2Map);
-            }else if ( arrayOFKeys.opt(i) instanceof JSONArray ) {
-                List<Object> subarray2List = jsonArray2List1((JSONArray) arrayOFKeys.opt(i));
-                array2List.add(subarray2List);
-            }else {
-               // keyNode( arrayOFKeys.opt(i) );
-                array2List.add( arrayOFKeys.opt(i) );
-            }
-        }
-        return array2List;      
-    }
-	
+		System.out.println("Incoming value is of JSONArray : =========");
+		List<Object> array2List = new ArrayList<Object>();
+		for ( int i = 0; i < arrayOFKeys.length(); i++ )  {
+			if ( arrayOFKeys.opt(i) instanceof JSONObject ) {
+				Map<String, Object> subObj2Map = jsonString2Map1(arrayOFKeys.opt(i).toString());
+				array2List.add(subObj2Map);
+			}else if ( arrayOFKeys.opt(i) instanceof JSONArray ) {
+				List<Object> subarray2List = jsonArray2List1((JSONArray) arrayOFKeys.opt(i));
+				array2List.add(subarray2List);
+			}else {
+				// keyNode( arrayOFKeys.opt(i) );
+				array2List.add( arrayOFKeys.opt(i) );
+			}
+		}
+		return array2List;      
+	}
+
 	public static Map<String, Object> jsonString2Map1( String jsonString ) throws JSONException{
-        Map<String, Object> keys = new HashMap<String, Object>(); 
+		Map<String, Object> keys = new HashMap<String, Object>(); 
 
-        org.json.JSONObject jsonObject = new org.json.JSONObject( jsonString ); // HashMap
-        Iterator<?> keyset = jsonObject.keys(); // HM
+		org.json.JSONObject jsonObject = new org.json.JSONObject( jsonString ); // HashMap
+		Iterator<?> keyset = jsonObject.keys(); // HM
 
-        while (keyset.hasNext()) {
-            String key =  (String) keyset.next();
-            Object value = jsonObject.get(key);
-            System.out.print("\n Key : "+key);
-            if ( value instanceof org.json.JSONObject ) {
-                System.out.println("Incomin value is of JSONObject : ");
-                keys.put( key, jsonString2Map1( value.toString() ));
-            }else if ( value instanceof org.json.JSONArray) {
-                org.json.JSONArray jsonArray = jsonObject.getJSONArray(key);
-                //JSONArray jsonArray = new JSONArray(value.toString());
-                keys.put( key, jsonArray2List1( jsonArray ));
-            } else {
-                //keyNode( value);
-                keys.put( key, value );
-            }
-        }
-        return keys;
-    }
-    @SuppressWarnings("unchecked")
+		while (keyset.hasNext()) {
+			String key =  (String) keyset.next();
+			Object value = jsonObject.get(key);
+			System.out.print("\n Key : "+key);
+			if ( value instanceof org.json.JSONObject ) {
+				System.out.println("Incomin value is of JSONObject : ");
+				keys.put( key, jsonString2Map1( value.toString() ));
+			}else if ( value instanceof org.json.JSONArray) {
+				org.json.JSONArray jsonArray = jsonObject.getJSONArray(key);
+				//JSONArray jsonArray = new JSONArray(value.toString());
+				keys.put( key, jsonArray2List1( jsonArray ));
+			} else {
+				//keyNode( value);
+				keys.put( key, value );
+			}
+		}
+		return keys;
+	}
+	@SuppressWarnings("unchecked")
 	public static void displayJSONMAP( Map<String, Object> allKeys, boolean isArray ) throws Exception{
-        Set<String> keyset = allKeys.keySet(); // HM$keyset
-        if (! keyset.isEmpty()) {
-            Iterator<String> keys = keyset.iterator(); // HM$keysIterator
-            while (keys.hasNext()) {
-                String key = keys.next();
-                
-                Object value = allKeys.get( key );
-                if ( value instanceof Map ) {
-                    System.out.println("\n Object Key : "+key);
-                        displayJSONMAP((Map<String,Object>)value, false);                   
-                }else if ( value instanceof List ) {
-                    System.out.println("\n Array Key : "+key);
-                    key = key+"[0]";
-                    //JSONArray jsonArray = new JSONArray(value.toString());                    
-                    displayJSONMAP((Map<String, Object>)((List)value).get(0), true);
-                }else {
-                	
-                	System.out.println("key : "+key);
-                }
-            }
-        }   
+		Set<String> keyset = allKeys.keySet(); // HM$keyset
+		if (! keyset.isEmpty()) {
+			Iterator<String> keys = keyset.iterator(); // HM$keysIterator
+			while (keys.hasNext()) {
+				String key = keys.next();
 
-    }
-    
+				Object value = allKeys.get( key );
+				if ( value instanceof Map ) {
+					System.out.println("\n Object Key : "+key);
+					displayJSONMAP((Map<String,Object>)value, false);                   
+				}else if ( value instanceof List ) {
+					System.out.println("\n Array Key : "+key);
+					key = key+"[0]";
+					//JSONArray jsonArray = new JSONArray(value.toString());                    
+					displayJSONMAP((Map<String, Object>)((List)value).get(0), true);
+				}else {
+
+					System.out.println("key : "+key);
+				}
+			}
+		}   
+
+	}
+
 	public static Map<String, Object> jsonString2MapForAssertionsRequiredParams(String jsonString, String prependKey, Element andAssertion ) throws JSONException, IOException {
-	       Map<String, Object> keys = new HashMap<String, Object>();     
-	      // Element andAssertion = null;
+		Map<String, Object> keys = new HashMap<String, Object>();     
+		// Element andAssertion = null;
 
-	        org.json.JSONObject jsonObject = new org.json.JSONObject( jsonString ); // HashMap
-	        Iterator<?> keyset = jsonObject.keys(); // HM
+		org.json.JSONObject jsonObject = new org.json.JSONObject( jsonString ); // HashMap
+		Iterator<?> keyset = jsonObject.keys(); // HM
 
-	        while (keyset.hasNext()) {
-	            String key =  (String) keyset.next();
-	            if(!key.equalsIgnoreCase("required")){
-		            Object value = jsonObject.get(key);
-		            //System.out.print("\n Key : "+key);
-		            String actualKey=key;
-		            if(null!= prependKey){
-						actualKey=prependKey+"."+key;
-		            }
-		            if ( value instanceof org.json.JSONObject ) {
-		               // System.out.println("Incomin value is of JSONObject : ");
-		            	jsonString2MapForAssertionsRequiredParams( value.toString(), actualKey, andAssertion);
-		               // keys.put( actualKey, );
-		            }else if ( value instanceof org.json.JSONArray) {
-		                org.json.JSONArray jsonArray = jsonObject.getJSONArray(key);
-		                jsonArray2ListForAssertionsRequiredParams( jsonArray, actualKey, andAssertion );
-		            } else {
-		                //keyNode( value);
-		               // keys.put( actualKey, value );
-		            }
-	            }else{//build assertions for required params	            	
-	            	Object value = jsonObject.get(key);
-		            String actualKey=key;
-		            if(null!= prependKey){
-						actualKey=prependKey;
-		            }
-		            if ( value instanceof org.json.JSONArray) {
-		                org.json.JSONArray jsonArray = jsonObject.getJSONArray(key);
-		               // XMLElementBuilder.buildStringComparisonAssertions(jsonArray, actualKey, andAssertion);
-		               
-		                	
-		            }
-	            }
-	        }
-	        return keys;
-	      }
-	
-	
-	public static Map<String, Object> jsonString2MapForReponseCodeAssertions(String responseCode, String responseSchema, String prependKey, Element andAssertion, int andAssertionSize) throws JSONException, IOException {
-	       Map<String, Object> keys = new HashMap<String, Object>();   
-	        org.json.JSONObject jsonObject = new org.json.JSONObject(responseSchema); // HashMap
-	        Iterator<?> keyset = jsonObject.keys(); // HM
+		while (keyset.hasNext()) {
+			String key =  (String) keyset.next();
+			if(!key.equalsIgnoreCase("required")){
+				Object value = jsonObject.get(key);
+				//System.out.print("\n Key : "+key);
+				String actualKey=key;
+				if(null!= prependKey){
+					actualKey=prependKey+"."+key;
+				}
+				if ( value instanceof org.json.JSONObject ) {
+					// System.out.println("Incomin value is of JSONObject : ");
+					jsonString2MapForAssertionsRequiredParams( value.toString(), actualKey, andAssertion);
+					// keys.put( actualKey, );
+				}else if ( value instanceof org.json.JSONArray) {
+					org.json.JSONArray jsonArray = jsonObject.getJSONArray(key);
+					jsonArray2ListForAssertionsRequiredParams( jsonArray, actualKey, andAssertion );
+				} else {
+					//keyNode( value);
+					// keys.put( actualKey, value );
+				}
+			}else{//build assertions for required params	            	
+				Object value = jsonObject.get(key);
+				String actualKey=key;
+				if(null!= prependKey){
+					actualKey=prependKey;
+				}
+				if ( value instanceof org.json.JSONArray) {
+					org.json.JSONArray jsonArray = jsonObject.getJSONArray(key);
+					// XMLElementBuilder.buildStringComparisonAssertions(jsonArray, actualKey, andAssertion);
 
-	        while (keyset.hasNext()) {
-	            String key =  (String) keyset.next();
-	            if(!key.equalsIgnoreCase("required")){
-		            Object value = jsonObject.get(key);
-		            //System.out.print("\n Key : "+key);
-		            String actualKey=key;
-		            if(null!= prependKey){
-						actualKey=prependKey+"."+key;
-		            }
-		            if ( value instanceof org.json.JSONObject ) {
-		               // System.out.println("Incomin value is of JSONObject : ");
-		            	jsonString2MapForReponseCodeAssertions(responseCode, value.toString(), actualKey, andAssertion, andAssertionSize);
-		               // keys.put( actualKey, );
-		            }else if ( value instanceof org.json.JSONArray) {
-		                org.json.JSONArray jsonArray = jsonObject.getJSONArray(key);
-		                
-		                jsonArray2ListForReponseCodeAssertions( jsonArray, actualKey, responseCode, andAssertion, andAssertionSize );
-		            } else {
-		                //keyNode( value);
-		               // keys.put( actualKey, value );
-		            }
-	            }else{//build assertions for required params	            	
-	            	Object value = jsonObject.get(key);
-		            String actualKey=key;
-		            
-		            
-		            if(null!= prependKey){
-						actualKey=prependKey;
-		            }
-		            if ( value instanceof org.json.JSONArray) {
-		            	
-		                org.json.JSONArray jsonArray = jsonObject.getJSONArray(key);
-		                /** check if the required attribute is not an JSON Object, 
-			            if it is a Object, we cannot create assertions for that attribute
-			            */
-		                jsonArray = compareRequiredAttribitesAgainstValueList(jsonObject, jsonArray);
-		               // andAssertionSize = (andAssertionSize + jsonArray.length());
-		                XMLElementBuilder.buildStringComparisonAssertions(jsonArray, actualKey, andAssertion);		               
-						//System.out.println(jsonArray.length()+"=======assertionsSize+++++++++++++++++>"+andAssertionSize+"");
-		                int andAssertionSizeLocal = 0;
-						if(!andAssertion.getChild("assertionsSize").getContent().get(0).getValue().toString().contains("11-template")){
-							andAssertionSizeLocal = Integer.parseInt(andAssertion.getChild("assertionsSize").getContent().get(0).getValue().toString());
-						}
-						 System.out.println("=======before assertionsSize+++++++++++++++++>"+(andAssertionSizeLocal+jsonArray.length())+"");
-		        		andAssertion.getChild("assertionsSize").removeContent();
-		        		andAssertion.getChild("assertionsSize").addContent((andAssertionSizeLocal+jsonArray.length())+"");   	
-		            }
-	            }
-	        }
-	        return keys;
-	      }
+
+				}
+			}
+		}
+		return keys;
+	}
+
+
+	public static Map<String, Object> jsonString2MapForReponseCodeAssertions(String responseCode, String responseSchema, String prependKey, Element andAssertion, int andAssertionSize, String typeOfKey) throws JSONException, IOException {
+		Map<String, Object> keys = new HashMap<String, Object>();   
+		org.json.JSONObject jsonObject = new org.json.JSONObject(responseSchema); // HashMap
+		Iterator<?> keyset = jsonObject.keys(); // HM
+
+		// if(prependKey == null){	        	
+		LinkedHashMap<String, Object> keys1 = new LinkedHashMap<String, Object>();
+		ObjectMapper mapper = new ObjectMapper();
+		System.out.print("\n Incoming json string for reference : " + responseSchema);
+		TypeReference<LinkedHashMap<String, Object>> typeRef = new TypeReference<LinkedHashMap<String,Object>>() {};
+		LinkedHashMap<String,?> o = mapper.readValue(responseSchema, typeRef); 
+		boolean andAssertionAdded = false;
+		for (String key : o.keySet()){
+			String actualKey=key;
+			
+
+		if(!key.equalsIgnoreCase("required")){
+			if(null!= prependKey ){
+				//actualKey=prependKey+"."+key;
+				
+			}else{
+				//actualKey = key;
+				prependKey = actualKey;
+				//buildAndAssertionsForRequiredFields(key, o, andAssertion, actualKey, typeOfKey);
+			}
+			Object value = o.get(key);
+			if ( value instanceof LinkedHashMap ) {
+				System.out.println("Incomin value is of JSONObject : ");
+				typeOfKey = "JSONObject";
+				String mapToJson = mapper.writeValueAsString(value);
+				actualKey=prependKey+"/";
+				//buildAndAssertionsForRequiredFields(key, o, andAssertion, actualKey, typeOfKey);
+				jsonString2MapForReponseCodeAssertions( responseCode, mapToJson, actualKey, andAssertion, andAssertionSize, typeOfKey );
+
+				// keys.put( actualKey, );
+			}else if ( value instanceof ArrayList) {
+				System.out.println("Incomin value is of JSONArray : ");
+				typeOfKey = "JSONArray";		
+				ObjectMapper objectMapper = new ObjectMapper();
+				//Set pretty printing of json
+				objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+				String mapToJson = objectMapper.writeValueAsString(value);
+				//System.out.println(mapToJson);
+				actualKey=prependKey+"/item/";
+				jsonArray2ListForReponseCodeAssertions( mapToJson, actualKey, responseCode, andAssertion, andAssertionSize, typeOfKey );
+			}else{
+				actualKey=prependKey;				
+				if(!andAssertionAdded){
+					buildAndAssertionsForRequiredFields(key, o, andAssertion, actualKey, typeOfKey);
+				}
+				andAssertionAdded=true;
+			}
+			//System.out.println(actualKey);
+		}
+
+
+		}
+		return keys;
+	}
 
 	private static org.json.JSONArray compareRequiredAttribitesAgainstValueList(org.json.JSONObject jsonObject, org.json.JSONArray jsonArray) {
-				
+
 		for(int i=0; i<jsonArray.length(); i++){
 			if(jsonObject.get(jsonArray.getString(i)) instanceof org.json.JSONObject || jsonObject.get(jsonArray.getString(i)) instanceof org.json.JSONArray) {				
 				jsonArray.remove(i);
@@ -320,50 +323,100 @@ public class XMLJsonUtils {
 	}
 
 	public static List<Object> jsonArray2ListForAssertionsRequiredParams(JSONArray arrayOFKeys, String actualKey, Element andAssertion) throws JSONException, IOException {
-        List<Object> array2List = new ArrayList<Object>();
-        for ( int i = 0; i < arrayOFKeys.length(); i++ )  {
-            if ( arrayOFKeys.opt(i) instanceof JSONObject ) {
-                Map<String, Object> subObj2Map = jsonString2MapForAssertionsRequiredParams(arrayOFKeys.opt(i).toString(), actualKey, andAssertion);
-                array2List.add(subObj2Map);
-            }else if ( arrayOFKeys.opt(i) instanceof JSONArray ) {
-                List<Object> subarray2List = jsonArray2ListForAssertionsRequiredParams((JSONArray) arrayOFKeys.opt(i), actualKey, andAssertion);
-                array2List.add(subarray2List);
-            }else {
-                array2List.add( arrayOFKeys.opt(i) );
-            }
-        }
-        return array2List;  
-       }
+		List<Object> array2List = new ArrayList<Object>();
+		for ( int i = 0; i < arrayOFKeys.length(); i++ )  {
+			if ( arrayOFKeys.opt(i) instanceof JSONObject ) {
+				Map<String, Object> subObj2Map = jsonString2MapForAssertionsRequiredParams(arrayOFKeys.opt(i).toString(), actualKey, andAssertion);
+				array2List.add(subObj2Map);
+			}else if ( arrayOFKeys.opt(i) instanceof JSONArray ) {
+				List<Object> subarray2List = jsonArray2ListForAssertionsRequiredParams((JSONArray) arrayOFKeys.opt(i), actualKey, andAssertion);
+				array2List.add(subarray2List);
+			}else {
+				array2List.add( arrayOFKeys.opt(i) );
+			}
+		}
+		return array2List;  
+	}
 
-	public static List<Object> jsonArray2ListForReponseCodeAssertions(JSONArray arrayOFKeys, String actualKey, String responseCode, Element jsonAssertionTool, int andAssertionSize) throws JSONException, IOException {
-        List<Object> array2List = new ArrayList<Object>();
-        for ( int i = 0; i < arrayOFKeys.length(); i++ )  {
-            if ( arrayOFKeys.opt(i) instanceof JSONObject ) {
-                Map<String, Object> subObj2Map = jsonString2MapForReponseCodeAssertions(responseCode, arrayOFKeys.opt(i).toString(), actualKey, jsonAssertionTool, andAssertionSize);
-                array2List.add(subObj2Map);
-            }else if ( arrayOFKeys.opt(i) instanceof JSONArray ) {
-                List<Object> subarray2List = jsonArray2ListForReponseCodeAssertions((JSONArray) arrayOFKeys.opt(i), actualKey, responseCode, jsonAssertionTool, andAssertionSize);
-                array2List.add(subarray2List);
-            }else {
-                array2List.add( arrayOFKeys.opt(i) );
-            }
-        }
-        return array2List;  
-       }	
-	
+	public static List<Object> jsonArray2ListForReponseCodeAssertions(String arrayOFKeys, String actualKey, String responseCode, Element jsonAssertionTool, int andAssertionSize, String typeOfKey) throws JSONException, IOException {
+
+		ObjectMapper mapper = new ObjectMapper();		
+		TypeReference<ArrayList<?>> typeRef = new TypeReference<ArrayList<?>>() {};        
+		ArrayList<?> arrayOFKeysList = mapper.readValue(arrayOFKeys, typeRef); 
+
+		List<Object> array2List = new ArrayList<Object>();
+		int arraySize;
+		if(arrayOFKeysList.size() ==1){
+			arraySize = arrayOFKeysList.size();
+		}else{
+			arraySize = arrayOFKeysList.size()-1;
+		}
+
+		/** always send one item from Array 
+		 * Not all items, therefore sending arraySize as 1
+		 */
+		arraySize = 1;
+		for ( int i = 0; i < arraySize; i++ )  {
+			if ( arrayOFKeysList.get(i) instanceof LinkedHashMap ) {
+				ObjectMapper objectMapper = new ObjectMapper();
+				//Set pretty printing of json
+				objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+				String mapToJson = objectMapper.writeValueAsString(arrayOFKeysList.get(i));
+				//System.out.println(mapToJson);
+				Map<String, Object> subObj2Map = jsonString2MapForReponseCodeAssertions(responseCode, mapToJson, actualKey, jsonAssertionTool, andAssertionSize, typeOfKey);
+				array2List.add(subObj2Map);
+			}else if ( arrayOFKeysList.get(i) instanceof ArrayList ) {
+				System.out.println("Incomin value is of JSONObject : "+arrayOFKeysList.get(i).toString());
+				ObjectMapper objectMapper = new ObjectMapper();
+				//Set pretty printing of json
+				objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+				String mapToJson = objectMapper.writeValueAsString(arrayOFKeysList.get(i));
+				//System.out.println(mapToJson);
+				List<Object> subarray2List = jsonArray2ListForReponseCodeAssertions(mapToJson, actualKey, responseCode, jsonAssertionTool, andAssertionSize, typeOfKey);
+				array2List.add(subarray2List);
+			}else {
+				array2List.add( arrayOFKeysList.get(i) );
+			}
+		}
+		return array2List;  
+	}	
+
 	public static String replaceDotWithSlashForAssertion_Xpath(String incomingXpath){
 		//String replacementStr= "\"][\"";
 		String replacementStr= "/";
 		incomingXpath = StringUtils.replace(incomingXpath, ".", replacementStr);
 		return incomingXpath;
-		
+
 	}
-	
+
 	public static String replaceDotWithUnderscore(String incomingXpath){
 		String replacementStr= "_";
 		incomingXpath = StringUtils.replace(incomingXpath, ".", replacementStr);
 		return incomingXpath;
-		
+
 	}
 
-}
+	public static void buildAndAssertionsForRequiredFields(String key, LinkedHashMap<String,?> o, Element andAssertion, String actualKey, String typeOfKey) throws IOException{
+		//if(!key.equalsIgnoreCase("required")){
+			org.json.JSONArray jsonArray =  new org.json.JSONArray((ArrayList<String>)o.get("required"));
+			/** check if the required attribute is not an JSON Object, 
+ 			            if it is a Object, we cannot create assertions for that attribute
+			 */
+			//jsonArray = compareRequiredAttribitesAgainstValueList(jsonObject, jsonArray);
+			// andAssertionSize = (andAssertionSize + jsonArray.length());
+			XMLElementBuilder.buildStringComparisonAssertions(jsonArray, actualKey, andAssertion, typeOfKey);		               
+			//System.out.println(jsonArray.length()+"=======assertionsSize+++++++++++++++++>"+andAssertionSize+"");
+			int andAssertionSizeLocal = 0;
+			if(!andAssertion.getChild("assertionsSize").getContent().get(0).getValue().toString().contains("11-template")){
+				andAssertionSizeLocal = Integer.parseInt(andAssertion.getChild("assertionsSize").getContent().get(0).getValue().toString());
+			}
+			System.out.println("=======before assertionsSize+++++++++++++++++>"+(andAssertionSizeLocal+jsonArray.length())+"");
+			andAssertion.getChild("assertionsSize").removeContent();
+			andAssertion.getChild("assertionsSize").addContent((andAssertionSizeLocal+jsonArray.length())+"");			
+			//System.out.print("\n Key : "+key);
+
+		//}
+	}
+	
+
+	}

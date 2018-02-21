@@ -679,7 +679,7 @@ public class XMLElementBuilder {
 				if(conditionAssertionSizeInt == 0){
 					conditionAssertionSizeInt++;
 					Element andAssertion = buildResponseConditionalAssertion(responseCode, jsonAssertionTool);
-					XMLJsonUtils.jsonString2MapForReponseCodeAssertions(responseCode, reponseSchemaContent, null, andAssertion, andAssertionSize);
+					XMLJsonUtils.jsonString2MapForReponseCodeAssertions(responseCode, reponseSchemaContent, null, andAssertion, andAssertionSize, "JSONObject");
 				}
 			}
 
@@ -1522,7 +1522,7 @@ public class XMLElementBuilder {
 		}
 	}
 
-	public static Element buildStringComparisonAssertions(JSONArray jsonArray, String actualKey, Element andAssertion) throws IOException {		
+	public static Element buildStringComparisonAssertions(JSONArray jsonArray, String actualKey, Element andAssertion, String typeOfKey) throws IOException {		
 		Element name =null, assertionsSize=null;
 		Element stringName=null, assertionXPath=null,column=null, stringName1=null;		
 
@@ -1556,14 +1556,23 @@ public class XMLElementBuilder {
 			assertionXPath.removeContent();
 
 
-			if(i==0 && actualKey.equals("required")){
-				assertionXPath.addContent("/root/"+jsonArray.get(i)+"");
+			//if(actualKey.equals("required")){
+				/*if(typeOfKey.equalsIgnoreCase("JSONArray")){
+					assertionXPath.addContent("/root/item/"+jsonArray.get(i)+"");
+				}else{
+					assertionXPath.addContent("/root/"+jsonArray.get(i)+"");
+				}
 			}else if(i==0){
 				assertionXPath.addContent("/root/"+XMLJsonUtils.replaceDotWithSlashForAssertion_Xpath(actualKey)+"/item/"+jsonArray.get(i));
 			}else{
-				assertionXPath.addContent("/root/"+XMLJsonUtils.replaceDotWithSlashForAssertion_Xpath(actualKey)+"/item/"+jsonArray.get(i));
-			}
+				if(typeOfKey.equalsIgnoreCase("JSONArray")){
+					assertionXPath.addContent("/root/"+XMLJsonUtils.replaceDotWithSlashForAssertion_Xpath(actualKey)+"/item/"+jsonArray.get(i));
+				}else{*/
+					assertionXPath.addContent("/root/"+XMLJsonUtils.replaceDotWithSlashForAssertion_Xpath(actualKey)+jsonArray.get(i));
+				//}
+			//}
 			column.removeContent();
+			System.out.println(assertionXPath.getText());
 			//column.addContent(jsonArray.get(i)+"");
 			column.addContent(XMLJsonUtils.replaceDotWithUnderscore(actualKey)+"_"+jsonArray.get(i));
 			andAssertion.addContent(stringAssertion);

@@ -3,6 +3,7 @@ com\ibm\automation\parasoft\XMLElementBuilder$4.class
 io\apptik\json\generator\matcher\SchemaCompositeMatchers$2.class
 io\apptik\json\schema\validation\CommonMatchers$5.class
 com\ibm\automation\parasoft\CreateTSTFile.class
+com\ibm\automation\parasoft\util\XMLJsonUtils$2.class
 io\apptik\json\generator\generators\ArrayGenerator.class
 io\apptik\json\generator\generators\OneOfGenerator.class
 io\apptik\json\generator\matcher\FormatMatchers$1.class
@@ -80,6 +81,7 @@ io\apptik\json\schema\validation\CommonMatchers$7.class
 io\apptik\json\generator\matcher\SchemaCompositeMatchers$3.class
 com\ibm\automation\parasoft\ParasoftTstGeneratorMain.class
 io\apptik\json\generator\generators\formats\UriGenerator.class
+com\ibm\automation\parasoft\util\XMLJsonUtils$1.class
 io\apptik\json\schema\validation\CommonMatchers$22.class
 io\apptik\json\generator\generators\IntegerGenerator.class
 io\apptik\json\generator\matcher\SchemaDefMatchers$7.class

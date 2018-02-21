@@ -627,7 +627,7 @@
             <path>..\output</path>
            </RelativeLocation>
            <createDirectories>true</createDirectories>
-           <targetPattern>%b_%t_%d.txt</targetPattern>
+           <targetPattern>${Test Case ID}_%d_%t.txt</targetPattern>
           </FileWriterProperties>
          </FileStreamWriter>
         </HTTPOutputProvider>

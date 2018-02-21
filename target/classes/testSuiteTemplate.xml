@@ -715,10 +715,10 @@
           <FileWriterProperties className="webtool.stream.FileWriterProperties" version="5">
            <targetDirectory>true</targetDirectory>
            <RelativeLocation className="com.parasoft.util.RelativeLocation" version="1.4">
-            <path>${OUTPUT}\ftpdeliveries\Positive</path>
+            <path>..\output</path>
            </RelativeLocation>
            <createDirectories>true</createDirectories>
-           <targetPattern>%b_%t_%d.txt</targetPattern>
+           <targetPattern>${Test Case ID}_%d_%t.txt</targetPattern>
           </FileWriterProperties>
          </FileStreamWriter>
         </HTTPOutputProvider>

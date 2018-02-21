@@ -1,0 +1,16 @@
+        <OccurrenceAssertion className="webtool.assertion.xml.OccurrenceAssertion" version="2.6.2">
+         <timestamp>1503077748485</timestamp>
+         <name>creationTime</name>
+         <extractEntireElement>true</extractEntireElement>
+         <Assertion_XPath>/root/creationTime</Assertion_XPath>
+         <NameValuePair className="webtool.data.NameValuePair" version="3.3">
+          <name>Count</name>
+          <MultiValue className="webtool.data.MultiValue" version="1.4">
+           <StringTestValue className="webtool.data.StringTestValue" version="4.1">
+            <value>1</value>
+           </StringTestValue>
+           <ParameterizedTestValue className="webtool.data.ParameterizedTestValue" version="3.1">
+           </ParameterizedTestValue>
+          </MultiValue>
+         </NameValuePair>
+        </OccurrenceAssertion>
