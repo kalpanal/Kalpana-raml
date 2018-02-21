@@ -29,12 +29,30 @@ import com.ibm.automation.excelOps.ReadExcelDataSheet;
 import com.ibm.automation.parasoft.domain.ConfigurationTO;
 import com.ibm.automation.parasoft.util.Util;
 
+
+/**
+ * This CreateTSTFile program implements logic to create a tst file 
+ * in XML format. The input for this program is app,config file
+ * @author kalpana
+ * @version 1.0
+ * @since   2017-10-31 
+ *
+ */
 public class CreateTSTFile {
 
 
 	public static void createTstFile() {
 	}
 
+
+	/**
+	 * This method is used to check if the update_flag is Y or N
+	 * If update_flag is Y, it takes INPUT_tst_file to make updates to tst file
+	 * If update_flag is N, it generates new tst file
+	 * @param configurationTOEndPointList This is an array of all resources in RAML file
+	 * @throws Exception
+	 * @see Exception
+	 */
 	public static void writeFileUsingJDOM(ArrayList<ConfigurationTO> configurationTOEndPointList)
 			throws Exception {
 
@@ -50,7 +68,7 @@ public class CreateTSTFile {
 				testSuite = document.getRootElement();
 				IteratorIterable<Content> descendantsOfMainTestSuite = testSuite.getDescendants();
 				Element firstTestsSize = null;
-				
+
 				for (Content descendant : descendantsOfMainTestSuite) {
 					if (descendant.getCType().equals(Content.CType.Element)) {
 						Element child = (Element) descendant;
@@ -61,12 +79,12 @@ public class CreateTSTFile {
 					}
 				}
 
-				
+
 				int firstTestsSizeInt = Integer.parseInt(firstTestsSize.getContent().get(0).getValue().toString());
 				firstTestsSize.removeContent();
 				firstTestsSize.addContent((firstTestsSizeInt+1)+"");
-				
-				
+
+
 				document1 = new XMLElementBuilder().loadElementValueTemplateXML("inputTSTFileTemplateForUpdate.xml");
 				testSuite1 = document1.getRootElement();
 				buildTestPathXML(configurationTOEndPointList, testSuite1);
@@ -78,7 +96,7 @@ public class CreateTSTFile {
 				buildTestPathXML(configurationTOEndPointList, testSuite);
 			}
 
-				
+
 		}
 		catch (IOException e) {
 			System.out.println(e);
@@ -97,6 +115,14 @@ public class CreateTSTFile {
 
 	}
 
+	/**
+	 * This method iterates through all child elements of a given element
+	 * @param current This is the input Element
+	 * @param depth This param is used to defined the depth until which it needs to iterate through
+	 * @param configurationTOEndPointList This is an array of all resource's information from RAML file
+	 * @return This returns an Element
+	 * @throws Exception
+	 */
 	public static Element listChildren(Element current,
 			int depth, ArrayList<ConfigurationTO> configurationTOEndPointList) throws Exception {
 		Element testSuiteMain = null, tokenPathURL = null, nameValuePropertiesForToken=null, nameValuePropertiesSizeForToken =null;
@@ -111,59 +137,52 @@ public class CreateTSTFile {
 					if(child.getText().contains("https://pingfederate.sys.td.com:9031/as/token.oauth2?client_id")){
 						tokenPathURL = child;
 					}
-				}else if(child.getName().equalsIgnoreCase("propertiesSize") && child.getText().contains("1-tokenURL")){
-					//System.out.println(child.getChild("propertiesSize").getText());
-					//if(child.getChild("propertiesSize").getText().contains("1-tokenURL")){
-					
-						nameValuePropertiesForToken = child.getParentElement();
-						nameValuePropertiesSizeForToken = child;
-					//}
+				}else if(child.getName().equalsIgnoreCase("propertiesSize") && child.getText().contains("1-tokenURL")){					
+					nameValuePropertiesForToken = child.getParentElement();
+					nameValuePropertiesSizeForToken = child;
 				}
 			}
 		}
-		
-		
-		
+
 		String tokenURLFromPropertiesFile = Util.loadProperties("TOKEN_URL", configurationTOEndPointList.get(0).getAppConfigPath());
 		tokenURLFromPropertiesFile = tokenURLFromPropertiesFile.replaceAll("&amp;","&");
-		
+
 		Map<String, Object> queryParamsMap = Util.convertQueryStringToMap(tokenURLFromPropertiesFile);
 		if(nameValuePropertiesSizeForToken != null){
 			nameValuePropertiesSizeForToken.removeContent();
 			nameValuePropertiesSizeForToken.addContent(queryParamsMap.size()+"");
 			XMLElementBuilder.buildNameValuePropertiesForTokenURL(nameValuePropertiesForToken,queryParamsMap);
 		}
-		
-		
-		
 		if(tokenPathURL!= null){
 			tokenPathURL.removeContent();
 			tokenPathURL.addContent(Util.loadProperties("TOKEN_URL", configurationTOEndPointList.get(0).getAppConfigPath()));
 		}
-		
+
 		Element testSuiteXML = new XMLElementBuilder().loadTestSuiteTemplateXML();
 		testSuiteMain.getParent().addContent(testSuiteXML.detach());
 
 		return testSuiteMain.getParentElement();
 	}
 
+	/**
+	 * @param configurationTOEndPointList
+	 * @param testSuiteMain
+	 * @return
+	 * @throws IOException
+	 */
 	@SuppressWarnings({ })
 	private static Element buildTestPathXML(
 			ArrayList<ConfigurationTO> configurationTOEndPointList, Element testSuiteMain) throws IOException {
-		AtomicReference<Element> updateTestSuiteXML  = new AtomicReference<Element>();
 		AtomicInteger incrementerForTestID = new AtomicInteger(0);
 		AtomicInteger incrementerFirstTime = new AtomicInteger(0);
 		configurationTOEndPointList.stream().forEach(configurationTO ->{
 			incrementerForTestID.getAndIncrement();
-			Element testSuiteXML;
 			try {
 				incrementerFirstTime.getAndIncrement();
 				if(incrementerFirstTime.get() == 1){
-					testSuiteXML = new XMLElementBuilder().loadTestSuiteTemplateXML();					
 					Element testSuiteMain1 = listChildren(testSuiteMain, 0, configurationTOEndPointList);
 					XMLElementBuilder.updateTemplateXMLForTestSuite(testSuiteMain1, incrementerForTestID, configurationTO, true);
 				} else{
-					testSuiteXML = new XMLElementBuilder().loadTestSuiteTemplateXML();					
 					Element testSuiteMain1 = listChildren(testSuiteMain, 0, configurationTOEndPointList);
 					XMLElementBuilder.updateTemplateXMLForTestSuite(testSuiteMain1, incrementerForTestID, configurationTO, false);
 

@@ -1572,9 +1572,9 @@ public class XMLElementBuilder {
 				//}
 			//}
 			column.removeContent();
-			System.out.println(assertionXPath.getText());
+			System.out.println(actualKey.substring(0, actualKey.indexOf("/")));
 			//column.addContent(jsonArray.get(i)+"");
-			column.addContent(XMLJsonUtils.replaceDotWithUnderscore(actualKey)+"_"+jsonArray.get(i));
+			column.addContent(XMLJsonUtils.replaceDotWithUnderscore(actualKey.substring(0, actualKey.indexOf("/")))+"_"+jsonArray.get(i));
 			andAssertion.addContent(stringAssertion);
 			//System.out.println();			
 
@@ -1585,26 +1585,17 @@ public class XMLElementBuilder {
 	public static Element buildResponseConditionalAssertion(String responseCode, Element jsonAssertionTool) throws IOException{
 		Element conditionAssertion = new XMLElementBuilder().loadElementValueTemplateXML("conditionalAssertionTemplate.xml").detachRootElement();
 		IteratorIterable<Content> descendantsOfConditional = conditionAssertion.getDescendants();
-		Element name =null, stringComparision = null, andAssertion =null, andAssertionSize=null;
+		Element andAssertion =null;
 		for (Content descendant : descendantsOfConditional) {
 			if (descendant.getCType().equals(Content.CType.Element)) {
 				Element child = (Element) descendant;
 				if(child.getName().equalsIgnoreCase("AndAssertion")){
 					andAssertion = child;
 				}else if(child.getName().equalsIgnoreCase("assertionsSize")){
-					andAssertionSize = child;
 				}
 			}
 		}
 
-		/*name.removeContent();
-		name.addContent(responseCode);*/
-
-		/*	andAssertionSize.removeContent();
-	andAssertionSize.addContent();*/
-
-		/*nameAndAssertion.removeContent();
-	nameAndAssertion.addContent();*/
 		jsonAssertionTool.addContent(9, conditionAssertion);
 
 		return andAssertion;

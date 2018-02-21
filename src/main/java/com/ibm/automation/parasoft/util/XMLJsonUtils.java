@@ -392,6 +392,7 @@ public class XMLJsonUtils {
 	public static String replaceDotWithUnderscore(String incomingXpath){
 		String replacementStr= "_";
 		incomingXpath = StringUtils.replace(incomingXpath, ".", replacementStr);
+		incomingXpath = StringUtils.replace(incomingXpath, "/", replacementStr);
 		return incomingXpath;
 
 	}
@@ -410,7 +411,7 @@ public class XMLJsonUtils {
 			if(!andAssertion.getChild("assertionsSize").getContent().get(0).getValue().toString().contains("11-template")){
 				andAssertionSizeLocal = Integer.parseInt(andAssertion.getChild("assertionsSize").getContent().get(0).getValue().toString());
 			}
-			System.out.println("=======before assertionsSize+++++++++++++++++>"+(andAssertionSizeLocal+jsonArray.length())+"");
+			System.out.println("=======total size of assertions===========>"+(andAssertionSizeLocal+jsonArray.length())+"");
 			andAssertion.getChild("assertionsSize").removeContent();
 			andAssertion.getChild("assertionsSize").addContent((andAssertionSizeLocal+jsonArray.length())+"");			
 			//System.out.print("\n Key : "+key);

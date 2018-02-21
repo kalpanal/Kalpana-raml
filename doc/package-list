@@ -1,0 +1,12 @@
+com.ibm.automation.common
+com.ibm.automation.excelOps
+com.ibm.automation.parasoft
+com.ibm.automation.parasoft.domain
+com.ibm.automation.parasoft.util
+io.apptik.json.generator
+io.apptik.json.generator.generators
+io.apptik.json.generator.generators.formats
+io.apptik.json.generator.matcher
+io.apptik.json.schema
+io.apptik.json.schema.fetch
+io.apptik.json.schema.validation
