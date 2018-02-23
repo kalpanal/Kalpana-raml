@@ -1,5 +1,5 @@
   <AndAssertion className="webtool.assertion.compound.AndAssertion" version="1.2">
 	<timestamp>1435587868312</timestamp>
 	<name>FirstResponseAND</name>
-	<assertionsSize>11-template</assertionsSize>
+	<assertionsSize>1-template</assertionsSize>
 </AndAssertion>

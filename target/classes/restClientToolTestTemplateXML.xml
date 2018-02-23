@@ -1324,34 +1324,34 @@ Content-Type: text/plain; charset=UTF-8</httpHeader>
         </ObjectOutputProvider>
        </MessagingOutputProvider>
 	   <outputToolsSize>1-assertiontemplate</outputToolsSize>
-	<GenericAssertionTool className="webtool.assertor.GenericAssertionTool" version="v.2.1.14">
-       <dataSourceNames size="1">
-        <dataSourceName index="0">printdeliveries.xlsx</dataSourceName>
-       </dataSourceNames>
-       <enabled>false</enabled>
-       <iconName>XMLAssertor</iconName>
-       <name>JSON Assertor_For_NegativeScenarios</name>	   
-		 <XMLAssertionTool className="webtool.xml.assertion.XMLAssertionTool" version="v.2.2.1.14">
-			<dataSourceNames size="1">
-			  <dataSourceName index="0">printdeliveries.xlsx</dataSourceName>
-			</dataSourceNames>
-			<iconName>XMLAssertor</iconName>
-			<name>XML Assertor</name>
-			<assertionsSize>1-template</assertionsSize>
-			<ExpectedXMLMessage className="webtool.xml.ExpectedXMLMessage" version="1.2.1">
-				<message>true</message>
-			</ExpectedXMLMessage>
-		  </XMLAssertionTool>   
-		 <TextXmlConversionStrategySerializer className="webtool.textxmlconvert.TextXmlConversionStrategySerializer" version="3">
-        <dataFormatName>JSON</dataFormatName>
-        <conversionStrategyId>JSON</conversionStrategyId>
-        <conversionStrategyClassName>com.parasoft.xml.convert.json.JsonConversionStrategy</conversionStrategyClassName>
-       </TextXmlConversionStrategySerializer>
-       <ConversionOptionSetSerializer className="webtool.textxmlconvert.ConversionOptionSetSerializer" version="2">
-       </ConversionOptionSetSerializer>
-       <TextXmlModelTypeSerializer className="webtool.textxmlconvert.TextXmlModelTypeSerializer" version="2">
-       </TextXmlModelTypeSerializer>
-      </GenericAssertionTool>
+		<GenericAssertionTool className="webtool.assertor.GenericAssertionTool" version="v.2.1.14">
+		   <dataSourceNames size="1">
+			<dataSourceName index="0">printdeliveries.xlsx</dataSourceName>
+		   </dataSourceNames>
+		   <enabled>false</enabled>
+		   <iconName>XMLAssertor</iconName>
+		   <name>JSON Assertor_For_NegativeScenarios</name>	   
+			 <XMLAssertionTool className="webtool.xml.assertion.XMLAssertionTool" version="v.2.2.1.14">
+				<dataSourceNames size="1">
+				  <dataSourceName index="0">printdeliveries.xlsx</dataSourceName>
+				</dataSourceNames>
+				<iconName>XMLAssertor</iconName>
+				<name>XML Assertor</name>
+				<assertionsSize>1-template</assertionsSize>
+				<ExpectedXMLMessage className="webtool.xml.ExpectedXMLMessage" version="1.2.1">
+					<message>true</message>
+				</ExpectedXMLMessage>
+			  </XMLAssertionTool>   
+			 <TextXmlConversionStrategySerializer className="webtool.textxmlconvert.TextXmlConversionStrategySerializer" version="3">
+			<dataFormatName>JSON</dataFormatName>
+			<conversionStrategyId>JSON</conversionStrategyId>
+			<conversionStrategyClassName>com.parasoft.xml.convert.json.JsonConversionStrategy</conversionStrategyClassName>
+		   </TextXmlConversionStrategySerializer>
+		   <ConversionOptionSetSerializer className="webtool.textxmlconvert.ConversionOptionSetSerializer" version="2">
+		   </ConversionOptionSetSerializer>
+		   <TextXmlModelTypeSerializer className="webtool.textxmlconvert.TextXmlModelTypeSerializer" version="2">
+		   </TextXmlModelTypeSerializer>
+		  </GenericAssertionTool>
        <UserMethod className="com.parasoft.scripting.UserMethod" version="2.2">
         <code>true</code>
         <ScriptCode className="com.parasoft.scripting.jsr223.ScriptCode" version="2.1.1.1">

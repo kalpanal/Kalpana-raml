@@ -252,7 +252,7 @@ public class XMLJsonUtils {
 	}
 
 
-	public static Map<String, Object> jsonString2MapForReponseCodeAssertions(String responseCode, String responseSchema, String prependKey, Element andAssertion, int andAssertionSize, String typeOfKey) throws JSONException, IOException {
+	public static Map<String, Object> jsonString2MapForReponseCodeAssertions(String responseCode, String responseSchema, String prependKey, Element xmlorAndAssertionTool) throws JSONException, IOException {
 		Map<String, Object> keys = new HashMap<String, Object>();   
 		org.json.JSONObject jsonObject = new org.json.JSONObject(responseSchema); // HashMap
 		Iterator<?> keyset = jsonObject.keys(); // HM
@@ -262,45 +262,33 @@ public class XMLJsonUtils {
 		ObjectMapper mapper = new ObjectMapper();
 		System.out.print("\n Incoming json string for reference : " + responseSchema);
 		TypeReference<LinkedHashMap<String, Object>> typeRef = new TypeReference<LinkedHashMap<String,Object>>() {};
-		LinkedHashMap<String,?> o = mapper.readValue(responseSchema, typeRef); 
+		LinkedHashMap<String,?> responseSchemaMap = mapper.readValue(responseSchema, typeRef); 
 		boolean andAssertionAdded = false;
-		for (String key : o.keySet()){
+		for (String key : responseSchemaMap.keySet()){
 			String actualKey=key;
 			
 
 		if(!key.equalsIgnoreCase("required")){
-			if(null!= prependKey ){
-				//actualKey=prependKey+"."+key;
-				
-			}else{
-				//actualKey = key;
-				prependKey = actualKey;
-				//buildAndAssertionsForRequiredFields(key, o, andAssertion, actualKey, typeOfKey);
+			if(null!= prependKey ){			
+				actualKey=prependKey+"/"+key;
 			}
-			Object value = o.get(key);
+			Object value = responseSchemaMap.get(key);
 			if ( value instanceof LinkedHashMap ) {
 				System.out.println("Incomin value is of JSONObject : ");
-				typeOfKey = "JSONObject";
 				String mapToJson = mapper.writeValueAsString(value);
-				actualKey=prependKey+"/";
-				//buildAndAssertionsForRequiredFields(key, o, andAssertion, actualKey, typeOfKey);
-				jsonString2MapForReponseCodeAssertions( responseCode, mapToJson, actualKey, andAssertion, andAssertionSize, typeOfKey );
-
-				// keys.put( actualKey, );
+				//actualKey=prependKey+"/";
+				jsonString2MapForReponseCodeAssertions( responseCode, mapToJson, actualKey, xmlorAndAssertionTool);
 			}else if ( value instanceof ArrayList) {
 				System.out.println("Incomin value is of JSONArray : ");
-				typeOfKey = "JSONArray";		
 				ObjectMapper objectMapper = new ObjectMapper();
-				//Set pretty printing of json
 				objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
 				String mapToJson = objectMapper.writeValueAsString(value);
-				//System.out.println(mapToJson);
-				actualKey=prependKey+"/item/";
-				jsonArray2ListForReponseCodeAssertions( mapToJson, actualKey, responseCode, andAssertion, andAssertionSize, typeOfKey );
+				actualKey=actualKey+"/item";
+				jsonArray2ListForReponseCodeAssertions( mapToJson, actualKey, responseCode, xmlorAndAssertionTool);
 			}else{
-				actualKey=prependKey;				
+				//actualKey=prependKey;				
 				if(!andAssertionAdded){
-					buildAndAssertionsForRequiredFields(key, o, andAssertion, actualKey, typeOfKey);
+					buildAndAssertionsForRequiredFields(key, responseSchemaMap, xmlorAndAssertionTool, prependKey);
 				}
 				andAssertionAdded=true;
 			}
@@ -338,7 +326,7 @@ public class XMLJsonUtils {
 		return array2List;  
 	}
 
-	public static List<Object> jsonArray2ListForReponseCodeAssertions(String arrayOFKeys, String actualKey, String responseCode, Element jsonAssertionTool, int andAssertionSize, String typeOfKey) throws JSONException, IOException {
+	public static List<Object> jsonArray2ListForReponseCodeAssertions(String arrayOFKeys, String actualKey, String responseCode, Element xmlAssertionTool) throws JSONException, IOException {
 
 		ObjectMapper mapper = new ObjectMapper();		
 		TypeReference<ArrayList<?>> typeRef = new TypeReference<ArrayList<?>>() {};        
@@ -359,20 +347,16 @@ public class XMLJsonUtils {
 		for ( int i = 0; i < arraySize; i++ )  {
 			if ( arrayOFKeysList.get(i) instanceof LinkedHashMap ) {
 				ObjectMapper objectMapper = new ObjectMapper();
-				//Set pretty printing of json
 				objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
 				String mapToJson = objectMapper.writeValueAsString(arrayOFKeysList.get(i));
-				//System.out.println(mapToJson);
-				Map<String, Object> subObj2Map = jsonString2MapForReponseCodeAssertions(responseCode, mapToJson, actualKey, jsonAssertionTool, andAssertionSize, typeOfKey);
+				Map<String, Object> subObj2Map = jsonString2MapForReponseCodeAssertions(responseCode, mapToJson, actualKey, xmlAssertionTool);
 				array2List.add(subObj2Map);
 			}else if ( arrayOFKeysList.get(i) instanceof ArrayList ) {
 				System.out.println("Incomin value is of JSONObject : "+arrayOFKeysList.get(i).toString());
 				ObjectMapper objectMapper = new ObjectMapper();
-				//Set pretty printing of json
 				objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
 				String mapToJson = objectMapper.writeValueAsString(arrayOFKeysList.get(i));
-				//System.out.println(mapToJson);
-				List<Object> subarray2List = jsonArray2ListForReponseCodeAssertions(mapToJson, actualKey, responseCode, jsonAssertionTool, andAssertionSize, typeOfKey);
+				List<Object> subarray2List = jsonArray2ListForReponseCodeAssertions(mapToJson, actualKey, responseCode, xmlAssertionTool);
 				array2List.add(subarray2List);
 			}else {
 				array2List.add( arrayOFKeysList.get(i) );
@@ -393,30 +377,45 @@ public class XMLJsonUtils {
 		String replacementStr= "_";
 		incomingXpath = StringUtils.replace(incomingXpath, ".", replacementStr);
 		incomingXpath = StringUtils.replace(incomingXpath, "/", replacementStr);
+		incomingXpath = StringUtils.replace(incomingXpath, "_item", "");
+		System.out.println("incomingXpath"+incomingXpath);
+		return incomingXpath;
+
+	}
+	
+	public static String removebraces(String incomingXpath){
+		String replacementStr= "";
+		incomingXpath = StringUtils.replace(incomingXpath, "{", replacementStr);
+		incomingXpath = StringUtils.replace(incomingXpath, "}", replacementStr);
 		return incomingXpath;
 
 	}
 
-	public static void buildAndAssertionsForRequiredFields(String key, LinkedHashMap<String,?> o, Element andAssertion, String actualKey, String typeOfKey) throws IOException{
-		//if(!key.equalsIgnoreCase("required")){
-			org.json.JSONArray jsonArray =  new org.json.JSONArray((ArrayList<String>)o.get("required"));
+	/**
+	 * This method build AND assertion for negative scenarios
+	 * or set of string comparison assertion for positive scenarios 
+	 * for each required field in response json
+	 * @param key
+	 * @param responseMap
+	 * @param xmlorAndAssertionTool
+	 * @param actualKey
+	 * @throws IOException
+	 */
+	public static void buildAndAssertionsForRequiredFields(String key, LinkedHashMap<String,?> responseMap, Element xmlorAndAssertionTool, String actualKey) throws IOException{
+			@SuppressWarnings("unchecked")
+			org.json.JSONArray jsonArray =  new org.json.JSONArray((ArrayList<String>)responseMap.get("required"));
 			/** check if the required attribute is not an JSON Object, 
  			            if it is a Object, we cannot create assertions for that attribute
 			 */
-			//jsonArray = compareRequiredAttribitesAgainstValueList(jsonObject, jsonArray);
-			// andAssertionSize = (andAssertionSize + jsonArray.length());
-			XMLElementBuilder.buildStringComparisonAssertions(jsonArray, actualKey, andAssertion, typeOfKey);		               
-			//System.out.println(jsonArray.length()+"=======assertionsSize+++++++++++++++++>"+andAssertionSize+"");
+			XMLElementBuilder.buildStringComparisonAssertions(jsonArray, actualKey, xmlorAndAssertionTool);		               
 			int andAssertionSizeLocal = 0;
-			if(!andAssertion.getChild("assertionsSize").getContent().get(0).getValue().toString().contains("11-template")){
-				andAssertionSizeLocal = Integer.parseInt(andAssertion.getChild("assertionsSize").getContent().get(0).getValue().toString());
+			if(!xmlorAndAssertionTool.getChild("assertionsSize").getContent().get(0).getValue().toString().contains("1-template")){
+				andAssertionSizeLocal = Integer.parseInt(xmlorAndAssertionTool.getChild("assertionsSize").getContent().get(0).getValue().toString());
 			}
 			System.out.println("=======total size of assertions===========>"+(andAssertionSizeLocal+jsonArray.length())+"");
-			andAssertion.getChild("assertionsSize").removeContent();
-			andAssertion.getChild("assertionsSize").addContent((andAssertionSizeLocal+jsonArray.length())+"");			
-			//System.out.print("\n Key : "+key);
+			xmlorAndAssertionTool.getChild("assertionsSize").removeContent();
+			xmlorAndAssertionTool.getChild("assertionsSize").addContent((andAssertionSizeLocal+jsonArray.length())+"");			
 
-		//}
 	}
 	
 
