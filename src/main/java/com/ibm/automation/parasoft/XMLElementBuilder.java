@@ -322,6 +322,7 @@ public class XMLElementBuilder {
 		int genericAssertionSizeInt = 0;
 		boolean firstAssertionToolSet = false;
 		Element genericAssertionToolForPosOrNegScenario = null;
+		Element genericAssertionToolCloned = null;
 		for (Entry<String, String> entry : responseMap.entrySet()) {
 			String responseCode = entry.getKey();
 			String reponseSchemaContent = entry.getValue();
@@ -331,14 +332,17 @@ public class XMLElementBuilder {
 				
 				if(!firstAssertionToolSet){
 					genericAssertionToolForPosOrNegScenario = genericAssertionTool.getChild("XMLAssertionTool");
+					genericAssertionToolCloned = genericAssertionTool.clone();	
 				}else{
-					Element genericAssertionToolCloned = genericAssertionTool.clone();					
+									
 					genericAssertionToolForPosOrNegScenario = genericAssertionToolCloned.getChild("XMLAssertionTool");
 					genericAssertionTool.getParentElement().addContent(40,genericAssertionToolCloned);
 				}
 				
 				if (reponseSchemaContent != null && !reponseSchemaContent.equals("") ) {
 					if(reponseSchemaContent.contains("serverStatusCode")){
+						genericAssertionToolForPosOrNegScenario.getChild("assertionsSize").removeContent();
+						genericAssertionToolForPosOrNegScenario.getChild("assertionsSize").addContent("1");
 						Element andAssertion = buildNegativeResponseConditionalAssertion(responseCode, genericAssertionToolForPosOrNegScenario);
 						genericAssertionToolForPosOrNegScenario.getParentElement().getChild("name").removeContent();
 						genericAssertionToolForPosOrNegScenario.getParentElement().getChild("name").addContent("JSON Assertor_For_NegativeScenarios");
@@ -544,7 +548,12 @@ public class XMLElementBuilder {
 			//System.out.println(actualKey.substring(0, actualKey.indexOf("/")));
 			// column.addContent(jsonArray.get(i)+"");
 			column.addContent(XMLJsonUtils.replaceDotWithUnderscore(actualKey)+"_"+jsonArray.get(i));
-			andAssertion.addContent(stringAssertion);
+			if(andAssertion.getName().contains("XMLAssertionTool")){
+				andAssertion.addContent(8,stringAssertion);
+			}else{
+				andAssertion.addContent(stringAssertion);
+			}
+			
 			// System.out.println();
 
 		}
