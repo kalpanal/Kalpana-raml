@@ -9,6 +9,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.TreeSet;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -323,38 +324,54 @@ public class XMLElementBuilder {
 		boolean firstAssertionToolSet = false;
 		Element genericAssertionToolForPosOrNegScenario = null;
 		Element genericAssertionToolCloned = null;
-		for (Entry<String, String> entry : responseMap.entrySet()) {
-			String responseCode = entry.getKey();
-			String reponseSchemaContent = entry.getValue();
+		Element genericAssertionToolOriginal = genericAssertionTool.clone();
+		boolean negativeScenarioExecuted = false;
+		/*SortedMap<String, Object> responseMapSorted = new TreeMap<String, Object>(responseMap);
+		//SortedMap<whatever> myNewMap = new TreeMap<whatever>(responseMap);
+		 * //for (Entry<String, String> entry : responseMapSorted.entrySet()) {*/
+		for(String responseCode: new TreeSet<String>(responseMap.keySet())){		
+			//String responseCode = entry.getKey();
+			String reponseSchemaContent = responseMap.get(responseCode);
 			// Just run assertions tag creation just twice not as many
 			// response code as in responseMap
-			if (genericAssertionSizeInt < 2) {
-				
+			if (genericAssertionSizeInt < 2) {				
 				if(!firstAssertionToolSet){
 					genericAssertionToolForPosOrNegScenario = genericAssertionTool.getChild("XMLAssertionTool");
-					genericAssertionToolCloned = genericAssertionTool.clone();	
-				}else{
-									
-					genericAssertionToolForPosOrNegScenario = genericAssertionToolCloned.getChild("XMLAssertionTool");
-					genericAssertionTool.getParentElement().addContent(40,genericAssertionToolCloned);
+						
+				}else{			
+					genericAssertionToolCloned = genericAssertionToolOriginal.clone();
+					genericAssertionToolForPosOrNegScenario = genericAssertionToolCloned.getChild("XMLAssertionTool");					
 				}
 				
 				if (reponseSchemaContent != null && !reponseSchemaContent.equals("") ) {
-					if(reponseSchemaContent.contains("serverStatusCode")){
+					if(reponseSchemaContent.contains("serverStatusCode") && (!negativeScenarioExecuted)){
 						genericAssertionToolForPosOrNegScenario.getChild("assertionsSize").removeContent();
 						genericAssertionToolForPosOrNegScenario.getChild("assertionsSize").addContent("1");
 						Element andAssertion = buildNegativeResponseConditionalAssertion(responseCode, genericAssertionToolForPosOrNegScenario);
 						genericAssertionToolForPosOrNegScenario.getParentElement().getChild("name").removeContent();
 						genericAssertionToolForPosOrNegScenario.getParentElement().getChild("name").addContent("JSON Assertor_For_NegativeScenarios");
 						XMLJsonUtils.jsonString2MapForReponseCodeAssertions(responseCode, reponseSchemaContent, null, andAssertion);
+						//firstAssertionToolSet = true;
+						//genericAssertionSizeInt++;
+						negativeScenarioExecuted = true;
 					
-					} else {
+					} else if(!reponseSchemaContent.contains("serverStatusCode")) {
 						genericAssertionToolForPosOrNegScenario.getParentElement().getChild("name").removeContent();
 						genericAssertionToolForPosOrNegScenario.getParentElement().getChild("name").addContent("JSON Assertor_For_PositiveScenarios");
 						XMLJsonUtils.jsonString2MapForReponseCodeAssertions(responseCode, reponseSchemaContent, null, genericAssertionToolForPosOrNegScenario);
+						
 					}
-					genericAssertionSizeInt++;
-					firstAssertionToolSet = true;
+					
+					if((!genericAssertionToolForPosOrNegScenario.getChild("assertionsSize").getText().equals("0")) && 
+							(!genericAssertionToolForPosOrNegScenario.getChild("assertionsSize").getText().equals("1-template"))){
+						if(firstAssertionToolSet){
+							genericAssertionTool.getParentElement().addContent(40, genericAssertionToolCloned);							
+						}else{
+							firstAssertionToolSet = true;
+						}
+						genericAssertionSizeInt++;
+					}
+									
 				}
 				
 			}
