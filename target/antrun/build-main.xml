@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="maven-antrun-" default="main"  >
+<target name="main">
+  <property name="final.name" value="C:\KalpanaTAEWorkspace\Kalpana-raml\target/APIFrameworkJavaUtility-1.0"/>
+  <property name="archive.includes" value="APIFrameworkJavaUtility-1.0-manual.jar APIFrameworkJavaUtility-1.0-manual.lib/*"/>
+  <property name="tar.destfile" value="${final.name}-manual.tar"/>
+  <zip basedir="C:\KalpanaTAEWorkspace\Kalpana-raml\target" destfile="${final.name}-manual.zip" includes="${archive.includes}"/>
+  <tar basedir="C:\KalpanaTAEWorkspace\Kalpana-raml\target" destfile="${tar.destfile}" includes="${archive.includes}"/>
+  <gzip destfile="${tar.destfile}.gz" src="${tar.destfile}"/>
+  <bzip2 destfile="${tar.destfile}.bz2" src="${tar.destfile}"/>
+</target>
+</project>

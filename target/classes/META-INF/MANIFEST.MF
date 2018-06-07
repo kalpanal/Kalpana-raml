@@ -1,0 +1,68 @@
+Manifest-Version: 1.0
+Built-By: kalpana.l
+Class-Path: APIFrameworkJavaUtility-1.0-manual.lib/guava-22.0.jar APIF
+ rameworkJavaUtility-1.0-manual.lib/jsr305-1.3.9.jar APIFrameworkJavaU
+ tility-1.0-manual.lib/error_prone_annotations-2.0.18.jar APIFramework
+ JavaUtility-1.0-manual.lib/j2objc-annotations-1.1.jar APIFrameworkJav
+ aUtility-1.0-manual.lib/animal-sniffer-annotations-1.14.jar APIFramew
+ orkJavaUtility-1.0-manual.lib/guice-4.1.0.jar APIFrameworkJavaUtility
+ -1.0-manual.lib/javax.inject-1.jar APIFrameworkJavaUtility-1.0-manual
+ .lib/aopalliance-1.0.jar APIFrameworkJavaUtility-1.0-manual.lib/httpc
+ lient-4.1.1.jar APIFrameworkJavaUtility-1.0-manual.lib/httpcore-4.1.j
+ ar APIFrameworkJavaUtility-1.0-manual.lib/commons-logging-1.1.1.jar A
+ PIFrameworkJavaUtility-1.0-manual.lib/commons-codec-1.4.jar APIFramew
+ orkJavaUtility-1.0-manual.lib/model-generator-1.1.0-alpha1.jar APIFra
+ meworkJavaUtility-1.0-manual.lib/gson-2.2.4.jar APIFrameworkJavaUtili
+ ty-1.0-manual.lib/freemarker-2.3.14.jar APIFrameworkJavaUtility-1.0-m
+ anual.lib/json-schema-1.1.0-alpha1.jar APIFrameworkJavaUtility-1.0-ma
+ nual.lib/json-aws-1.1.0-alpha1.jar APIFrameworkJavaUtility-1.0-manual
+ .lib/json-core-1.1.0-alpha1.jar APIFrameworkJavaUtility-1.0-manual.li
+ b/json-wrapper-1.1.0-alpha1.jar APIFrameworkJavaUtility-1.0-manual.li
+ b/hamcrest-core-1.3.jar APIFrameworkJavaUtility-1.0-manual.lib/hamcre
+ st-library-1.3.jar APIFrameworkJavaUtility-1.0-manual.lib/hamcrest-in
+ tegration-1.3.jar APIFrameworkJavaUtility-1.0-manual.lib/codemodel-2.
+ 6.jar APIFrameworkJavaUtility-1.0-manual.lib/json-20160810.jar APIFra
+ meworkJavaUtility-1.0-manual.lib/jdom2-2.0.5.jar APIFrameworkJavaUtil
+ ity-1.0-manual.lib/commons-collections4-4.0.jar APIFrameworkJavaUtili
+ ty-1.0-manual.lib/poi-ooxml-3.9.jar APIFrameworkJavaUtility-1.0-manua
+ l.lib/poi-3.9.jar APIFrameworkJavaUtility-1.0-manual.lib/poi-ooxml-sc
+ hemas-3.9.jar APIFrameworkJavaUtility-1.0-manual.lib/xmlbeans-2.3.0.j
+ ar APIFrameworkJavaUtility-1.0-manual.lib/stax-api-1.0.1.jar APIFrame
+ workJavaUtility-1.0-manual.lib/dom4j-1.6.1.jar APIFrameworkJavaUtilit
+ y-1.0-manual.lib/xml-apis-1.0.b2.jar APIFrameworkJavaUtility-1.0-manu
+ al.lib/json-simple-1.1.jar APIFrameworkJavaUtility-1.0-manual.lib/jso
+ n-lib-2.4-jdk15.jar APIFrameworkJavaUtility-1.0-manual.lib/commons-be
+ anutils-1.8.0.jar APIFrameworkJavaUtility-1.0-manual.lib/commons-coll
+ ections-3.2.1.jar APIFrameworkJavaUtility-1.0-manual.lib/commons-lang
+ -2.5.jar APIFrameworkJavaUtility-1.0-manual.lib/ezmorph-1.0.6.jar API
+ FrameworkJavaUtility-1.0-manual.lib/commons-lang3-3.0.jar APIFramewor
+ kJavaUtility-1.0-manual.lib/json-schema-validator-0.1.7.jar APIFramew
+ orkJavaUtility-1.0-manual.lib/jackson-databind-2.8.7.jar APIFramework
+ JavaUtility-1.0-manual.lib/jackson-annotations-2.8.0.jar APIFramework
+ JavaUtility-1.0-manual.lib/jackson-core-2.8.7.jar APIFrameworkJavaUti
+ lity-1.0-manual.lib/slf4j-api-1.7.25.jar APIFrameworkJavaUtility-1.0-
+ manual.lib/slf4j-ext-1.7.25.jar APIFrameworkJavaUtility-1.0-manual.li
+ b/raml-parser-2-1.0.16.jar APIFrameworkJavaUtility-1.0-manual.lib/yag
+ i-1.0.16.jar APIFrameworkJavaUtility-1.0-manual.lib/snakeyaml-1.15.ja
+ r APIFrameworkJavaUtility-1.0-manual.lib/commons-io-2.4.jar APIFramew
+ orkJavaUtility-1.0-manual.lib/annotations-3.0.0.jar APIFrameworkJavaU
+ tility-1.0-manual.lib/joda-time-2.3.jar APIFrameworkJavaUtility-1.0-m
+ anual.lib/jackson-module-jsonSchema-2.9.0.jar APIFrameworkJavaUtility
+ -1.0-manual.lib/validation-api-1.1.0.Final.jar APIFrameworkJavaUtilit
+ y-1.0-manual.lib/json-schema-validator-2.2.8.jar APIFrameworkJavaUtil
+ ity-1.0-manual.lib/json-schema-core-1.2.8.jar APIFrameworkJavaUtility
+ -1.0-manual.lib/rhino-1.7R4.jar APIFrameworkJavaUtility-1.0-manual.li
+ b/jackson-coreutils-1.8.jar APIFrameworkJavaUtility-1.0-manual.lib/ms
+ g-simple-1.1.jar APIFrameworkJavaUtility-1.0-manual.lib/btf-1.2.jar A
+ PIFrameworkJavaUtility-1.0-manual.lib/uri-template-0.9.jar APIFramewo
+ rkJavaUtility-1.0-manual.lib/mailapi-1.4.3.jar APIFrameworkJavaUtilit
+ y-1.0-manual.lib/activation-1.1.jar APIFrameworkJavaUtility-1.0-manua
+ l.lib/libphonenumber-8.0.0.jar APIFrameworkJavaUtility-1.0-manual.lib
+ /jopt-simple-5.0.3.jar APIFrameworkJavaUtility-1.0-manual.lib/juniver
+ salchardet-1.0.3.jar APIFrameworkJavaUtility-1.0-manual.lib/xmlschema
+ -core-2.2.1.jar APIFrameworkJavaUtility-1.0-manual.lib/javax.json-api
+ -1.0.jar APIFrameworkJavaUtility-1.0-manual.lib/javax.json-1.0.4.jar
+Build-Jdk: 1.8.0_151
+Created-By: Maven Integration for Eclipse
+Main-Class: com.ibm.automation.parasoft.ParasoftTstGeneratorMain
+

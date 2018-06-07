@@ -3,6 +3,7 @@ package com.ibm.automation.parasoft;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -645,13 +646,28 @@ public class XMLElementBuilder {
 				List<Object> subarray2List = jsonArray2List(mapToJson, parentElement, actualKey);
 				array2List.add(subarray2List);
 			} else {
-				// keyNode( arrayOFKeys.opt(i) );
-				array2List.add(arrayOFKeysList.get(i));
+					//array2List.add(arrayOFKeysList.get(i));				
+					//listChildrenForElementValue(parentElement, 0, actualKey, value.toString(), totalSize + "");
+					listChildrenForArrayElementValue(parentElement, 0, actualKey, arrayOFKeysList.get(i).toString(), 1 + "");
+				
+					//listChildrenForElementValue(parentElement, 0, key, value.toString(), totalSize + "");
+				
 			}
 		}
 		return array2List;
 	}
 
+	private static Element listChildrenForArrayElementValue(Element parentElement, int depth, String columnName, String columnValue, String objectSize)
+			throws IOException {
+		Element complexType = parentElement.getParentElement();
+		complexType.removeChild("attributesSize");
+		complexType.removeChild("AttributeType");//get reference to complexType Element		
+		complexType.removeChild("name");
+		complexType.removeChild("compositor");
+		complexType.removeChild("AllCompositor");
+		
+		return parentElement;
+	}
 	public static List<Object> jsonArray2ListForComplexValue(String arrayOFKeys, Element incomingElementValueElementForString, String actualKey)
 			throws JSONException, IOException {
 		System.out.println("Incoming value is of JSONArray : =========");
@@ -1417,18 +1433,19 @@ public class XMLElementBuilder {
 
 	public Document loadElementValueTemplateXML(String templateName) throws IOException {
 		ClassLoader classLoader = getClass().getClassLoader();
-		File xmlFile = new File(classLoader.getResource(templateName).getFile());
+		//File xmlFile = new File(classLoader.getResourceAsStream(templateName));
+		//File xmlFile = new File(templateName);
 		// File xmlFile = new
 		// File("C:/Kalpana/TD Bank/InputOutput/inputTSTFileTemplate.xml");
 		Document document = null;
-		if (xmlFile.exists()) {
+		//if (xmlFile.exists()) {
 			// try to load document from xml file if it exist
 			// create a file input stream
-			FileInputStream fis = new FileInputStream(xmlFile);
+			//FileInputStream fis = new FileInputStream(classLoader.getResourceAsStream(templateName));
 			SAXBuilder builder = new SAXBuilder();
 			try {
-				document = builder.build(xmlFile);
-
+				//document = builder.build(xmlFile);
+				document = builder.build(classLoader.getResourceAsStream(templateName));
 			}
 			// indicates a well-formedness error
 			catch (JDOMException e) {
@@ -1438,18 +1455,19 @@ public class XMLElementBuilder {
 				System.out.println(e);
 			}
 
-			fis.close();
-		}
+			//fis.close();
+		//}
 		return document;
 	}
 
 	public Document loadElementValueTemplateXML_DOM(String templateName) throws ParserConfigurationException, SAXException, IOException {
 		new File("C:/Users/xxx/Desktop/ff.xml");
+		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+		InputStream is = classLoader.getResourceAsStream(templateName);
 		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-		Document document = (Document) documentBuilder.parse(templateName);
+		Document document = (Document) documentBuilder.parse(is);
 		return document;
-
 	}
 
 	public Document loadIncomingTSTFile(String incomingTstFile) throws IOException {
@@ -1483,13 +1501,13 @@ public class XMLElementBuilder {
 		// File xmlFile = new
 		// File("C:/Kalpana/TD Bank/InputOutput/inputTSTFileTemplate.xml");
 		Document document = null;
-		if (xmlFile.exists()) {
+	//	if (xmlFile.exists()) {
 			// try to load document from xml file if it exist
 			// create a file input stream
-			FileInputStream fis = new FileInputStream(xmlFile);
+			//FileInputStream fis = new FileInputStream(xmlFile);
 			SAXBuilder builder = new SAXBuilder();
 			try {
-				document = builder.build(xmlFile);
+				document = builder.build(classLoader.getResourceAsStream("testSuiteTemplate.xml"));
 
 			}
 			// indicates a well-formedness error
@@ -1500,8 +1518,8 @@ public class XMLElementBuilder {
 				System.out.println(e);
 			}
 
-			fis.close();
-		}
+			//fis.close();
+		//}
 		return document.getRootElement();
 	}
 
