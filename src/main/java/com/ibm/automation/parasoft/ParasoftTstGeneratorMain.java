@@ -165,6 +165,7 @@ public class ParasoftTstGeneratorMain {
 			urlEndPointsNode.resources().forEach((urlEndPointsSubNode) -> {
 				List<AppConfigurationPropertiesForDataSheet> dataSheetsListSubNodeLevel = appConfigPropertiesForDatasheets.stream().filter(p -> p.getEndpointUrl().equals(urlEndPointsSubNode.resourcePath())).collect(Collectors.toList());
 				System.out.println(dataSheetsListSubNodeLevel);
+				System.out.println("EndPoints are ==>" + urlEndPointsSubNode.displayName() + "===>resources size====>" + urlEndPointsSubNode.resources().size());
 				AtomicInteger methodPosition1 = new AtomicInteger();
 				List<Method> methodTypes1 = urlEndPointsSubNode.methods();
 				for (Method methodName : methodTypes1) {
@@ -183,6 +184,31 @@ public class ParasoftTstGeneratorMain {
 					}
 					configurationTOEndPointList.add(configurationTOSubNode);
 				}
+				
+				urlEndPointsSubNode.resources().forEach((urlEndPointsSubSecondLevelNode) -> {
+					List<AppConfigurationPropertiesForDataSheet> dataSheetsListSubNodeSecondLevelLevel = appConfigPropertiesForDatasheets.stream().filter(p -> p.getEndpointUrl().equals(urlEndPointsSubSecondLevelNode.resourcePath())).collect(Collectors.toList());
+					System.out.println(dataSheetsListSubNodeLevel);
+					System.out.println("EndPoints are ==>" + urlEndPointsSubSecondLevelNode.displayName() + "===>resources size====>" + urlEndPointsSubSecondLevelNode.resources().size());
+					AtomicInteger methodPosition2 = new AtomicInteger();
+					List<Method> methodTypes2 = urlEndPointsSubSecondLevelNode.methods();
+					for (Method methodName : methodTypes2) {
+						ConfigurationTO configurationTOSubNode = null;
+						try {
+							configurationTOSubNode = copyRAMLDataToDTO(urlEndPointsSubSecondLevelNode, methodPosition2.get());
+							configurationTOSubNode.setDataSource(dataSheetsListSubNodeSecondLevelLevel.stream().map(i -> i.getDatasheetName()).collect(Collectors.toList()));
+							configurationTOSubNode.setRamlFileName(filesList.get(0));
+							configurationTOSubNode.setAppConfigPath(appConfigPath);
+							configurationTOSubNode.setInputTstFile(inputTstFile);
+							configurationTOSubNode.setQueryParameters(urlEndPointsSubSecondLevelNode.methods().get(methodPosition2.get()).queryParameters());
+							methodPosition1.incrementAndGet();
+							// configurationTOSubNodeLevelDSList.add(configurationTOSubNode);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+						configurationTOEndPointList.add(configurationTOSubNode);
+					}
+
+				});
 
 			}	);
 
